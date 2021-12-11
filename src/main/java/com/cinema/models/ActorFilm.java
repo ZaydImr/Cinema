@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.UUID;
 
 @Entity
 @Table(name="actorfilm")
@@ -14,15 +13,15 @@ import java.util.UUID;
 @NoArgsConstructor
 @ToString
 public class ActorFilm implements Serializable {
-    @Id
+    @EmbeddedId
+    private Keys keys= new Keys();
     @ManyToOne(fetch = FetchType.EAGER)
+    @MapsId("idFilm")
     @JoinColumn(name = "idFilm")
-    @Column(name = "idfilm")
     private Film film;
-    @Id
     @ManyToOne(fetch = FetchType.EAGER)
+    @MapsId("idActor")
     @JoinColumn(name = "idActor")
-    @Column(name = "idActor")
     private Actor actor;
 
 }

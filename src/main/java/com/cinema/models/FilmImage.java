@@ -15,8 +15,8 @@ import java.util.UUID;
 @ToString
 public class FilmImage implements Serializable {
     @Id
-    @Column(name = "ifImageFilm")
-    private UUID ifImageFilm;
+    @Column(name = "idImageFilm")
+    private UUID idImageFilm;
     @Column(name = "imgUrl")
     private String imageUrl;
     @ManyToOne(fetch = FetchType.EAGER)

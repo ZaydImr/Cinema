@@ -18,7 +18,7 @@ import java.util.UUID;
 public class Director implements Serializable {
     @Id
     @Column(name = "IdDirector")
-    private UUID IdDirector;
+    private UUID idDirector;
     @Column(name = "fullnameDirector")
     private String fullnameDirector;
     @Column(name = "birthdayDirector")

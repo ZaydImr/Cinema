@@ -17,6 +17,6 @@ public class Subscription implements Serializable {
     @Id
     @Column(name = "idEmailSubscription")
     private UUID idEmailSubscription;
-    @Column(name = "emailSubscriver")
-    private String emailSubscriver;
+    @Column(name = "emailSubscriber")
+    private String emailSubscriber;
 }
