@@ -7,6 +7,11 @@ create table if NOT exists TypeUser(
     typeUser VARCHAR(50)
 );
 
+CREATE Table if NOT exists Nationality(
+    idNatonality VARCHAR(255) NOT NULL,
+    nationality VARCHAR(255) NOT NULL
+);
+
 create table if NOT exists User(
     idUser VARCHAR(255) PRIMARY KEY,
     idTypeUser VARCHAR(255) NOT NULL,
@@ -37,16 +42,18 @@ create table if NOT exists Actor(
     idActor VARCHAR(255) PRIMARY KEY,
     fullnameActor VARCHAR(70),
     birthdayActor DATE,
-    nationalityActor VARCHAR(20),
-    imgActor VARCHAR(255)
+    idNationality VARCHAR(255) NOT NULL,
+    imgActor VARCHAR(255),
+    constraint fk_actor_nationality FOREIGN KEY (idNationality) REFERENCES Nationality(idNationality)
 );
 
 create table if NOT exists Director(
     idDirector VARCHAR(255) PRIMARY KEY,
     fullnameDirector VARCHAR(70),
     birthdayDirector DATE,
-    nationalityDirector VARCHAR(20),
-    imgDirector VARCHAR(255)
+    idNationality VARCHAR(255) NOT NULL,
+    imgDirector VARCHAR(255),
+    constraint fk_director_nationality FOREIGN KEY (idNationality) REFERENCES Nationality(idNationality)
 );
 
 
@@ -66,15 +73,15 @@ create table if NOT exists Film(
     idFilm VARCHAR(255) PRIMARY KEY,
     idTypeFilm VARCHAR(255) NOT NULL,
     idActor VARCHAR(255) NOT NULL,
-    idLanguage VARCHAR(255) NOT NULL,
+    idNationality VARCHAR(255) NOT NULL,
     idDirector VARCHAR(255) NOT NULL,
     titleFilm VARCHAR(100),
     descriptionFilm VARCHAR(255),
     dateRelease DATE,
     durationFilm TIME,
     constraint fk_film_type FOREIGN KEY (idTypeFilm) REFERENCES FilmType(idTypeFilm),
-    constraint fk_film_language FOREIGN KEY (idLanguage) references Language(idLanguage),
-    constraint fk_film_director FOREIGN KEY (idDirector) references Director(idDirector)
+    constraint fk_film_director FOREIGN KEY (idDirector) references Director(idDirector),
+    constraint fk_film_nationality FOREIGN KEY (idNationality) references Nationality(idNationality)
 );
 
 create table if NOT exists FilmImage(
@@ -96,7 +103,8 @@ create table if NOT exists Session(
     dateBeginSession DATE,
     tarif DOUBLE NOT NULL,
     constraint fk_film_session FOREIGN KEY (idFilm) REFERENCES Film(idFilm),
-    constraint fk_session_room FOREIGN KEY (idRoom) references Room(idRoom)
+    constraint fk_session_room FOREIGN KEY (idRoom) references Room(idRoom),
+    constraint fk_film_nationality FOREIGN KEY (idNatonality) references Nationality(idNatonality)
 );
 
 create table if NOT exists ActorFilm(
