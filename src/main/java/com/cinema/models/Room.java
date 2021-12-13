@@ -8,7 +8,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Table(name="room")
+@Table(name="Room")
 @Data
 @Getter
 @Setter

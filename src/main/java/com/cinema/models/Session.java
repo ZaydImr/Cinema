@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name="session")
+@Table(name="Session")
 @Data
 @Getter
 @Setter
@@ -24,10 +24,8 @@ public class Session implements Serializable {
     private double tarif;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idFilm")
-    @Column(name = "idFilm")
     private Film film;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idRoom")
-    @Column(name = "idRoom")
     private Room room;
 }

@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.UUID;
 
 @Entity
-@Table(name="filmimage")
+@Table(name="FilmImage")
 @Data
 @Getter
 @Setter
@@ -21,6 +21,5 @@ public class FilmImage implements Serializable {
     private String imageUrl;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idFilm")
-    @Column(name = "idFilm")
     private Film film;
 }

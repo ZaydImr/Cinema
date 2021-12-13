@@ -10,7 +10,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Table(name="film")
+@Table(name="Film")
 @Data
 @Getter
 @Setter
@@ -30,19 +30,15 @@ public class Film implements Serializable {
     private LocalTime durationFilm;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idTypeFilm")
-    @Column(name = "idTypeFilm")
     private FilmType filmType;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idActor")
-    @Column(name = "idActor")
     private Actor actor;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idLanguage")
-    @Column(name = "idLanguage")
-    private Language language;
+    private Nationality language;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idDirector")
-    @Column(name = "idDirector")
     private Director director;
     @OneToMany(mappedBy = "film",fetch = FetchType.EAGER,targetEntity = Comment.class)
     private Set<Comment> comments;

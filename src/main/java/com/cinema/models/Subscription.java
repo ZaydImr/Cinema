@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.UUID;
 
 @Entity
-@Table(name="subscription")
+@Table(name="Subscription")
 @Data
 @Getter
 @Setter

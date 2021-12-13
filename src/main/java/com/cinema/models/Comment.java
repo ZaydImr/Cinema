@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.UUID;
 
 @Entity
-@Table(name="comment")
+@Table(name="Comment")
 @Data
 @Getter
 @Setter
@@ -23,7 +23,6 @@ public class Comment implements Serializable {
     private User user;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idFilm")
-    @Column(name = "idFilm")
     private Film film;
     @Column(name = "contentComment")
     private String contentComment;

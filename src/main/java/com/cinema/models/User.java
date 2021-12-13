@@ -9,7 +9,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Table(name="user")
+@Table(name="User")
 @Data
 @Getter
 @Setter
@@ -33,7 +33,6 @@ public class User implements Serializable {
     private String imgUser ;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idTypeUser")
-    @Column(name = "idTypeUser")
     private TypeUser typeUser ;
     @OneToMany(mappedBy = "user",fetch = FetchType.EAGER,targetEntity = Comment.class)
     private Set<Comment> comments;
