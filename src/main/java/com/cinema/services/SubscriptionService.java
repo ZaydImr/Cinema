@@ -6,20 +6,23 @@ import com.cinema.models.Subscription;
 import com.cinema.exceptions.ElementNotFoundException;
 import com.cinema.repositories.ISubscriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
 @Service
-public class SubscriptionService implements IGenericRepository<Subscription, UUID> {
-    private ISubscriptionRepository subscriptionRepository;
+public class SubscriptionService extends AbstractService<Subscription, UUID> {
 
     @Autowired
-    public SubscriptionService(ISubscriptionRepository subscriptionRepository){
-        this.subscriptionRepository = subscriptionRepository;
-    }
+    private ISubscriptionRepository subscriptionRepository;
 
     @Override
+    protected JpaRepository<Subscription, UUID> getRepository() {
+        return subscriptionRepository;
+    }
+
+    /*@Override
     public List<Subscription> GetAll() {
         return subscriptionRepository.findAll();
     }
@@ -43,5 +46,5 @@ public class SubscriptionService implements IGenericRepository<Subscription, UUI
     @Override
     public void DeleteEntity(UUID id) {
         subscriptionRepository.deleteSubscriptionById(id);
-    }
+    }*/
 }

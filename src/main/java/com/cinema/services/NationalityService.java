@@ -5,20 +5,23 @@ import com.cinema.models.Nationality;
 import com.cinema.exceptions.ElementNotFoundException;
 import com.cinema.repositories.INationalityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
 @Service
-public class NationalityService implements IGenericRepository<Nationality, UUID> {
-    private INationalityRepository nationalityRepository;
+public class NationalityService extends AbstractService<Nationality, UUID> {
 
     @Autowired
-    public NationalityService(INationalityRepository nationalityRepository){
-        this.nationalityRepository = nationalityRepository;
-    }
+    private INationalityRepository nationalityRepository;
 
     @Override
+    protected JpaRepository<Nationality, UUID> getRepository() {
+        return nationalityRepository;
+    }
+
+    /*@Override
     public List<Nationality> GetAll() {
         return nationalityRepository.findAll();
     }
@@ -42,5 +45,5 @@ public class NationalityService implements IGenericRepository<Nationality, UUID>
     @Override
     public void DeleteEntity(UUID id) {
         nationalityRepository.deleteLanguageById(id);
-    }
+    }*/
 }

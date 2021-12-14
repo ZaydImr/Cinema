@@ -6,21 +6,24 @@ import com.cinema.exceptions.ElementNotFoundException;
 import com.cinema.models.User;
 import com.cinema.repositories.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
 @Service
-public class UserService implements IGenericRepository<User, UUID> {
-    private IUserRepository userRepository;
+public class UserService extends AbstractService<User, UUID> {
 
     @Autowired
-    public UserService(IUserRepository userRepository){
-        this.userRepository = userRepository;
+    private IUserRepository userRepository;
+
+    @Override
+    protected JpaRepository<User, UUID> getRepository() {
+        return userRepository;
     }
 
 
-    @Override
+ /*   @Override
     public List<User> GetAll() {
         return userRepository.findAll();
     }
@@ -44,5 +47,5 @@ public class UserService implements IGenericRepository<User, UUID> {
     @Override
     public void DeleteEntity(UUID id) {
         userRepository.deleteUserById(id);
-    }
+    }*/
 }

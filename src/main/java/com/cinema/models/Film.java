@@ -48,4 +48,6 @@ public class Film implements Serializable {
     private Set<ActorFilm> actorFilms;
     @OneToMany(mappedBy = "film",fetch = FetchType.EAGER,targetEntity = Session.class)
     private Set<Session> sessions;
+    @OneToMany(mappedBy = "film",fetch = FetchType.EAGER,targetEntity = Events.class)
+    private Set<Events> events;
 }

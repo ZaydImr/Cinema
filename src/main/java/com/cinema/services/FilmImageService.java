@@ -5,21 +5,23 @@ import com.cinema.models.FilmImage;
 import com.cinema.exceptions.ElementNotFoundException;
 import com.cinema.repositories.IFilmImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
 @Service
-public class FilmImageService implements IGenericRepository<FilmImage, UUID> {
-
-    private final IFilmImageRepository filmImageRepository;
+public class FilmImageService extends AbstractService<FilmImage, UUID> {
 
     @Autowired
-    public FilmImageService(IFilmImageRepository filmImageRepository){
-        this.filmImageRepository = filmImageRepository;
-    }
+    private IFilmImageRepository filmImageRepository;
 
     @Override
+    protected JpaRepository<FilmImage, UUID> getRepository() {
+        return filmImageRepository;
+    }
+
+    /*@Override
     public List<FilmImage> GetAll() {
         return filmImageRepository.findAll();
     }
@@ -43,5 +45,5 @@ public class FilmImageService implements IGenericRepository<FilmImage, UUID> {
     @Override
     public void DeleteEntity(UUID id) {
         filmImageRepository.deleteFilmImageById(id);
-    }
+    }*/
 }

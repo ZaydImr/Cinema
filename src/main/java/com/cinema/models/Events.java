@@ -28,4 +28,7 @@ public class Events implements Serializable {
     private String titleEvent;
     @Column(name = "descriptionEvent")
     private String descriptionEvent;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "idFilm")
+    private Film film;
 }

@@ -6,20 +6,23 @@ import com.cinema.models.Director;
 import com.cinema.exceptions.ElementNotFoundException;
 import com.cinema.repositories.IDirectorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
 @Service
-public class DirectorService implements IGenericRepository<Director, UUID> {
-    private final IDirectorRepository directorRepository;
+public class DirectorService extends AbstractService<Director, UUID> {
 
     @Autowired
-    public DirectorService(IDirectorRepository directorRepository){
-        this.directorRepository = directorRepository;
-    }
+    private IDirectorRepository directorRepository;
 
     @Override
+    protected JpaRepository<Director, UUID> getRepository() {
+        return directorRepository;
+    }
+
+/*    @Override
     public List<Director> GetAll() {
         return directorRepository.findAll();
     }
@@ -43,5 +46,5 @@ public class DirectorService implements IGenericRepository<Director, UUID> {
     @Override
     public void DeleteEntity(UUID id) {
         directorRepository.deleteDirectorById(id);
-    }
+    }*/
 }

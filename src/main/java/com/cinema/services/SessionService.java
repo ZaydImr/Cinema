@@ -5,20 +5,23 @@ import com.cinema.models.Session;
 import com.cinema.exceptions.ElementNotFoundException;
 import com.cinema.repositories.ISessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
 @Service
-public class SessionService implements IGenericRepository<Session, UUID> {
-    private ISessionRepository sessionRepository;
+public class SessionService extends AbstractService<Session, UUID> {
 
     @Autowired
-    public SessionService(ISessionRepository sessionRepository){
-        this.sessionRepository = sessionRepository;
-    }
+    private ISessionRepository sessionRepository;
 
     @Override
+    protected JpaRepository<Session, UUID> getRepository() {
+        return sessionRepository;
+    }
+
+    /*@Override
     public List<Session> GetAll() {
         return sessionRepository.findAll();
     }
@@ -42,5 +45,5 @@ public class SessionService implements IGenericRepository<Session, UUID> {
     @Override
     public void DeleteEntity(UUID id) {
         sessionRepository.deleteCommentById(id);
-    }
+    }*/
 }

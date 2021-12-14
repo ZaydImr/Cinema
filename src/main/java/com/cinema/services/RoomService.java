@@ -5,20 +5,23 @@ import com.cinema.exceptions.ElementNotFoundException;
 import com.cinema.models.Room;
 import com.cinema.repositories.IRoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
 @Service
-public class RoomService implements IGenericRepository<Room, UUID> {
-    private IRoomRepository roomRepository;
+public class RoomService extends AbstractService<Room, UUID> {
 
     @Autowired
-    public RoomService(IRoomRepository roomRepository){
-        this.roomRepository = roomRepository;
-    }
+    private IRoomRepository roomRepository;
 
     @Override
+    protected JpaRepository<Room, UUID> getRepository() {
+        return roomRepository;
+    }
+
+    /*@Override
     public List<Room> GetAll() {
         return roomRepository.findAll();
     }
@@ -42,5 +45,5 @@ public class RoomService implements IGenericRepository<Room, UUID> {
     @Override
     public void DeleteEntity(UUID id) {
         roomRepository.deleteRoomById(id);
-    }
+    }*/
 }

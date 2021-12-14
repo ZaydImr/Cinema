@@ -5,20 +5,23 @@ import com.cinema.exceptions.ElementNotFoundException;
 import com.cinema.models.Comment;
 import com.cinema.repositories.ICommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
 @Service
-public class CommentService implements IGenericRepository<Comment, UUID> {
-    private final ICommentRepository commentRepository;
+public class CommentService extends AbstractService<Comment, UUID> {
 
     @Autowired
-    public CommentService(ICommentRepository commentRepository){
-        this.commentRepository = commentRepository;
-    }
+    private ICommentRepository commentRepository;
 
     @Override
+    protected JpaRepository<Comment, UUID> getRepository() {
+        return commentRepository;
+    }
+
+    /*@Override
     public List<Comment> GetAll() {
         return commentRepository.findAll();
     }
@@ -42,5 +45,5 @@ public class CommentService implements IGenericRepository<Comment, UUID> {
     @Override
     public void DeleteEntity(UUID id) {
         commentRepository.deleteCommentById(id);
-    }
+    }*/
 }
