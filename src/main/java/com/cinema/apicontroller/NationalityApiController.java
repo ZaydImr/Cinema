@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/actor")
+@RequestMapping("/api/nationality")
 @RequiredArgsConstructor
 public class NationalityApiController {
     public final NationalityService nationalityService;
