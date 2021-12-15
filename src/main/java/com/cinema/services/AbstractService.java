@@ -1,13 +1,12 @@
 package com.cinema.services;
 
-import com.cinema.models.Actor;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class AbstractService<T ,UUID extends Serializable> {
+public abstract class AbstractService<T  ,UUID extends Serializable> {
     //private static final int PAGE_SIZE = 5;
     protected abstract JpaRepository<T, UUID> getRepository();
 

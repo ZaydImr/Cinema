@@ -36,7 +36,7 @@ public class Film implements Serializable {
     private Actor actor;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idLanguage")
-    private Nationality language;
+    private Nationality nationality;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idDirector")
     private Director director;

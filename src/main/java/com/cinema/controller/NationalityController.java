@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/nationality")
 public class NationalityController {
-    private NationalityService nationalityService;
+    private final NationalityService nationalityService;
     public NationalityController(NationalityService nationalityService){
         this.nationalityService = nationalityService;
     }

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/session")
 public class SessionController {
-    private SessionService sessionService;
+    private final SessionService sessionService;
     public SessionController(SessionService sessionService){
         this.sessionService = sessionService;
     }

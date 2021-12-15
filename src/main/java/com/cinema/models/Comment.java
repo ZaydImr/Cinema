@@ -19,7 +19,6 @@ public class Comment implements Serializable {
     private UUID idComment;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idUser")
-    @Column(name = "idUser")
     private User user;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idFilm")

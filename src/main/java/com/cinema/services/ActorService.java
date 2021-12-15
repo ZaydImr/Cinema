@@ -1,9 +1,7 @@
 package com.cinema.services;
 
 
-import com.cinema.dao.IGenericRepository;
 import com.cinema.models.Actor;
-import com.cinema.exceptions.ElementNotFoundException;
 import com.cinema.repositories.IActorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;

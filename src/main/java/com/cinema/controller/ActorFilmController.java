@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/actorfilm")
 public class ActorFilmController {
-    private ActorFilmService actorFilmService;
+    private final ActorFilmService actorFilmService;
     public ActorFilmController(ActorFilmService actorFilmService){
         this.actorFilmService = actorFilmService;
     }
