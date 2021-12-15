@@ -14,10 +14,9 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @ToString
-public class Events implements Serializable {
-    @Id
-    @Column(name = "idEvent")
-    private UUID idEvent;
+public class Events extends AbstractModel<UUID> implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     @Column(name = "dateEvent")
     private LocalDateTime dateEvent;
     @Column(name = "dateEndEvent")

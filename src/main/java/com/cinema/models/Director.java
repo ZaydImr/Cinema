@@ -15,10 +15,9 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @ToString
-public class Director implements Serializable {
-    @Id
-    @Column(name = "IdDirector")
-    private UUID idDirector;
+public class Director extends AbstractModel<UUID> implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     @Column(name = "fullnameDirector")
     private String fullnameDirector;
     @Column(name = "birthdayDirector")

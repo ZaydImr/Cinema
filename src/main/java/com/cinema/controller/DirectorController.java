@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/director")
 public class DirectorController {
-    private DirectorService directorService;
+    private final DirectorService directorService;
     public DirectorController(DirectorService directorService){
         this.directorService = directorService;
     }

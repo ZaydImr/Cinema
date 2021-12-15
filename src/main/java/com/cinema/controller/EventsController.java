@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/events")
 public class EventsController {
-    private EventsService eventsService;
+    private final EventsService eventsService;
     public EventsController(EventsService eventsService){
         this.eventsService = eventsService;
     }

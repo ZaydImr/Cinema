@@ -14,10 +14,9 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @ToString
-public class Session implements Serializable {
-    @Id
-    @Column(name = "idSession")
-    private UUID idSession;
+public class Session extends AbstractModel<UUID> implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     @Column(name = "dateBeginSession")
     private LocalDateTime dateBeginSession;
     @Column(name = "tarif")

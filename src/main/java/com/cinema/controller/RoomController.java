@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/room")
 public class RoomController {
-    private RoomService roomService;
+    private final RoomService roomService;
     public RoomController(RoomService roomService){
         this.roomService = roomService;
     }

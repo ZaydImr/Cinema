@@ -13,10 +13,9 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @ToString
-public class ActorFilm implements Serializable {
-    @Id
-    @Column(name = "idActorFilm")
-    private UUID idActorFilm;
+public class ActorFilm extends AbstractModel<UUID> implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @MapsId("idFilm")
     @JoinColumn(name = "idFilm")

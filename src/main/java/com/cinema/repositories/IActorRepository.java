@@ -11,5 +11,5 @@ import java.util.UUID;
 public interface IActorRepository extends JpaRepository<Actor, UUID> {
     void deleteActorById(UUID id);
 
-    Optional<Object> findActorById(UUID id);
+    Optional<Actor> findActorById(UUID id);
 }

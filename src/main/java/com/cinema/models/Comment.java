@@ -13,10 +13,9 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @ToString
-public class Comment implements Serializable {
-    @Id
-    @Column(name = "idComment")
-    private UUID idComment;
+public class Comment extends AbstractModel<UUID> implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idUser")
     private User user;

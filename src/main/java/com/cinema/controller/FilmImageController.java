@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/filmimage")
 public class FilmImageController {
-    private FilmImageService filmImageService;
+    private final FilmImageService filmImageService;
     public FilmImageController(FilmImageService filmImageService){
         this.filmImageService = filmImageService;
     }

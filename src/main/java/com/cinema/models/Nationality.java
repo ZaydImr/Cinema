@@ -14,10 +14,9 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @ToString
-public class Nationality implements Serializable {
-    @Id
-    @Column(name = "idNationality")
-    private UUID idNationality;
+public class Nationality extends AbstractModel<UUID> implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     @Column(name = "nationality")
     private String nationality;
     @OneToMany(mappedBy = "nationality",fetch = FetchType.EAGER,targetEntity = Film.class)

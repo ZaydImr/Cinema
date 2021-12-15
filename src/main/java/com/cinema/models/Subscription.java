@@ -13,10 +13,9 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @ToString
-public class Subscription implements Serializable {
-    @Id
-    @Column(name = "idEmailSubscription")
-    private UUID idEmailSubscription;
+public class Subscription extends AbstractModel<UUID> implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     @Column(name = "emailSubscriber")
     private String emailSubscriber;
 }

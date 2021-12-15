@@ -14,10 +14,9 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @ToString
-public class Room implements Serializable {
-    @Id
-    @Column(name = "idRoom")
-    private UUID idRoom;
+public class Room extends AbstractModel<UUID> implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     @Column(name = "nameRoom")
     private String nameRoom;
     @OneToMany(mappedBy = "room",fetch = FetchType.EAGER,targetEntity = Session.class)

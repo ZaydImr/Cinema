@@ -14,10 +14,9 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @ToString
-public class TypeUser implements Serializable {
-    @Id
-    @Column(name = "idTypeUser")
-    private UUID idTypeUser ;
+public class TypeUser extends AbstractModel<UUID> implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     @Column(name = "typeUser")
     private String typeUser ;
     @OneToMany(mappedBy = "typeUser",fetch = FetchType.EAGER,targetEntity = User.class)

@@ -15,10 +15,9 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @ToString
-public class User implements Serializable {
-    @Id
-    @Column(name = "idUser")
-    private UUID idUser ;
+public class User extends AbstractModel<UUID> implements Serializable {
+    private static final long serialVersionUID = 1L;
+    
     @Column(name = "email")
     private String email ;
     @Column(name = "password")
