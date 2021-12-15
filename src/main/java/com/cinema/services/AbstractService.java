@@ -1,9 +1,6 @@
 package com.cinema.services;
 
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import com.cinema.models.Actor;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.io.Serializable;
@@ -36,7 +33,8 @@ public abstract class AbstractService<T ,UUID extends Serializable> {
         getRepository().deleteById(id);
     }
 
-    public void updateEntity(T entity) {
+    public T updateEntity(T entity) {
         getRepository().save(entity);
+        return entity;
     }
 }
