@@ -1,10 +1,13 @@
 package com.cinema.apicontroller;
 
+import com.cinema.models.Director;
 import com.cinema.models.Session;
 import com.cinema.services.SessionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +18,27 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class SessionApiController {
     public final SessionService sessionService;
+
+    @GetMapping
+    public String index() {
+        return "redirect:/sessions/1";
+    }
+
+    @GetMapping(value = "/{pageNumber}")
+    public String list(@PathVariable Integer pageNumber, Model model) {
+        Page<Session> page = sessionService.getList(pageNumber);
+
+        int current = page.getNumber() + 1;
+        int begin = Math.max(1, current - 10);
+        int end = Math.min(begin + 10, page.getTotalPages());
+
+        model.addAttribute("list", page);
+        model.addAttribute("beginIndex", begin);
+        model.addAttribute("endIndex", end);
+        model.addAttribute("currentIndex", current);
+
+        return "sessions/list";
+    }
 
     @GetMapping("/all")
     public ResponseEntity<List<Session>> getAllSessions(){
