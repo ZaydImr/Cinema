@@ -14,10 +14,10 @@ public abstract class AbstractService<T extends AbstractModel<UUID>,UUID extends
     private static final int PAGE_SIZE = 10;
     protected abstract JpaRepository<T, UUID> getRepository();
 
-    public Page<T> getList(Integer pageNumber) {
+    public List<T> getList(Integer pageNumber) {
         PageRequest pageRequest =
                 PageRequest.of(pageNumber - 1, PAGE_SIZE, Sort.Direction.ASC, "id");
-        return getRepository().findAll(pageRequest);
+        return getRepository().findAll(pageRequest).toList();
     }
     public List<T> getAll() {
         return getRepository().findAll();

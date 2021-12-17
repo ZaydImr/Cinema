@@ -1,10 +1,11 @@
 package com.cinema.apicontroller;
 
+import com.cinema.classGeneric.Page;
 import com.cinema.models.Director;
+import com.cinema.models.Nationality;
 import com.cinema.models.Subscription;
 import com.cinema.services.SubscriptionService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -19,25 +20,16 @@ import java.util.UUID;
 public class SubscriptionApiController {
     public final SubscriptionService subscriptionService;
 
-    @GetMapping
-    public String index() {
-        return "redirect:/subscriptions/1";
-    }
-
-    @GetMapping(value = "/{pageNumber}")
-    public String list(@PathVariable Integer pageNumber, Model model) {
-        Page<Subscription> page = subscriptionService.getList(pageNumber);
-
-        int current = page.getNumber() + 1;
-        int begin = Math.max(1, current - 10);
-        int end = Math.min(begin + 10, page.getTotalPages());
-
-        model.addAttribute("list", page);
-        model.addAttribute("beginIndex", begin);
-        model.addAttribute("endIndex", end);
-        model.addAttribute("currentIndex", current);
-
-        return "subscriptions/list";
+    @GetMapping(value = "all/{pageNumber}")
+    public ResponseEntity<com.cinema.classGeneric.Page<Subscription>> list(@PathVariable Integer pageNumber) {
+        com.cinema.classGeneric.Page<Subscription> page = new Page<>();
+        page.setList(subscriptionService.getList(pageNumber));
+        page.setNext(subscriptionService.getList(pageNumber + 1).size() > 0);
+        if(pageNumber -1 > 0)
+            page.setPrev(subscriptionService.getList(pageNumber - 1).size() > 0);
+        else
+            page.setPrev(false);
+        return new ResponseEntity<>(page,HttpStatus.OK) ;
     }
 
     @GetMapping("/all")

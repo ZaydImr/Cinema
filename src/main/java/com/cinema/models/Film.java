@@ -33,7 +33,7 @@ public class Film extends AbstractModel<UUID> implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idActor")
     private Actor actor;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idLanguage")
     private Nationality nationality;
     @ManyToOne(fetch = FetchType.EAGER)

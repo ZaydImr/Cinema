@@ -13,7 +13,6 @@ public class NationalityController {
 
     private final NationalityService nationalityService;
     private final String list = "admin/nationality/list";
-    private final String main = "redirect:/nationality/1";
 
     public NationalityController(NationalityService nationalityService){
         this.nationalityService = nationalityService;
@@ -22,12 +21,6 @@ public class NationalityController {
     @GetMapping
     public String index()
     {
-        return main;
-    }
-
-    @GetMapping(value = "/{pageNumber}")
-    public String list(@PathVariable Integer pageNumber) {
-
         return list;
     }
 

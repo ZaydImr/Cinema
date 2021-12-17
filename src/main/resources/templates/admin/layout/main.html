@@ -15,12 +15,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" defer ></script>
     <script src="../js/tailwind/charts-lines.js" defer></script>
     <script src="../js/tailwind/charts-pie.js" defer></script>
-
+    <script src="https://cdn.tailwindcss.com/"></script>
+    
     <!--    AngularJs   -->
     <script src="../js/angular/angular.min.js"></script>
     <script src="../js/controllers/nationality.js"></script>
+    <script src="../js/controllers/sidebar.js"></script>
 </head>
-<body>
+<body ng-app="myApp" >
 <div
         class="flex h-screen bg-gray-50 dark:bg-gray-900"
         :class="{ 'overflow-hidden': isSideMenuOpen }"
@@ -38,11 +40,11 @@
                 :class="{ 'overflow-hidden': isSideMenuOpen }"
                 th:fragment="content"
         >
-            <div class="flex flex-col flex-1 w-full"  ng-app="myApp" >
+            <div class="flex flex-col flex-1 w-full" >
                 <header class="z-10 py-4 bg-white shadow-md dark:bg-gray-800">
-                    <div class="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300" >
+                    <div class="container flex items-center justify-between h-full px-6 mx-auto text-sky-600 dark:text-sky-300" >
                         <!-- Mobile hamburger -->
-                        <button class="p-1 mr-5 -ml-1 rounded-md md:hidden focus:outline-none focus:shadow-outline-purple"
+                        <button class="p-1 mr-5 -ml-1 rounded-md md:hidden focus:outline-none focus:shadow-outline-sky"
                                 @click="toggleSideMenu"
                                 aria-label="Menu" >
                             <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" >
@@ -55,7 +57,7 @@
                         <ul class="flex items-center flex-shrink-0 space-x-6">
                             <!-- Theme toggler -->
                             <li class="flex">
-                                <button class="rounded-md focus:outline-none focus:shadow-outline-purple"
+                                <button class="rounded-md focus:outline-none focus:shadow-outline-sky"
                                         @click="toggleTheme"
                                         aria-label="Toggle color mode" >
                                     <template x-if="!dark">
@@ -73,7 +75,7 @@
                             <!-- Notifications menu -->
                             <li class="relative">
                                 <button
-                                        class="relative align-middle rounded-md focus:outline-none focus:shadow-outline-purple"
+                                        class="relative align-middle rounded-md focus:outline-none focus:shadow-outline-sky"
                                         @click="toggleNotificationsMenu"
                                         @keydown.escape="closeNotificationsMenu"
                                         aria-label="Notifications"
@@ -134,7 +136,7 @@
                             <!-- Profile menu -->
                             <li class="relative">
                                 <button
-                                        class="align-middle rounded-full focus:shadow-outline-purple focus:outline-none"
+                                        class="align-middle rounded-full focus:shadow-outline-sky focus:outline-none"
                                         @click="toggleProfileMenu"
                                         @keydown.escape="closeProfileMenu"
                                         aria-label="Account"

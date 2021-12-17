@@ -1,10 +1,11 @@
 package com.cinema.apicontroller;
 
+import com.cinema.classGeneric.Page;
 import com.cinema.models.Comment;
 import com.cinema.models.Director;
+import com.cinema.models.Nationality;
 import com.cinema.services.DirectorService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -19,25 +20,16 @@ import java.util.UUID;
 public class DirectorApiController {
     public final DirectorService directorService;
 
-    @GetMapping
-    public String index() {
-        return "redirect:/directors/1";
-    }
-
-    @GetMapping(value = "/{pageNumber}")
-    public String list(@PathVariable Integer pageNumber, Model model) {
-        Page<Director> page = directorService.getList(pageNumber);
-
-        int current = page.getNumber() + 1;
-        int begin = Math.max(1, current - 10);
-        int end = Math.min(begin + 10, page.getTotalPages());
-
-        model.addAttribute("list", page);
-        model.addAttribute("beginIndex", begin);
-        model.addAttribute("endIndex", end);
-        model.addAttribute("currentIndex", current);
-
-        return "directors/list";
+    @GetMapping(value = "all/{pageNumber}")
+    public ResponseEntity<com.cinema.classGeneric.Page<Director>> list(@PathVariable Integer pageNumber) {
+        com.cinema.classGeneric.Page<Director> page = new Page<>();
+        page.setList(directorService.getList(pageNumber));
+        page.setNext(directorService.getList(pageNumber + 1).size() > 0);
+        if(pageNumber -1 > 0)
+            page.setPrev(directorService.getList(pageNumber - 1).size() > 0);
+        else
+            page.setPrev(false);
+        return new ResponseEntity<>(page,HttpStatus.OK) ;
     }
 
     @GetMapping("/all")
