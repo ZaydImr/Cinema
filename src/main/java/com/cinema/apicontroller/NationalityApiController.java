@@ -42,7 +42,7 @@ public class NationalityApiController {
         Nationality nationality = null;
         try {
             nationality = nationalityService.getElementById(id);
-        } catch (Throwable e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return new ResponseEntity<>(nationality, HttpStatus.OK);

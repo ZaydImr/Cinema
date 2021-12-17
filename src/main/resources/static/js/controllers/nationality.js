@@ -1,6 +1,7 @@
 var myApp = angular.module('myApp',[]);
 
 myApp.controller("nationalityController", function($scope,$http){
+
 	$scope.all = { list:[], next:true, prev:false};
 	$scope.add = false;
 	$scope.page= 1;
@@ -21,6 +22,16 @@ myApp.controller("nationalityController", function($scope,$http){
     }
     $scope.next = function(){ $scope.unPage = $scope.unPage + 1; $scope.getNat($scope.unPage);}
     $scope.prev = function(){ $scope.unPage = $scope.unPage - 1; $scope.getNat($scope.unPage);}
+    $scope.deleteNat = function($idNat){
+        $http.delete('/api/nationality/delete/'+$idNat)
+            .then(function successCallback(){
+                $scope.getNat();
+            }, function errorCallback(response) {
+                console.log('Error....');
+                console.log(response);
+            });
+    }
 
-    $scope.getNat()
+    $scope.getNat();
+
 });
