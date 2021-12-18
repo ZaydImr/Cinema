@@ -17,7 +17,7 @@ import java.util.UUID;
 @ToString
 public class User extends AbstractModel<UUID> implements Serializable {
     private static final long serialVersionUID = 1L;
-    
+
     @Column(name = "email")
     private String email ;
     @Column(name = "password")
