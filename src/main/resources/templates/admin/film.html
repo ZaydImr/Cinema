@@ -1,6 +1,6 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="admin/layout/main" :class="{ 'theme-dark': dark }" x-data="data()" lang="en">
+  layout:decorate="admin/layout" :class="{ 'theme-dark': dark }" x-data="data()" lang="en">
 
 <head>
   <meta charset="UTF-8" />
@@ -8,11 +8,11 @@
   <title>Cinema - Nationalities</title>
 </head>
 
-<body>
+<body ng-controller="nationalityController">
 
   <div layout:fragment="header" class="flex justify-center flex-1 lg:mr-32">
     <div class="relative w-full max-w-xl mr-6 focus-within:text-sky-500">
-      <div class="absolute inset-y-0 flex items-center pl-2">
+      <div class="absolute inset-y-0 flex items-center p-2 ">
         <svg class="w-4 h-4" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
           <path fill-rule="evenodd"
             d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
@@ -20,12 +20,14 @@
         </svg>
       </div>
       <input
+        ng-model="searchIn"
+        ng-change="search()"
         class="w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-sky-300 focus:outline-none focus:shadow-outline-sky form-input"
-        type="text" placeholder="Search for projects" aria-label="Search" />
+        type="text" placeholder="Search for films .." aria-label="Search" />
     </div>
   </div>
 
-  <main layout:fragment="content" ng-controller="nationalityController" class="h-full overflow-y-auto">
+  <main layout:fragment="content" class="h-full overflow-y-auto">
     <div class="container px-6 mx-auto grid pt-2">
 
 
@@ -81,7 +83,7 @@
 
       <div class="flex items-center justify-between">
         <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-          Nationalities
+          Films
         </h2>
         <div ng-if="addNat == false">
           <button ng-click="setAdd()"
@@ -91,12 +93,12 @@
                 d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
                 clip-rule="evenodd" />
             </svg>
-            Add Nationality
+            Add Film
           </button>
         </div>
       </div>
       <!-- Table of nationalities -->
-      <div class="w-full overflow-hidden rounded-lg shadow-xs mb-4">
+     <!-- <div class="w-full overflow-hidden rounded-lg shadow-xs mb-4">
         <div class="w-full overflow-x-auto">
           <table class="w-full whitespace-no-wrap">
             <thead>
@@ -158,7 +160,7 @@
           </span>
           <span class="col-span-2"></span>
           <!-- Pagination -->
-          <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
+          <!--<span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
             <nav aria-label="Table navigation">
               <ul class="inline-flex items-center">
                 <li ng-if="all.prev">
@@ -206,7 +208,7 @@
           </span>
         </div>
       </div>
-
+    -->
     </div>
 
     <!-- Modal backdrop. This what you want to place close to the closing body tag -->

@@ -1,3 +1,3 @@
 myApp.controller("sidebarController", function($scope,$location){
-    $scope.route = $location.absUrl().split('/')[3];
+    $scope.route = $location.absUrl().split('/')[4];
 });

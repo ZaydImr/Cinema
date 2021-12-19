@@ -1,0 +1,268 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="admin/layout" :class="{ 'theme-dark': dark }" x-data="data()" lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cinema - Nationalities</title>
+</head>
+
+<body ng-controller="nationalityController">
+
+  <div layout:fragment="header" class="flex justify-center flex-1 lg:mr-32">
+    <div class="relative w-full max-w-xl mr-6 focus-within:text-sky-500">
+      <div class="absolute inset-y-0 flex items-center p-2 ">
+        <svg class="w-4 h-4" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd"
+            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+            clip-rule="evenodd"></path>
+        </svg>
+      </div>
+      <input
+        ng-model="searchIn"
+        ng-change="search()"
+        class="w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-sky-300 focus:outline-none focus:shadow-outline-sky form-input"
+        type="text" placeholder="Search for nationalities .." aria-label="Search" />
+    </div>
+  </div>
+
+  <main layout:fragment="content" class="h-full overflow-y-auto">
+    <div class="container px-6 mx-auto grid pt-2">
+
+
+      <!--  Add Formulaire  -->
+      <div ng-if="addNat" class="px-4 py-3 m-auto mt-6 bg-white rounded-lg shadow-md dark:bg-gray-800"
+        style="max-width: 350px;">
+        <h4 class="mt-2 mb-3 text-xl font-semibold text-gray-700 dark:text-gray-200">Add Nationality</h4>
+        <label class="block text-sm">
+          <span class="text-gray-700 dark:text-gray-400">Nationality</span>
+          <input id="addNat" ng-model="nationalite" auto-focus="true"
+            class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+            placeholder="Marocaine" />
+        </label>
+        <footer
+          class="flex flex-col items-center justify-end px-6 py-3 -mx-6 -mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row">
+          <button ng-click="setAdd()"
+            class="w-full px-5 py-3 text-sm font-medium leading-5 text-white text-gray-700 transition-colors duration-150 border border-gray-300 rounded-lg dark:text-gray-400 sm:px-4 sm:py-2 sm:w-auto active:bg-transparent hover:border-gray-500 focus:border-gray-500 active:text-gray-500 focus:outline-none focus:shadow-outline-gray">
+            Cancel
+          </button>
+          <button ng-click="addNationalite(nationalite)"
+            class="w-full px-5 py-3 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-sky-600 border border-transparent rounded-lg sm:w-auto sm:px-4 sm:py-2 active:bg-sky-600 hover:bg-sky-700 focus:outline-none focus:shadow-outline-sky">
+            Save
+          </button>
+        </footer>
+      </div>
+
+      <!--  Edit Formulaire  -->
+      <div ng-if="editNat" class="px-4 py-3 m-auto mt-6 bg-white rounded-lg shadow-md dark:bg-gray-800"
+        style="max-width: 400px;width: 100%;">
+        <h4 class="mt-2 mb-3 text-xl font-semibold text-gray-700 dark:text-gray-200">Edit Nationality</h4>
+        <label class="block text-sm">
+          <span class="text-gray-700 dark:text-gray-400">id</span>
+          <input ng-model="idNat" ng-disabled="true"
+            class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+            placeholder="Marocaine" />
+          <span class="text-gray-700 dark:text-gray-400">Nationality</span>
+          <input ng-model="nationalite" autofocus="true"
+            class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+            placeholder="Marocaine" />
+        </label>
+        <footer
+          class="flex flex-col items-center justify-end px-6 py-3 -mx-6 -mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row">
+          <button ng-click="setEdit()"
+            class="w-full px-5 py-3 text-sm font-medium leading-5 text-white text-gray-700 transition-colors duration-150 border border-gray-300 rounded-lg dark:text-gray-400 sm:px-4 sm:py-2 sm:w-auto active:bg-transparent hover:border-gray-500 focus:border-gray-500 active:text-gray-500 focus:outline-none focus:shadow-outline-gray">
+            Cancel
+          </button>
+          <button ng-click="updateNationalite(idNat,nationalite)"
+            class="w-full px-5 py-3 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-sky-600 border border-transparent rounded-lg sm:w-auto sm:px-4 sm:py-2 active:bg-sky-600 hover:bg-sky-700 focus:outline-none focus:shadow-outline-sky">
+            Save
+          </button>
+        </footer>
+      </div>
+
+      <div class="flex items-center justify-between">
+        <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+          Nationalities
+        </h2>
+        <div ng-if="addNat == false">
+          <button ng-click="setAdd()"
+            class=" flex items-center justify-between p-3 text-sm font-semibold text-sky-100 bg-sky-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-sky">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd"
+                d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                clip-rule="evenodd" />
+            </svg>
+            Add Nationality
+          </button>
+        </div>
+      </div>
+      <!-- Table of nationalities -->
+      <div class="w-full overflow-hidden rounded-lg shadow-xs mb-4">
+        <div class="w-full overflow-x-auto">
+          <table class="w-full whitespace-no-wrap">
+            <thead>
+              <tr
+                class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                <th class="px-4 py-3">Nationaity</th>
+                <th class="px-4 py-3">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+
+              <tr class="text-gray-700 dark:text-gray-400" ng-repeat="nat in all.list">
+                <td class="px-4 py-3">
+                  {{nat.nationality}}
+                </td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center space-x-4 text-sm">
+                    <button ng-click="prerareUpdate(nat.id,nat.nationality)"
+                      class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-sky-600 rounded-lg  focus:outline-none focus:shadow-outline-gray"
+                      aria-label="Edit">
+                      <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                          d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
+                        </path>
+                      </svg>
+                    </button>
+                    <button @click="openModal" ng-click="prepareDelete(nat.id)"
+                      class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-600 rounded-lg focus:outline-none focus:shadow-outline-gray"
+                      aria-label="Delete">
+                      <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                          d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                          clip-rule="evenodd"></path>
+                      </svg>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+        <div ng-if="loading">
+          <svg class="h-12" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+            style="margin: auto; background: none; display: block; shape-rendering: auto;" width="200px" height="200px"
+            viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+            <path fill="none" stroke="#0284c7" stroke-width="8" stroke-dasharray="42.76482137044271 42.76482137044271"
+              d="M24.3 30C11.4 30 5 43.3 5 50s6.4 20 19.3 20c19.3 0 32.1-40 51.4-40 C88.6 30 95 43.3 95 50s-6.4 20-19.3 20C56.4 70 43.6 30 24.3 30z"
+              stroke-linecap="round" style="transform:scale(0.8);transform-origin:50px 50px">
+              <animate attributeName="stroke-dashoffset" repeatCount="indefinite" dur="1.1363636363636365s"
+                keyTimes="0;1" values="0;256.58892822265625"></animate>
+            </path>
+          </svg>
+        </div>
+        <div
+          class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
+          <span class="flex items-center col-span-3">
+            Showing {{all.list.length}}
+          </span>
+          <span class="col-span-2"></span>
+          <!-- Pagination -->
+          <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
+            <nav aria-label="Table navigation">
+              <ul class="inline-flex items-center">
+                <li ng-if="all.prev">
+                  <button ng-click="prev()" ng-disabled="loading"
+                    class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-sky"
+                    aria-label="Previous">
+                    <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
+                      <path
+                        d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                        clip-rule="evenodd" fill-rule="evenodd"></path>
+                    </svg>
+                  </button>
+                </li>
+                <li ng-if="all.prev">
+                  <button ng-click="prev()" ng-disabled="loading"
+                    class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-sky">
+                    {{page-1}}
+                  </button>
+                </li>
+                <li>
+                  <button
+                    class="px-3 py-1 text-white transition-colors duration-150 bg-sky-600 border border-r-0 border-sky-600 rounded-md focus:outline-none focus:shadow-outline-sky">
+                    {{page}}
+                  </button>
+                </li>
+                <li ng-if="all.next">
+                  <button ng-click="next()" ng-disabled="loading"
+                    class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-sky">
+                    {{page+1}}
+                  </button>
+                </li>
+                <li ng-if="all.next">
+                  <button ng-click="next()" ng-disabled="loading"
+                    class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-sky"
+                    aria-label="Next">
+                    <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
+                      <path
+                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                        clip-rule="evenodd" fill-rule="evenodd"></path>
+                    </svg>
+                  </button>
+                </li>
+              </ul>
+            </nav>
+          </span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Modal backdrop. This what you want to place close to the closing body tag -->
+    <div x-show="isModalOpen" x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0"
+      x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
+      x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+      class="fixed inset-0 z-30 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center">
+      <!-- Modal -->
+      <div x-show="isModalOpen" x-transition:enter="transition ease-out duration-150"
+        x-transition:enter-start="opacity-0 transform translate-y-1/2" x-transition:enter-end="opacity-100"
+        x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0  transform translate-y-1/2" @click.away="closeModal"
+        @keydown.escape="closeModal"
+        class="w-full px-6 py-4 overflow-hidden bg-white rounded-t-lg dark:bg-gray-800 sm:rounded-lg sm:m-4 sm:max-w-xl"
+        role="dialog" id="modal">
+        <!-- Body -->
+        <div class="sm:flex sm:items-start pt-3 pb-5">
+          <div
+            class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+            <!-- Heroicon name: outline/exclamation -->
+            <svg class="h-6 w-6 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+          </div>
+          <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+            <!-- Modal title -->
+            <p class="mb-2 text-lg font-semibold text-gray-700 dark:text-gray-300">
+              Delete
+            </p>
+
+            <!-- Modal description -->
+            <p class="text-sm text-gray-700 dark:text-gray-400">
+              Are you sure ? This nationality will be deleted permenantly !
+            </p>
+          </div>
+        </div>
+        <footer
+          class="flex flex-col items-center justify-end px-6 py-3 -mx-6 -mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row bg-gray-50 dark:bg-gray-800">
+          <button @click="closeModal"
+            class="w-full px-5 py-3 text-sm font-medium leading-5 text-white text-gray-700 transition-colors duration-150 border border-gray-300 rounded-lg dark:text-gray-400 sm:px-4 sm:py-2 sm:w-auto active:bg-transparent hover:border-gray-500 focus:border-gray-500 active:text-gray-500 focus:outline-none focus:shadow-outline-gray">
+            Cancel
+          </button>
+          <button ng-click="deleteNat(idNat)" @click="closeModal"
+            class="w-full px-5 py-3 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-700 border border-transparent rounded-lg sm:w-auto sm:px-4 sm:py-2 active:bg-red-700 hover:bg-red-800 focus:outline-none focus:shadow-outline-sky">
+            Accept
+          </button>
+        </footer>
+      </div>
+    </div>
+
+  </main>
+  </div>
+</body>
+
+</html>

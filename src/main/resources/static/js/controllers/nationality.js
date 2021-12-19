@@ -11,6 +11,7 @@ myApp.controller("nationalityController", function($scope,$http){
     $scope.isDeleteOpen = false;
     $scope.idNat = '';
     $scope.nationalite = '';
+    $scope.searchIn = '';
     $scope.getNat = function ($page){
         $scope.loading = true;
         $http.get('/api/nationality/all/'+$scope.unPage)
@@ -77,6 +78,28 @@ myApp.controller("nationalityController", function($scope,$http){
                 console.log('Error....');
                 console.log(response);
             });
+    }
+    $scope.search = function() {
+        if($scope.searchIn === "")
+        {
+            $scope.page = 1;
+            $scope.unPage = 1;
+            $scope.getNat(1);
+        }
+        else{
+            $scope.loading = true;
+            $http.get('/api/nationality/all/keyword/'+$scope.searchIn)
+                .then(function successCallback(response){
+                    console.log(response);
+                        $scope.loading = false;
+                        $scope.all = { list :response.data, next: false, prev:false};
+
+                        $scope.natsCount = response.data.length-1;
+                }, function errorCallback(response) {
+                        console.log('Error....');
+                        console.log(response);
+                });  
+        }
     }
 
     $scope.getNat();
