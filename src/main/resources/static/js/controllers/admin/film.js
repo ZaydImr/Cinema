@@ -1,6 +1,4 @@
-var myApp = angular.module('myApp',[]);
-
-myApp.controller("nationalityController", function($scope,$http){
+myApp.controller("filmController", function($scope,$http){
 
 	$scope.all = { list:[], next:true, prev:false};
 	$scope.addNat = false;
