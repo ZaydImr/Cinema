@@ -37,6 +37,12 @@ public class NationalityApiController {
         return new ResponseEntity<>(nationalities, HttpStatus.OK);
     }
 
+    @GetMapping("/all/keyword/{keyword}")
+    public ResponseEntity<List<Nationality>> getAllNationalitiesByKeyword(@PathVariable("keyword") String keyword){
+        List<Nationality> nationalities = nationalityService.GetAllByKeyword(keyword);
+        return new ResponseEntity<>(nationalities, HttpStatus.OK);
+    }
+
     @GetMapping("/find/{id}")
     public ResponseEntity<Nationality> getNationalityById(@PathVariable("id") UUID id) {
         Nationality nationality = null;

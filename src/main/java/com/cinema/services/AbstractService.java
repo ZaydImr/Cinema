@@ -23,8 +23,9 @@ public abstract class AbstractService<T extends AbstractModel<UUID>,UUID extends
     public List<T> getAll() {
         return getRepository().findAll();
     }
+
     public T addEntity(T entity) {
-        entity.setId((UUID) java.util.UUID.randomUUID());
+        //entity.setId((UUID) java.util.UUID.randomUUID());
         return getRepository().save(entity);
     }
 
