@@ -1,5 +1,6 @@
 package com.cinema.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -19,6 +20,8 @@ public class Nationality extends AbstractModel<UUID> implements Serializable {
 
     @Column(name = "nationality")
     private String nationality;
-    @OneToMany(mappedBy = "nationality",fetch = FetchType.EAGER,targetEntity = Film.class)
+
+    @OneToMany(mappedBy = "nationality",targetEntity = Film.class)
+    @JsonIgnore
     private Set<Film> films;
 }

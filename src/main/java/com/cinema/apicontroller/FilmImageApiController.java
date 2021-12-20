@@ -1,10 +1,12 @@
 package com.cinema.apicontroller;
 
+import com.cinema.classGeneric.Page;
 import com.cinema.models.Director;
+import com.cinema.models.Film;
 import com.cinema.models.FilmImage;
+import com.cinema.models.Nationality;
 import com.cinema.services.FilmImageService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -19,25 +21,16 @@ import java.util.UUID;
 public class FilmImageApiController {
     public final FilmImageService filmImageService;
 
-    @GetMapping
-    public String index() {
-        return "redirect:/filmimages/1";
-    }
-
-    @GetMapping(value = "/{pageNumber}")
-    public String list(@PathVariable Integer pageNumber, Model model) {
-        Page<FilmImage> page = filmImageService.getList(pageNumber);
-
-        int current = page.getNumber() + 1;
-        int begin = Math.max(1, current - 10);
-        int end = Math.min(begin + 10, page.getTotalPages());
-
-        model.addAttribute("list", page);
-        model.addAttribute("beginIndex", begin);
-        model.addAttribute("endIndex", end);
-        model.addAttribute("currentIndex", current);
-
-        return "filmimages/list";
+    @GetMapping(value = "all/{pageNumber}")
+    public ResponseEntity<com.cinema.classGeneric.Page<FilmImage>> list(@PathVariable Integer pageNumber) {
+        com.cinema.classGeneric.Page<FilmImage> page = new Page<>();
+        page.setList(filmImageService.getList(pageNumber));
+        page.setNext(filmImageService.getList(pageNumber + 1).size() > 0);
+        if(pageNumber -1 > 0)
+            page.setPrev(filmImageService.getList(pageNumber - 1).size() > 0);
+        else
+            page.setPrev(false);
+        return new ResponseEntity<>(page,HttpStatus.OK) ;
     }
 
     @GetMapping("/all")

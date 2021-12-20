@@ -3,6 +3,7 @@ package com.cinema.models;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
@@ -13,6 +14,7 @@ import java.io.Serializable;
 public abstract class AbstractModel<UUID extends Serializable> implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
+    @Column(columnDefinition = "BINARY(16)")
     private UUID id;
 
     @Override
