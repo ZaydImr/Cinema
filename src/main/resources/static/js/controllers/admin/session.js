@@ -8,11 +8,17 @@ myApp.controller("sessionController", function($scope,$http){
 	$scope.loading = false;
     $scope.isDeleteOpen = false;
     $scope.idNat = '';
-    $scope.nationalite = '';
+    //$scope.nationalite = '';
+    $scope.session = {
+        dateBeginSession:'',
+        tarif:'',
+        film:'',
+        room:'',
+    }
     $scope.searchIn = '';
     $scope.getNat = function ($page){
         $scope.loading = true;
-        $http.get('/api/nationality/all/'+$scope.unPage)
+        $http.get('/api/session/all/'+$scope.unPage)
             .then(function successCallback(response){
                     $scope.loading = false;
                     $scope.all = response.data;
@@ -23,6 +29,19 @@ myApp.controller("sessionController", function($scope,$http){
         			console.log(response);
             });
     }
+
+    $scope.getFilms = function (){
+        $http.get('/api/nationality/all')
+            .then(function successCallback(response){
+                    $scope.nationalities = response.data;
+                    $scope.director.nationalityDirector = $scope.nationalities[0];
+            }, function errorCallback(response) {
+        			console.log('Error....');
+        			console.log(response);
+            });
+    }
+
+
     $scope.next = function(){ $scope.unPage = $scope.unPage + 1; $scope.getNat($scope.unPage);}
     $scope.prev = function(){ $scope.unPage = $scope.unPage - 1; $scope.getNat($scope.unPage);}
     $scope.setAdd = function(){

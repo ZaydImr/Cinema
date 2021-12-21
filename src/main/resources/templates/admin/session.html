@@ -38,10 +38,28 @@
         style="max-width: 350px;">
         <h4 class="mt-2 mb-3 text-xl font-semibold text-gray-700 dark:text-gray-200">Add Nationality</h4>
         <label class="block text-sm">
-          <span class="text-gray-700 dark:text-gray-400">Nationality</span>
-          <input id="addNat" ng-model="nationalite" auto-focus="true"
+          <span class="text-gray-700 dark:text-gray-400">Date Begin Session</span>
+          <input id="addNat" ng-model="" auto-focus="true"
             class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-            placeholder="Marocaine" />
+            placeholder="Marocaine" type="text" />
+        </label>
+        <label class="block text-sm">
+          <span class="text-gray-700 dark:text-gray-400">Price</span>
+          <input  ng-model=""
+            class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+            type="number"/>
+        </label>
+        <label class="block text-sm">
+          <span class="text-gray-700 dark:text-gray-400">Film</span>
+          <input  ng-model=""
+            class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+            type="text"/>
+        </label>
+        <label class="block text-sm">
+          <span class="text-gray-700 dark:text-gray-400">Room</span>
+          <input  ng-model=""
+            class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+            type="text"/>
         </label>
         <footer
           class="flex flex-col items-center justify-end px-6 py-3 -mx-6 -mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row">

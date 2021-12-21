@@ -3,6 +3,7 @@ package com.cinema.apicontroller;
 import com.cinema.classGeneric.Page;
 import com.cinema.models.Comment;
 import com.cinema.models.Director;
+import com.cinema.models.FilmType;
 import com.cinema.models.Nationality;
 import com.cinema.services.DirectorService;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +38,13 @@ public class DirectorApiController {
         List<Director> directors = directorService.getAll();
         return new ResponseEntity<>(directors, HttpStatus.OK);
     }
+
+    @GetMapping("/all/keyword/{keyword}")
+    public ResponseEntity<List<Director>> getAllByKeyword(@PathVariable("keyword") String keyword){
+        List<Director> rooms = directorService.GetAllByKeyword(keyword);
+        return new ResponseEntity<>(rooms, HttpStatus.OK);
+    }
+
     @GetMapping("/find/{id}")
     public ResponseEntity<Director> getDirectorById(@PathVariable("id") UUID id){
         Director director = null;

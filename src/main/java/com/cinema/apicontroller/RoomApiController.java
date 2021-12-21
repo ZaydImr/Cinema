@@ -38,6 +38,12 @@ public class RoomApiController {
         return new ResponseEntity<>(rooms, HttpStatus.OK);
     }
 
+    @GetMapping("/all/keyword/{keyword}")
+    public ResponseEntity<List<Room>> getAllByKeyword(@PathVariable("keyword") String keyword){
+        List<Room> rooms = roomService.GetAllByKeyword(keyword);
+        return new ResponseEntity<>(rooms, HttpStatus.OK);
+    }
+
     @GetMapping("/find/{id}")
     public ResponseEntity<Room> getRoomById(@PathVariable("id") UUID id) {
         Room room = null;
