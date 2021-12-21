@@ -10,6 +10,7 @@ myApp.controller("nationalityController", function($scope,$http){
     $scope.idNat = '';
     $scope.nationalite = '';
     $scope.searchIn = '';
+
     $scope.getNat = function ($page){
         $scope.loading = true;
         $http.get('/api/nationality/all/'+$scope.unPage)
@@ -25,17 +26,21 @@ myApp.controller("nationalityController", function($scope,$http){
     }
     $scope.next = function(){ $scope.unPage = $scope.unPage + 1; $scope.getNat($scope.unPage);}
     $scope.prev = function(){ $scope.unPage = $scope.unPage - 1; $scope.getNat($scope.unPage);}
+
     $scope.setAdd = function(){
         if($scope.editNat)
             $scope.editNat = false;
         if(!$scope.addNat)
             $scope.nationalite = '';
         $scope.addNat = !$scope.addNat;
+        
     }
     $scope.setEdit = function(){
         if($scope.addNat)
             $scope.addNat = false;
-         $scope.editNat = !$scope.editNat;}
+         $scope.editNat = !$scope.editNat;
+        }
+
     $scope.addNationalite = function($nationalite) {
         $http.post('/api/nationality/add/',{ nationality: $nationalite })
             .then(function successCallback(){

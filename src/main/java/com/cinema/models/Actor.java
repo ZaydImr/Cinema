@@ -28,4 +28,6 @@ public class Actor extends AbstractModel<UUID> implements Serializable {
     private String imgActor;
     @OneToMany(mappedBy = "actor",fetch = FetchType.EAGER,targetEntity = ActorFilm.class)
     private Set<ActorFilm> actorFilms;
+    
+
 }

@@ -1,18 +1,23 @@
 myApp.controller("actorController", function($scope,$http){
 
 	$scope.all = { list:[], next:true, prev:false};
-	$scope.addNat = false;
-	$scope.editNat = false;
+	$scope.addAct = false;
+	$scope.editAct = false;
 	$scope.page= 1;
     $scope.unPage = 1;
 	$scope.loading = false;
     $scope.isDeleteOpen = false;
-    $scope.idNat = '';
-    $scope.nationalite = '';
+    $scope.idAct = '';
+    $scope.nomActeur = '';
+    $scope.birthActor= '';
+    $scope.natActor = '';
+    $scope.imgActor = '';
+    //$scope.nationalite = '';
     $scope.searchIn = '';
-    $scope.getNat = function ($page){
+
+    $scope.getAct = function ($page){
         $scope.loading = true;
-        $http.get('/api/nationality/all/'+$scope.unPage)
+        $http.get('/api/actor/all/'+$scope.unPage)
             .then(function successCallback(response){
                     $scope.loading = false;
                     $scope.all = response.data;
@@ -23,39 +28,50 @@ myApp.controller("actorController", function($scope,$http){
         			console.log(response);
             });
     }
-    $scope.next = function(){ $scope.unPage = $scope.unPage + 1; $scope.getNat($scope.unPage);}
-    $scope.prev = function(){ $scope.unPage = $scope.unPage - 1; $scope.getNat($scope.unPage);}
+    $scope.next = function(){ $scope.unPage = $scope.unPage + 1; $scope.getAct($scope.unPage);}
+    $scope.prev = function(){ $scope.unPage = $scope.unPage - 1; $scope.getAct($scope.unPage);}
+
+
     $scope.setAdd = function(){
-        if($scope.editNat)
-            $scope.editNat = false;
-        if(!$scope.addNat)
-            $scope.nationalite = '';
-        $scope.addNat = !$scope.addNat;
+        if($scope.editAct)
+            $scope.editAct = false;
+        if(!$scope.addAct)
+             $scope.nomActeur = '';
+             $scope.birthActor= '';
+             $scope.natActor = '';
+             $scope.imgActor = '';
+             $scope.addAct = !$scope.addAct;
     }
+
     $scope.setEdit = function(){
-        if($scope.addNat)
-            $scope.addNat = false;
-         $scope.editNat = !$scope.editNat;}
-    $scope.addNationalite = function($nationalite) {
-        $http.post('/api/nationality/add/',{ nationality: $nationalite })
+        if($scope.addAct)
+            $scope.addAct = false;
+         $scope.editAct = !$scope.editAct;}
+
+
+       
+    $scope.addActor = function($nomActor,$birthActor,$natActor,$imgActor) {
+        $http.post('/api/actor/add/',{ fullNameActor:$nomActor,birthdayActor:$birthActor,nationalityActor: $natActor, imgActor:$imgActor })
             .then(function successCallback(){
-                $scope.getNat();
+                $scope.getAct();
                 $scope.setAdd();
             }, function errorCallback(response) {
                 console.log('Error....');
                 console.log(response);
             });
     }
-    $scope.updateNationalite = function($id,$nationalite) {
-        $http.put('/api/nationality/update/',{ id: $id, nationality: $nationalite })
+    $scope.updateActor = function($idAct,$nomActor,$birthActor,$natActor,$imgActor) {
+        $http.put('/api/actor/update/',{ id: $idAct, Actor:$nomActor,birthdayActor:$birthActor,nationalityActor: $natActor, imgActor:$imgActor })
             .then(function successCallback(){
-                $scope.getNat();
+                $scope.getAct();
                 $scope.setEdit();
             }, function errorCallback(response) {
                 console.log('Error....');
                 console.log(response);
             });
     }
+
+    //stoped
     $scope.prerareUpdate = function($id,$nat) {
         $scope.idNat = $id;
         $scope.nationalite = $nat;
