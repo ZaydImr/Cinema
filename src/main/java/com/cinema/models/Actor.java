@@ -22,8 +22,10 @@ public class Actor extends AbstractModel<UUID> implements Serializable {
     private String fullNameActor;
     @Column(name = "birthdayActor")
     private LocalDate birthdayActor;
-    @Column(name = "nationalityActor")
-    private String nationalityActor;
+    @ManyToOne
+    @JoinColumn(name = "idNationalityActor")
+    private Nationality nationalityActor;
+
     @Column(name = "imgActor")
     private String imgActor;
     @OneToMany(mappedBy = "actor",fetch = FetchType.EAGER,targetEntity = ActorFilm.class)

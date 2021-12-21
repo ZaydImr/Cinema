@@ -18,7 +18,7 @@ public class FilmType extends AbstractModel<UUID> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Column(name = "typeFilm")
-    private String typeFilm;
+        private String typeFilm;
     @OneToMany(mappedBy = "filmType",fetch = FetchType.EAGER,targetEntity = Film.class)
     private Set<Film> films;
 }

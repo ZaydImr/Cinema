@@ -24,4 +24,12 @@ public class Nationality extends AbstractModel<UUID> implements Serializable {
     @OneToMany(mappedBy = "nationality",targetEntity = Film.class)
     @JsonIgnore
     private Set<Film> films;
+
+    @OneToMany(mappedBy = "nationalityDirector")
+    @JsonIgnore
+    private Set<Director> directors;
+
+    @OneToMany(mappedBy = "nationalityActor")
+    @JsonIgnore
+    private Set<Actor> actors;
 }

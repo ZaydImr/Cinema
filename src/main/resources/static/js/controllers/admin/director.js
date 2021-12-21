@@ -8,16 +8,33 @@ myApp.controller("directorController", function($scope,$http){
 	$scope.loading = false;
     $scope.isDeleteOpen = false;
     $scope.idNat = '';
-    $scope.nationalite = '';
+    $scope.director =  {
+        fullnameDirector:'',
+        birthdayDirector:'',
+        nationalityDirector: {},
+        imgDirector: ''
+    };
+    $scope.nationalities = [];
     $scope.searchIn = '';
     $scope.getNat = function ($page){
         $scope.loading = true;
-        $http.get('/api/nationality/all/'+$scope.unPage)
+        $http.get('/api/director/all/'+$scope.unPage)
             .then(function successCallback(response){
                     $scope.loading = false;
                     $scope.all = response.data;
         			$scope.natsCount = response.data.length-1;
                     if($page) $scope.page = $page;
+            }, function errorCallback(response) {
+        			console.log('Error....');
+        			console.log(response);
+            });
+    }
+
+    $scope.getNationalities = function (){
+        $http.get('/api/nationality/all')
+            .then(function successCallback(response){
+                    $scope.nationalities = response.data;
+                    $scope.director.nationalityDirector = $scope.nationalities[0];
             }, function errorCallback(response) {
         			console.log('Error....');
         			console.log(response);
@@ -29,15 +46,21 @@ myApp.controller("directorController", function($scope,$http){
         if($scope.editNat)
             $scope.editNat = false;
         if(!$scope.addNat)
-            $scope.nationalite = '';
+            $scope.director = {
+                fullnameDirector:'',
+                birthdayDirector:'',
+                nationalityDirector: $scope.nationalities[0],
+                imgDirector: ''
+            };
+            console.log($scope.director);
         $scope.addNat = !$scope.addNat;
     }
     $scope.setEdit = function(){
         if($scope.addNat)
             $scope.addNat = false;
          $scope.editNat = !$scope.editNat;}
-    $scope.addNationalite = function($nationalite) {
-        $http.post('/api/nationality/add/',{ nationality: $nationalite })
+    $scope.addNationalite = function() {
+        $http.post('/api/director/add/', $scope.director )
             .then(function successCallback(){
                 $scope.getNat();
                 $scope.setAdd();
@@ -47,7 +70,7 @@ myApp.controller("directorController", function($scope,$http){
             });
     }
     $scope.updateNationalite = function($id,$nationalite) {
-        $http.put('/api/nationality/update/',{ id: $id, nationality: $nationalite })
+        $http.put('/api/director/update/', $scope.director )
             .then(function successCallback(){
                 $scope.getNat();
                 $scope.setEdit();
@@ -69,7 +92,7 @@ myApp.controller("directorController", function($scope,$http){
         $scope.idNat = $idNat;
     }
     $scope.deleteNat = function($idNat){
-        $http.delete('/api/nationality/delete/'+$idNat)
+        $http.delete('/api/director/delete/'+$idNat)
             .then(function successCallback(){
                 $scope.getNat();
             }, function errorCallback(response) {
@@ -86,7 +109,7 @@ myApp.controller("directorController", function($scope,$http){
         }
         else{
             $scope.loading = true;
-            $http.get('/api/nationality/all/keyword/'+$scope.searchIn)
+            $http.get('/api/director/all/keyword/'+$scope.searchIn)
                 .then(function successCallback(response){
                     console.log(response);
                         $scope.loading = false;
@@ -100,6 +123,7 @@ myApp.controller("directorController", function($scope,$http){
         }
     }
 
+    $scope.getNationalities();
     $scope.getNat();
 
 });

@@ -8,11 +8,11 @@ myApp.controller("roomController", function($scope,$http){
 	$scope.loading = false;
     $scope.isDeleteOpen = false;
     $scope.idNat = '';
-    $scope.nationalite = '';
+    $scope.nameRoom = '';
     $scope.searchIn = '';
     $scope.getNat = function ($page){
         $scope.loading = true;
-        $http.get('/api/nationality/all/'+$scope.unPage)
+        $http.get('/api/room/all/'+$scope.unPage)
             .then(function successCallback(response){
                     $scope.loading = false;
                     $scope.all = response.data;
@@ -21,6 +21,7 @@ myApp.controller("roomController", function($scope,$http){
             }, function errorCallback(response) {
         			console.log('Error....');
         			console.log(response);
+                    $scope.loading = false;
             });
     }
     $scope.next = function(){ $scope.unPage = $scope.unPage + 1; $scope.getNat($scope.unPage);}
@@ -37,7 +38,7 @@ myApp.controller("roomController", function($scope,$http){
             $scope.addNat = false;
          $scope.editNat = !$scope.editNat;}
     $scope.addNationalite = function($nationalite) {
-        $http.post('/api/nationality/add/',{ nationality: $nationalite })
+        $http.post('/api/room/add/',{ nameRoom: $nationalite })
             .then(function successCallback(){
                 $scope.getNat();
                 $scope.setAdd();
@@ -47,7 +48,7 @@ myApp.controller("roomController", function($scope,$http){
             });
     }
     $scope.updateNationalite = function($id,$nationalite) {
-        $http.put('/api/nationality/update/',{ id: $id, nationality: $nationalite })
+        $http.put('/api/room/update/',{ id: $id, nameRoom: $nationalite })
             .then(function successCallback(){
                 $scope.getNat();
                 $scope.setEdit();
@@ -56,9 +57,9 @@ myApp.controller("roomController", function($scope,$http){
                 console.log(response);
             });
     }
-    $scope.prerareUpdate = function($id,$nat) {
+    $scope.prerareUpdate = function($id,$nameRoom) {
         $scope.idNat = $id;
-        $scope.nationalite = $nat;
+        $scope.nameRoom = $nameRoom;
 
         if($scope.addNat)
             $scope.addNat = false;
@@ -69,7 +70,7 @@ myApp.controller("roomController", function($scope,$http){
         $scope.idNat = $idNat;
     }
     $scope.deleteNat = function($idNat){
-        $http.delete('/api/nationality/delete/'+$idNat)
+        $http.delete('/api/room/delete/'+$idNat)
             .then(function successCallback(){
                 $scope.getNat();
             }, function errorCallback(response) {
@@ -86,7 +87,7 @@ myApp.controller("roomController", function($scope,$http){
         }
         else{
             $scope.loading = true;
-            $http.get('/api/nationality/all/keyword/'+$scope.searchIn)
+            $http.get('/api/room/all/keyword/'+$scope.searchIn)
                 .then(function successCallback(response){
                     console.log(response);
                         $scope.loading = false;

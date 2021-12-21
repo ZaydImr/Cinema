@@ -2,6 +2,7 @@ package com.cinema.apicontroller;
 
 import com.cinema.classGeneric.Page;
 import com.cinema.models.Actor;
+import com.cinema.models.Director;
 import com.cinema.models.Nationality;
 import com.cinema.services.ActorService;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/actor")
+@CrossOrigin(origins = "")
 @RequiredArgsConstructor
 public class ActorApiController {
     public final ActorService actorService;
@@ -35,6 +37,12 @@ public class ActorApiController {
     public ResponseEntity<List<Actor>> getAllActors(){
         List<Actor> actors = actorService.getAll();
         return new ResponseEntity<>(actors, HttpStatus.OK);
+    }
+
+    @GetMapping("/all/keyword/{keyword}")
+    public ResponseEntity<List<Actor>> getAllByKeyword(@PathVariable("keyword") String keyword){
+        List<Actor> rooms = actorService.GetAllByKeyword(keyword);
+        return new ResponseEntity<>(rooms, HttpStatus.OK);
     }
 
     @GetMapping("/find/{id}")

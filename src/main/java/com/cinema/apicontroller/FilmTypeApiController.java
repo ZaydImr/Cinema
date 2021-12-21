@@ -4,6 +4,7 @@ import com.cinema.classGeneric.Page;
 import com.cinema.models.Director;
 import com.cinema.models.FilmType;
 import com.cinema.models.Nationality;
+import com.cinema.models.Room;
 import com.cinema.services.FilmTypeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -36,6 +37,12 @@ public class FilmTypeApiController {
     public ResponseEntity<List<FilmType>> getAllFilmTypes(){
         List<FilmType> filmTypes = filmTypeService.getAll();
         return new ResponseEntity<>(filmTypes, HttpStatus.OK);
+    }
+
+    @GetMapping("/all/keyword/{keyword}")
+    public ResponseEntity<List<FilmType>> getAllByKeyword(@PathVariable("keyword") String keyword){
+        List<FilmType> rooms = filmTypeService.GetAllByKeyword(keyword);
+        return new ResponseEntity<>(rooms, HttpStatus.OK);
     }
 
     @GetMapping("/find/{id}")

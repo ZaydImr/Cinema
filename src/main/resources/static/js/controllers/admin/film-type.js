@@ -8,8 +8,9 @@ myApp.controller("filmTypeController", function($scope,$http){
 	$scope.loading = false;
     $scope.isDeleteOpen = false;
     $scope.idNat = '';
-    $scope.nationalite = '';
+    $scope.category = '';
     $scope.searchIn = '';
+    
     $scope.getNat = function ($page){
         $scope.loading = true;
         $http.get('/api/filmtypes/all/'+$scope.unPage)
@@ -29,7 +30,7 @@ myApp.controller("filmTypeController", function($scope,$http){
         if($scope.editNat)
             $scope.editNat = false;
         if(!$scope.addNat)
-            $scope.nationalite = '';
+            $scope.category = '';
         $scope.addNat = !$scope.addNat;
     }
     $scope.setEdit = function(){
@@ -37,7 +38,7 @@ myApp.controller("filmTypeController", function($scope,$http){
             $scope.addNat = false;
          $scope.editNat = !$scope.editNat;}
     $scope.addNationalite = function($nationalite) {
-        $http.post('/api/filmtypes/add/',{ nationality: $nationalite })
+        $http.post('/api/filmtypes/add/',{ typeFilm: $nationalite })
             .then(function successCallback(){
                 $scope.getNat();
                 $scope.setAdd();
@@ -47,7 +48,7 @@ myApp.controller("filmTypeController", function($scope,$http){
             });
     }
     $scope.updateNationalite = function($id,$nationalite) {
-        $http.put('/api/filmtypes/update/',{ id: $id, nationality: $nationalite })
+        $http.put('/api/filmtypes/update/',{ id: $id, typeFilm: $nationalite })
             .then(function successCallback(){
                 $scope.getNat();
                 $scope.setEdit();
@@ -58,7 +59,7 @@ myApp.controller("filmTypeController", function($scope,$http){
     }
     $scope.prerareUpdate = function($id,$nat) {
         $scope.idNat = $id;
-        $scope.nationalite = $nat;
+        $scope.category = $nat;
 
         if($scope.addNat)
             $scope.addNat = false;

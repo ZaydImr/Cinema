@@ -1,5 +1,6 @@
 myApp.controller("nationalityController", function($scope,$http){
 
+    // Variables
 	$scope.all = { list:[], next:true, prev:false};
 	$scope.addNat = false;
 	$scope.editNat = false;
@@ -10,6 +11,8 @@ myApp.controller("nationalityController", function($scope,$http){
     $scope.idNat = '';
     $scope.nationalite = '';
     $scope.searchIn = '';
+
+    // Methodes
     $scope.getNat = function ($page){
         $scope.loading = true;
         $http.get('/api/nationality/all/'+$scope.unPage)
@@ -78,7 +81,6 @@ myApp.controller("nationalityController", function($scope,$http){
             });
     }
     $scope.search = function() {
-        console.log($scope.searchIn);
         if($scope.searchIn === "")
         {
             $scope.page = 1;
@@ -89,7 +91,6 @@ myApp.controller("nationalityController", function($scope,$http){
             $scope.loading = true;
             $http.get('/api/nationality/all/keyword/'+$scope.searchIn)
                 .then(function successCallback(response){
-                    console.log(response);
                         $scope.loading = false;
                         $scope.all = { list :response.data, next: false, prev:false};
 
@@ -101,6 +102,7 @@ myApp.controller("nationalityController", function($scope,$http){
         }
     }
 
+    
     $scope.getNat();
 
 });

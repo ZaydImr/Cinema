@@ -35,13 +35,33 @@
 
       <!--  Add Formulaire  -->
       <div ng-if="addNat" class="px-4 py-3 m-auto mt-6 bg-white rounded-lg shadow-md dark:bg-gray-800"
-        style="max-width: 350px;">
-        <h4 class="mt-2 mb-3 text-xl font-semibold text-gray-700 dark:text-gray-200">Add Nationality</h4>
+        style="max-width: 500px;width: 100%;">
+        <h4 class="mt-2 mb-3 text-xl font-semibold text-gray-700 dark:text-gray-200">Add Director</h4>
+        <label class="block text-sm">
+          <span class="text-gray-700 dark:text-gray-400">Fullname</span>
+          <input id="addNat" ng-model="director.fullnameDirector" auto-focus="true"
+            class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+            placeholder="Robin shan" />
+        </label>
+        <label class="block text-sm">
+          <span class="text-gray-700 dark:text-gray-400">Birthday</span>
+          <input  ng-model="director.birthdayDirector"
+            class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+            type="date"/>
+        </label>
         <label class="block text-sm">
           <span class="text-gray-700 dark:text-gray-400">Nationality</span>
-          <input id="addNat" ng-model="nationalite" auto-focus="true"
+          <select  ng-model="director.nationalityDirector.id"  class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input">
+            <option ng-repeat="nat in nationalities" value="{{nat.id}}">{{nat.nationality}}</option>
+          </select>
+
+
+        </label>
+        <label class="block text-sm">
+          <span class="text-gray-700 dark:text-gray-400">Image</span>
+          <input ng-model="director.imgDirector" auto-focus="true"
             class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-            placeholder="Marocaine" />
+            type="file" />
         </label>
         <footer
           class="flex flex-col items-center justify-end px-6 py-3 -mx-6 -mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row">
@@ -100,25 +120,33 @@
         </div>
       </div>
       <!-- Table of nationalities -->
-     <!-- <div class="w-full overflow-hidden rounded-lg shadow-xs mb-4">
+     <div class="w-full overflow-hidden rounded-lg shadow-xs mb-4">
         <div class="w-full overflow-x-auto">
           <table class="w-full whitespace-no-wrap">
             <thead>
               <tr
                 class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                <th class="px-4 py-3">Nationaity</th>
+                <th class="px-4 py-3">Fullname</th>
+                <th class="px-4 py-3">Birthday</th>
+                <th class="px-4 py-3">Nationality</th>
                 <th class="px-4 py-3">Actions</th>
               </tr>
             </thead>
             <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
 
-              <tr class="text-gray-700 dark:text-gray-400" ng-repeat="nat in all.list">
+              <tr class="text-gray-700 dark:text-gray-400" ng-repeat="director in all.list">
                 <td class="px-4 py-3">
-                  {{nat.nationality}}
+                  {{director.fullnameDirector}}
+                </td>
+                <td class="px-4 py-3">
+                  {{director.birthdayDirector}}
+                </td>
+                <td class="px-4 py-3">
+                  {{director.nationalityDirector.nationality}}
                 </td>
                 <td class="px-4 py-3">
                   <div class="flex items-center space-x-4 text-sm">
-                    <button ng-click="prerareUpdate(nat.id,nat.nationality)"
+                    <button ng-click="prerareUpdate()"
                       class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-sky-600 rounded-lg  focus:outline-none focus:shadow-outline-gray"
                       aria-label="Edit">
                       <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
@@ -127,7 +155,7 @@
                         </path>
                       </svg>
                     </button>
-                    <button @click="openModal" ng-click="prepareDelete(nat.id)"
+                    <button @click="openModal" ng-click="prepareDelete(director.id)"
                       class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-600 rounded-lg focus:outline-none focus:shadow-outline-gray"
                       aria-label="Delete">
                       <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
@@ -162,7 +190,7 @@
           </span>
           <span class="col-span-2"></span>
           <!-- Pagination -->
-          <!--<span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
+        <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
             <nav aria-label="Table navigation">
               <ul class="inline-flex items-center">
                 <li ng-if="all.prev">
@@ -210,7 +238,6 @@
           </span>
         </div>
       </div>
-    -->
     </div>
 
     <!-- Modal backdrop. This what you want to place close to the closing body tag -->

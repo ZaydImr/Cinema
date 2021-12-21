@@ -1,15 +1,17 @@
 package com.cinema.repositories;
 
 import com.cinema.models.FilmType;
+import com.cinema.models.Room;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Repository
 public interface IFilmtypeRepository extends JpaRepository<FilmType, UUID> {
-    Optional<FilmType> findFilmTypeById(UUID id);
-
-    void deleteFilmTypeById(UUID id);
+    @Query("SELECT f FROM FilmType f WHERE f.typeFilm LIKE %?1%")
+    List<FilmType> getByName(String filmType);
 }
