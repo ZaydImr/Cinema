@@ -79,9 +79,9 @@ myApp.controller("actorController", function($scope,$http){
                 console.log(response);
             });
     }
-    $scope.prerareUpdate = function($id,$nat) {
-        $scope.idNat = $id;
-        $scope.nationalite = $nat;
+    $scope.prerareUpdate = function($id) {
+        $scope.actor=$scope.all.list.filter(ac=>ac.id ===$id)[0];
+        $scope.actor.birthdayActor= new Date ($scope.actor.birthdayActor);
 
         if($scope.addNat)
             $scope.addNat = false;

@@ -36,30 +36,30 @@
       <!--  Add Formulaire  -->
       <div ng-if="addNat" class="px-4 py-3 m-auto mt-6 bg-white rounded-lg shadow-md dark:bg-gray-800"
         style="max-width: 350px;">
-        <h4 class="mt-2 mb-3 text-xl font-semibold text-gray-700 dark:text-gray-200">Add Nationality</h4>
+        <h4 class="mt-2 mb-3 text-xl font-semibold text-gray-700 dark:text-gray-200">Add Session</h4>
         <label class="block text-sm">
           <span class="text-gray-700 dark:text-gray-400">Date Begin Session</span>
-          <input id="addNat" ng-model="" auto-focus="true"
+          <input id="addNat" ng-model="session.dateBeginSession" auto-focus="true"
             class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-            placeholder="Marocaine" type="text" />
+            placeholder="Marocaine" type ="datetime-local" />
         </label>
         <label class="block text-sm">
           <span class="text-gray-700 dark:text-gray-400">Price</span>
-          <input  ng-model=""
+          <input  ng-model="session.tarif"
             class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
             type="number"/>
         </label>
         <label class="block text-sm">
           <span class="text-gray-700 dark:text-gray-400">Film</span>
-          <input  ng-model=""
-            class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-            type="text"/>
+          <select  ng-model="session.film.id"  class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input">
+            <option ng-repeat="fil in films" value="{{fil.id}}">{{fil.titleFilm}}</option>
+          </select>
         </label>
         <label class="block text-sm">
           <span class="text-gray-700 dark:text-gray-400">Room</span>
-          <input  ng-model=""
-            class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-            type="text"/>
+          <select  ng-model="session.room.id"  class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input">
+            <option ng-repeat="rom in rooms" value="{{rom.id}}">{{rom.nameRoom}}</option>
+          </select>
         </label>
         <footer
           class="flex flex-col items-center justify-end px-6 py-3 -mx-6 -mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row">
@@ -77,16 +77,29 @@
       <!--  Edit Formulaire  -->
       <div ng-if="editNat" class="px-4 py-3 m-auto mt-6 bg-white rounded-lg shadow-md dark:bg-gray-800"
         style="max-width: 400px;width: 100%;">
-        <h4 class="mt-2 mb-3 text-xl font-semibold text-gray-700 dark:text-gray-200">Edit Nationality</h4>
+        <h4 class="mt-2 mb-3 text-xl font-semibold text-gray-700 dark:text-gray-200">Edit Session</h4>
         <label class="block text-sm">
           <span class="text-gray-700 dark:text-gray-400">id</span>
           <input ng-model="idNat" ng-disabled="true"
             class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
             placeholder="Marocaine" />
-          <span class="text-gray-700 dark:text-gray-400">Nationality</span>
-          <input ng-model="nationalite" autofocus="true"
+          <span class="text-gray-700 dark:text-gray-400">Date Begin Session</span>
+          <input id="addNat" ng-model="session.dateBeginSession" auto-focus="true"
+          class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+          placeholder="Marocaine" type ="datetime-local" />
+          <span class="text-gray-700 dark:text-gray-400">Price</span>
+          <input  ng-model="session.tarif"
             class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-            placeholder="Marocaine" />
+            type="number"/>
+            <span class="text-gray-700 dark:text-gray-400">Film</span>
+          <select  ng-model="session.film.id"  class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input">
+            <option ng-repeat="fil in films" value="{{fil.id}}">{{fil.titleFilm}}</option>
+          </select>
+          <span class="text-gray-700 dark:text-gray-400">Room</span>
+          <select  ng-model="session.room.id"  class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input">
+            <option ng-repeat="rom in rooms" value="{{rom.id}}">{{rom.nameRoom}}</option>
+          </select>
+      </label>
         </label>
         <footer
           class="flex flex-col items-center justify-end px-6 py-3 -mx-6 -mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row">
@@ -118,25 +131,38 @@
         </div>
       </div>
       <!-- Table of nationalities -->
-     <!-- <div class="w-full overflow-hidden rounded-lg shadow-xs mb-4">
+      <div class="w-full overflow-hidden rounded-lg shadow-xs mb-4">
         <div class="w-full overflow-x-auto">
           <table class="w-full whitespace-no-wrap">
             <thead>
               <tr
                 class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                <th class="px-4 py-3">Nationaity</th>
-                <th class="px-4 py-3">Actions</th>
+                <th class="px-4 py-3">Date Begin Session</th>
+                <th class="px-4 py-3">Price</th>
+                <th class="px-4 py-3">Film</th>
+                <th class="px-4 py-3">Room</th>
+                <th class="px-4 py-3">Action</th>
+
               </tr>
             </thead>
             <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
 
-              <tr class="text-gray-700 dark:text-gray-400" ng-repeat="nat in all.list">
+              <tr class="text-gray-700 dark:text-gray-400" ng-repeat="session in all.list">
                 <td class="px-4 py-3">
-                  {{nat.nationality}}
+                  {{session.dateBeginSession}}
+                </td>
+                <td class="px-4 py-3">
+                  {{session.tarif}}
+                </td>
+                <td class="px-4 py-3">
+                  {{session.film}}
+                </td>
+                <td class="px-4 py-3">
+                  {{session.room}}
                 </td>
                 <td class="px-4 py-3">
                   <div class="flex items-center space-x-4 text-sm">
-                    <button ng-click="prerareUpdate(nat.id,nat.nationality)"
+                    <button ng-click="prerareUpdate(session.id)"
                       class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-sky-600 rounded-lg  focus:outline-none focus:shadow-outline-gray"
                       aria-label="Edit">
                       <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
@@ -145,7 +171,7 @@
                         </path>
                       </svg>
                     </button>
-                    <button @click="openModal" ng-click="prepareDelete(nat.id)"
+                    <button @click="openModal" ng-click="prepareDelete(session.id)"
                       class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-600 rounded-lg focus:outline-none focus:shadow-outline-gray"
                       aria-label="Delete">
                       <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">

@@ -12,9 +12,11 @@ myApp.controller("sessionController", function($scope,$http){
     $scope.session = {
         dateBeginSession:'',
         tarif:'',
-        film:'',
-        room:'',
-    }
+        film:{},
+        room:{}
+    };
+    $scope.rooms=[];
+    $scope.films=[];
     $scope.searchIn = '';
     $scope.getNat = function ($page){
         $scope.loading = true;
@@ -29,18 +31,30 @@ myApp.controller("sessionController", function($scope,$http){
         			console.log(response);
             });
     }
+// to be continued
 
     $scope.getFilms = function (){
-        $http.get('/api/nationality/all')
+        $http.get('/api/film/all')
             .then(function successCallback(response){
-                    $scope.nationalities = response.data;
-                    $scope.director.nationalityDirector = $scope.nationalities[0];
+                    $scope.films = response.data;
+                    $scope.session.film = $scope.films[0];
             }, function errorCallback(response) {
         			console.log('Error....');
         			console.log(response);
             });
     }
 
+// to be continued
+    $scope.getRooms = function (){
+        $http.get('/api/room/all')
+            .then(function successCallback(response){
+                    $scope.rooms = response.data;
+                    $scope.session.room = $scope.rooms[0];
+            }, function errorCallback(response) {
+        			console.log('Error....');
+        			console.log(response);
+            });
+    }
 
     $scope.next = function(){ $scope.unPage = $scope.unPage + 1; $scope.getNat($scope.unPage);}
     $scope.prev = function(){ $scope.unPage = $scope.unPage - 1; $scope.getNat($scope.unPage);}
@@ -48,15 +62,21 @@ myApp.controller("sessionController", function($scope,$http){
         if($scope.editNat)
             $scope.editNat = false;
         if(!$scope.addNat)
-            $scope.nationalite = '';
+            $scope.session = {
+                dateBeginSession:'',
+                tarif:'',
+                film:$scope.films[0],
+                room:$scope.rooms[0]
+            };
+            console.log($scope.session);
         $scope.addNat = !$scope.addNat;
     }
     $scope.setEdit = function(){
         if($scope.addNat)
             $scope.addNat = false;
          $scope.editNat = !$scope.editNat;}
-    $scope.addNationalite = function($nationalite) {
-        $http.post('/api/nationality/add/',{ nationality: $nationalite })
+    $scope.addNationalite = function() {
+        $http.post('/api/session/add/', $scope.session)
             .then(function successCallback(){
                 $scope.getNat();
                 $scope.setAdd();
@@ -66,7 +86,7 @@ myApp.controller("sessionController", function($scope,$http){
             });
     }
     $scope.updateNationalite = function($id,$nationalite) {
-        $http.put('/api/nationality/update/',{ id: $id, nationality: $nationalite })
+        $http.put('/api/session/update/', $scope.session)
             .then(function successCallback(){
                 $scope.getNat();
                 $scope.setEdit();
@@ -75,9 +95,8 @@ myApp.controller("sessionController", function($scope,$http){
                 console.log(response);
             });
     }
-    $scope.prerareUpdate = function($id,$nat) {
-        $scope.idNat = $id;
-        $scope.nationalite = $nat;
+    $scope.prerareUpdate = function($id) {
+        $scope.session=$scope.all.list.filter(sec=>sec.id ===$id)[0];        $scope.nationalite = $nat;
 
         if($scope.addNat)
             $scope.addNat = false;
@@ -88,7 +107,7 @@ myApp.controller("sessionController", function($scope,$http){
         $scope.idNat = $idNat;
     }
     $scope.deleteNat = function($idNat){
-        $http.delete('/api/nationality/delete/'+$idNat)
+        $http.delete('/api/session/delete/'+$idNat)
             .then(function successCallback(){
                 $scope.getNat();
             }, function errorCallback(response) {
@@ -105,7 +124,7 @@ myApp.controller("sessionController", function($scope,$http){
         }
         else{
             $scope.loading = true;
-            $http.get('/api/nationality/all/keyword/'+$scope.searchIn)
+            $http.get('/api/session/all/keyword/'+$scope.searchIn)
                 .then(function successCallback(response){
                     console.log(response);
                         $scope.loading = false;
@@ -120,5 +139,7 @@ myApp.controller("sessionController", function($scope,$http){
     }
 
     $scope.getNat();
+    $scope.getRooms();
+    $scope.getFilms();
 
 });

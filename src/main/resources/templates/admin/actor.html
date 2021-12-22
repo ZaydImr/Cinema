@@ -80,16 +80,25 @@
       <!--  Edit Formulaire  -->
       <div ng-if="editNat" class="px-4 py-3 m-auto mt-6 bg-white rounded-lg shadow-md dark:bg-gray-800"
         style="max-width: 400px;width: 100%;">
-        <h4 class="mt-2 mb-3 text-xl font-semibold text-gray-700 dark:text-gray-200">Edit Nationality</h4>
+        <h4 class="mt-2 mb-3 text-xl font-semibold text-gray-700 dark:text-gray-200">Edit Actor</h4>
         <label class="block text-sm">
           <span class="text-gray-700 dark:text-gray-400">id</span>
-          <input ng-model="idNat" ng-disabled="true"
+          <input ng-model="actor.id" ng-disabled="true"
             class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
             placeholder="Marocaine" />
-          <span class="text-gray-700 dark:text-gray-400">Nationality</span>
-          <input ng-model="nationalite" autofocus="true"
+          <span class="text-gray-700 dark:text-gray-400">FullName</span>
+          <input ng-model="actor.fullNameActor" autofocus="true"
             class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
             placeholder="Marocaine" />
+            <span class="text-gray-700 dark:text-gray-400">Birthday</span>
+          <input ng-model="actor.birthdayActor" autofocus="true"
+            class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+            placeholder="Marocaine" type="date" />
+           
+            <span class="text-gray-700 dark:text-gray-400">Nationality</span>
+            <select  ng-model="actor.nationalityActor.id"  class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input">
+              <option ng-repeat="nat in nationalities" value="{{nat.id}}">{{nat.nationality}}</option>
+            </select>
         </label>
         <footer
           class="flex flex-col items-center justify-end px-6 py-3 -mx-6 -mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row">
@@ -147,7 +156,7 @@
                 </td>
                 <td class="px-4 py-3">
                   <div class="flex items-center space-x-4 text-sm">
-                    <button ng-click="prerareUpdate()"
+                    <button ng-click="prerareUpdate(actor.id)"
                       class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-sky-600 rounded-lg  focus:outline-none focus:shadow-outline-gray"
                       aria-label="Edit">
                       <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
