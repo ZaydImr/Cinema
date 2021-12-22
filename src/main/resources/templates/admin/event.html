@@ -34,14 +34,44 @@
 
 
       <!--  Add Formulaire  -->
-      <div ng-if="addNat" class="px-4 py-3 m-auto mt-6 bg-white rounded-lg shadow-md dark:bg-gray-800"
+      <div ng-if="addEvent" class="px-4 py-3 m-auto mt-6 bg-white rounded-lg shadow-md dark:bg-gray-800"
         style="max-width: 350px;">
-        <h4 class="mt-2 mb-3 text-xl font-semibold text-gray-700 dark:text-gray-200">Add Nationality</h4>
+        <h4 class="mt-2 mb-3 text-xl font-semibold text-gray-700 dark:text-gray-200">Add Event</h4>
         <label class="block text-sm">
-          <span class="text-gray-700 dark:text-gray-400">Nationality</span>
-          <input id="addNat" ng-model="nationalite" auto-focus="true"
+          <span class="text-gray-700 dark:text-gray-400">Start Date</span>
+          <input type="datetime-local" id="addEvent" ng-model="event.dateEvent" auto-focus="true"
             class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-            placeholder="Marocaine" />
+             />
+        </label>
+        <label class="block text-sm">
+          <span class="text-gray-700 dark:text-gray-400">End Date</span>
+          <input type="datetime-local" id=" " ng-model="event.dateEndEvent" auto-focus="true"
+                 class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                  />
+        </label>
+        <label class="block text-sm">
+          <span class="text-gray-700 dark:text-gray-400">Image URL</span>
+          <input id="" ng-model="event.imgEvent" auto-focus="true"
+                 class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                 placeholder="Picture URL .." />
+        </label>
+        <label class="block text-sm">
+          <span class="text-gray-700 dark:text-gray-400">Title</span>
+          <input id="  " ng-model="event.titleEvent" auto-focus="true"
+                 class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                 placeholder="Title of Event .." />
+        </label>
+        <label class="block text-sm">
+          <span class="text-gray-700 dark:text-gray-400">Description</span>
+          <textarea id="    " ng-model="event.descriptionEvent" auto-focus="true"
+                 class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                    placeholder="Description of Event .." ></textarea>
+        </label>
+        <label class="block text-sm">
+          <span class="text-gray-700 dark:text-gray-400">Film</span>
+          <select  ng-model="event.film.id"  class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input">
+            <option ng-repeat="film in films" value="{{film.id}}">{{event.film}}</option>
+          </select>
         </label>
         <footer
           class="flex flex-col items-center justify-end px-6 py-3 -mx-6 -mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row">
@@ -49,7 +79,7 @@
             class="w-full px-5 py-3 text-sm font-medium leading-5 text-white text-gray-700 transition-colors duration-150 border border-gray-300 rounded-lg dark:text-gray-400 sm:px-4 sm:py-2 sm:w-auto active:bg-transparent hover:border-gray-500 focus:border-gray-500 active:text-gray-500 focus:outline-none focus:shadow-outline-gray">
             Cancel
           </button>
-          <button ng-click="addNationalite(nationalite)"
+          <button ng-click="addEvents(event)"
             class="w-full px-5 py-3 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-sky-600 border border-transparent rounded-lg sm:w-auto sm:px-4 sm:py-2 active:bg-sky-600 hover:bg-sky-700 focus:outline-none focus:shadow-outline-sky">
             Save
           </button>
@@ -57,26 +87,43 @@
       </div>
 
       <!--  Edit Formulaire  -->
-      <div ng-if="editNat" class="px-4 py-3 m-auto mt-6 bg-white rounded-lg shadow-md dark:bg-gray-800"
+      <div ng-if="editEvent" class="px-4 py-3 m-auto mt-6 bg-white rounded-lg shadow-md dark:bg-gray-800"
         style="max-width: 400px;width: 100%;">
-        <h4 class="mt-2 mb-3 text-xl font-semibold text-gray-700 dark:text-gray-200">Edit Nationality</h4>
+        <h4 class="mt-2 mb-3 text-xl font-semibold text-gray-700 dark:text-gray-200">Edit Event</h4>
         <label class="block text-sm">
-          <span class="text-gray-700 dark:text-gray-400">id</span>
-          <input ng-model="idNat" ng-disabled="true"
+          <span class="text-gray-700 dark:text-gray-400">Date Start Event</span>
+          <input ng-model="event.dateEvent" ng-disabled="true"
             class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-            placeholder="Marocaine" />
-          <span class="text-gray-700 dark:text-gray-400">Nationality</span>
-          <input ng-model="nationalite" autofocus="true"
+             />
+          <span class="text-gray-700 dark:text-gray-400">Date End Event</span>
+          <input ng-model="event.dateEndEvent" autofocus="true"
             class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-            placeholder="Marocaine" />
+             />
+          <span class="text-gray-700 dark:text-gray-400">Image URL</span>
+          <input ng-model="event.imgEvent" autofocus="true"
+                 class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                  />
+          <span class="text-gray-700 dark:text-gray-400">Title</span>
+          <input ng-model="event.titleEvent" autofocus="true"
+                 class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                  />
+          <span class="text-gray-700 dark:text-gray-400">Description</span>
+          <textarea ng-model="event.descriptionEvent" autofocus="true"
+                 class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+          ></textarea>
+          <span class="text-gray-700 dark:text-gray-400">Film</span>
+          <input ng-model="event.film" autofocus="true"
+                 class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+          />
         </label>
+
         <footer
           class="flex flex-col items-center justify-end px-6 py-3 -mx-6 -mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row">
           <button ng-click="setEdit()"
             class="w-full px-5 py-3 text-sm font-medium leading-5 text-white text-gray-700 transition-colors duration-150 border border-gray-300 rounded-lg dark:text-gray-400 sm:px-4 sm:py-2 sm:w-auto active:bg-transparent hover:border-gray-500 focus:border-gray-500 active:text-gray-500 focus:outline-none focus:shadow-outline-gray">
             Cancel
           </button>
-          <button ng-click="updateNationalite(idNat,nationalite)"
+          <button ng-click="updateEvent(idEvent,event)"
             class="w-full px-5 py-3 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-sky-600 border border-transparent rounded-lg sm:w-auto sm:px-4 sm:py-2 active:bg-sky-600 hover:bg-sky-700 focus:outline-none focus:shadow-outline-sky">
             Save
           </button>
@@ -87,7 +134,7 @@
         <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
           Events
         </h2>
-        <div ng-if="addNat == false">
+        <div ng-if="addEvent == false">
           <button ng-click="setAdd()"
             class=" flex items-center justify-between p-3 text-sm font-semibold text-sky-100 bg-sky-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-sky">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
@@ -99,26 +146,49 @@
           </button>
         </div>
       </div>
-      <!-- Table of nationalities -->
-     <!-- <div class="w-full overflow-hidden rounded-lg shadow-xs mb-4">
+      <!-- Table of Events -->
+     <div class="w-full overflow-hidden rounded-lg shadow-xs mb-4">
         <div class="w-full overflow-x-auto">
           <table class="w-full whitespace-no-wrap">
             <thead>
               <tr
                 class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                <th class="px-4 py-3">Nationaity</th>
-                <th class="px-4 py-3">Actions</th>
+                <th class="px-4 py-3">Id Event</th>
+                <th class="px-4 py-3">Start Date</th>
+                <th class="px-4 py-3">End Date</th>
+                <th class="px-4 py-3">Image URL</th>
+                <th class="px-4 py-3">Title</th>
+                <th class="px-4 py-3">Description</th>
+                <th class="px-4 py-3">Film</th>
               </tr>
             </thead>
             <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
 
-              <tr class="text-gray-700 dark:text-gray-400" ng-repeat="nat in all.list">
+              <tr class="text-gray-700 dark:text-gray-400" ng-repeat="ev in all.list">
                 <td class="px-4 py-3">
-                  {{nat.nationality}}
+                  {{ev.idEvent}}
+                </td>
+                <td class="px-4 py-3">
+                  {{ev.dateEvent}}
+                </td>
+                <td class="px-4 py-3">
+                  {{ev.dateEndEvent}}
+                </td>
+                <td class="px-4 py-3">
+                  {{ev.imgEvent}}
+                </td>
+                <td class="px-4 py-3">
+                  {{ev.titleEvent}}
+                </td>
+                <td class="px-4 py-3">
+                  {{ev.descriptionEvent}}
+                </td>
+                <td class="px-4 py-3">
+                  {{ev.film}}
                 </td>
                 <td class="px-4 py-3">
                   <div class="flex items-center space-x-4 text-sm">
-                    <button ng-click="prerareUpdate(nat.id,nat.nationality)"
+                    <button ng-click="prepareUpdate(ev.idEvent,ev.dateEvent,ev.dateEndEvent,ev.imgEvent,ev.titleEvent,ev.descriptionEvent,ev.film)"
                       class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-sky-600 rounded-lg  focus:outline-none focus:shadow-outline-gray"
                       aria-label="Edit">
                       <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
@@ -127,7 +197,7 @@
                         </path>
                       </svg>
                     </button>
-                    <button @click="openModal" ng-click="prepareDelete(nat.id)"
+                    <button @click="openModal" ng-click="prepareDelete(ev.idEvent)"
                       class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-600 rounded-lg focus:outline-none focus:shadow-outline-gray"
                       aria-label="Delete">
                       <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
@@ -162,7 +232,7 @@
           </span>
           <span class="col-span-2"></span>
           <!-- Pagination -->
-          <!--<span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
+          <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
             <nav aria-label="Table navigation">
               <ul class="inline-flex items-center">
                 <li ng-if="all.prev">
@@ -245,7 +315,7 @@
 
             <!-- Modal description -->
             <p class="text-sm text-gray-700 dark:text-gray-400">
-              Are you sure ? This nationality will be deleted permenantly !
+              Are you sure ? This Event will be deleted permanently !
             </p>
           </div>
         </div>
@@ -255,7 +325,7 @@
             class="w-full px-5 py-3 text-sm font-medium leading-5 text-white text-gray-700 transition-colors duration-150 border border-gray-300 rounded-lg dark:text-gray-400 sm:px-4 sm:py-2 sm:w-auto active:bg-transparent hover:border-gray-500 focus:border-gray-500 active:text-gray-500 focus:outline-none focus:shadow-outline-gray">
             Cancel
           </button>
-          <button ng-click="deleteNat(idNat)" @click="closeModal"
+          <button ng-click="deleteEvent(idEvent)" @click="closeModal"
             class="w-full px-5 py-3 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-700 border border-transparent rounded-lg sm:w-auto sm:px-4 sm:py-2 active:bg-red-700 hover:bg-red-800 focus:outline-none focus:shadow-outline-sky">
             Accept
           </button>

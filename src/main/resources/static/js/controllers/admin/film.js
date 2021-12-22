@@ -1,105 +1,174 @@
-myApp.controller("filmController", function($scope,$http){
+myApp.controller("filmController", function ($scope, $http) {
+  $scope.all = { list: [], next: true, prev: false };
+  $scope.addFilm = false;
+  $scope.editFilm = false;
+  $scope.page = 1;
+  $scope.unPage = 1;
+  $scope.loading = false;
+  $scope.isDeleteOpen = false;
+  $scope.idFilm = "";
+  $scope.film = {
+    titleFilm: "",
+    descriptionFilm: "",
+    dateRelease: "",
+    durationFilm: "",
+    filmType: {},
+    nationality: {},
+    director: {},
+  };
 
-	$scope.all = { list:[], next:true, prev:false};
-	$scope.addNat = false;
-	$scope.editNat = false;
-	$scope.page= 1;
-    $scope.unPage = 1;
-	$scope.loading = false;
-    $scope.isDeleteOpen = false;
-    $scope.idNat = '';
-    $scope.nationalite = '';
-    $scope.searchIn = '';
-    $scope.getNat = function ($page){
-        $scope.loading = true;
-        $http.get('/api/nationality/all/'+$scope.unPage)
-            .then(function successCallback(response){
-                    $scope.loading = false;
-                    $scope.all = response.data;
-        			$scope.natsCount = response.data.length-1;
-                    if($page) $scope.page = $page;
-            }, function errorCallback(response) {
-        			console.log('Error....');
-        			console.log(response);
-            });
-    }
-    $scope.next = function(){ $scope.unPage = $scope.unPage + 1; $scope.getNat($scope.unPage);}
-    $scope.prev = function(){ $scope.unPage = $scope.unPage - 1; $scope.getNat($scope.unPage);}
-    $scope.setAdd = function(){
-        if($scope.editNat)
-            $scope.editNat = false;
-        if(!$scope.addNat)
-            $scope.nationalite = '';
-        $scope.addNat = !$scope.addNat;
-    }
-    $scope.setEdit = function(){
-        if($scope.addNat)
-            $scope.addNat = false;
-         $scope.editNat = !$scope.editNat;}
-    $scope.addNationalite = function($nationalite) {
-        $http.post('/api/nationality/add/',{ nationality: $nationalite })
-            .then(function successCallback(){
-                $scope.getNat();
-                $scope.setAdd();
-            }, function errorCallback(response) {
-                console.log('Error....');
-                console.log(response);
-            });
-    }
-    $scope.updateNationalite = function($id,$nationalite) {
-        $http.put('/api/nationality/update/',{ id: $id, nationality: $nationalite })
-            .then(function successCallback(){
-                $scope.getNat();
-                $scope.setEdit();
-            }, function errorCallback(response) {
-                console.log('Error....');
-                console.log(response);
-            });
-    }
-    $scope.prerareUpdate = function($id,$nat) {
-        $scope.idNat = $id;
-        $scope.nationalite = $nat;
+  $scope.searchIn = "";
+  $scope.getFilms = function ($page) {
+    $scope.loading = true;
+    $http.get("/api/film/all/" + $scope.unPage).then(
+      function successCallback(response) {
+        $scope.loading = false;
+        $scope.all = response.data;
+        $scope.filmsCount = response.data.length - 1;
+        if ($page) $scope.page = $page;
+      },
+      function errorCallback(response) {
+        console.log("Error....");
+        console.log(response);
+      }
+    );
+  };
 
-        if($scope.addNat)
-            $scope.addNat = false;
-        $scope.editNat = true;
+  $scope.getNationalities = function () {
+    $http.get("/api/nationality/all").then(
+      function successCallback(response) {
+        $scope.nationalities = response.data;
+        $scope.film.nationality = $scope.nationalities[0];
+      },
+      function errorCallback(response) {
+        console.log("Error....");
+        console.log(response);
+      }
+    );
+  };
+
+  $scope.getTypeFilm = function () {
+    $http.get("/api/filmtypes/all").then(
+      function successCallback(response) {
+        $scope.typeFilms = response.data;
+        $scope.film.typeFilms = $scope.typeFilms[0];
+      },
+      function errorCallback(response) {
+        console.log("Error....");
+        console.log(response);
+      }
+    );
+  };
+
+  $scope.getDirectors = function () {
+    $http.get("/api/director/all").then(
+      function successCallback(response) {
+        $scope.directors = response.data;
+        $scope.film.director = $scope.directors[0];
+      },
+      function errorCallback(response) {
+        console.log("Error....");
+        console.log(response);
+      }
+    );
+  };
+
+  $scope.next = function () {
+    $scope.unPage = $scope.unPage + 1;
+    $scope.getFilms($scope.unPage);
+  };
+  $scope.prev = function () {
+    $scope.unPage = $scope.unPage - 1;
+    $scope.getFilms($scope.unPage);
+  };
+  $scope.setAdd = function () {
+    if ($scope.editFilm) $scope.editFilm = false;
+    if (!$scope.addFilm) {
+      $scope.film = {
+        titleFilm: "",
+        descriptionFilm: "",
+        dateRelease: "",
+        durationFilm: "",
+        filmType: $scope.typeFilms[0],
+        director: $scope.directors[0],
+        nationality: $scope.nationalities[0],
+      };
     }
-    $scope.prepareDelete = function($idNat){
-        $scope.isDeleteOpen = true;
-        $scope.idNat = $idNat;
-    }
-    $scope.deleteNat = function($idNat){
-        $http.delete('/api/nationality/delete/'+$idNat)
-            .then(function successCallback(){
-                $scope.getNat();
-            }, function errorCallback(response) {
-                console.log('Error....');
-                console.log(response);
-            });
-    }
-    $scope.search = function() {
-        if($scope.searchIn === "")
-        {
-            $scope.page = 1;
-            $scope.unPage = 1;
-            $scope.getNat(1);
+
+    $scope.addFilm = !$scope.addFilm;
+  };
+
+  $scope.setEdit = function () {
+    if ($scope.addFilm) $scope.addFilm = false;
+    $scope.editFilm = !$scope.editFilm;
+  };
+  $scope.addFilms = function ($film) {
+    $http.post("/api/film/add/", $scope.film).then(
+      function successCallback() {
+        $scope.getFilms();
+        $scope.setAdd();
+      },
+      function errorCallback(response) {
+        console.log("Error....");
+        console.log(response);
+      }
+    );
+  };
+  $scope.updateFilm = function () {
+    $http.put("/api/film/update/", $scope.film).then(
+      function successCallback() {
+        $scope.getFilms();
+        $scope.setEdit();
+      },
+      function errorCallback(response) {
+        console.log("Error....");
+        console.log(response);
+      }
+    );
+  };
+  $scope.prepareUpdate = function () {
+    if ($scope.addFilm) $scope.addFilm = false;
+    $scope.editFilm = true;
+  };
+  $scope.prepareDelete = function ($idFil) {
+    $scope.isDeleteOpen = true;
+    $scope.idFilm = $idFil;
+  };
+  $scope.deleteFilm = function ($idFilm) {
+    $http.delete("/api/film/delete/" + $idFilm).then(
+      function successCallback() {
+        $scope.getFilms();
+      },
+      function errorCallback(response) {
+        console.log("Error....");
+        console.log(response);
+      }
+    );
+  };
+  $scope.search = function () {
+    if ($scope.searchIn === "") {
+      $scope.page = 1;
+      $scope.unPage = 1;
+      $scope.getNat(1);
+    } else {
+      $scope.loading = true;
+      $http.get("/api/film/all/keyword/" + $scope.searchIn).then(
+        function successCallback(response) {
+          console.log(response);
+          $scope.loading = false;
+          $scope.all = { list: response.data, next: false, prev: false };
+
+          $scope.filmsCount = response.data.length - 1;
+        },
+        function errorCallback(response) {
+          console.log("Error....");
+          console.log(response);
         }
-        else{
-            $scope.loading = true;
-            $http.get('/api/nationality/all/keyword/'+$scope.searchIn)
-                .then(function successCallback(response){
-                    console.log(response);
-                        $scope.loading = false;
-                        $scope.all = { list :response.data, next: false, prev:false};
-
-                        $scope.natsCount = response.data.length-1;
-                }, function errorCallback(response) {
-                        console.log('Error....');
-                        console.log(response);
-                });  
-        }
+      );
     }
-
-    $scope.getNat();
-
+  };
+  $scope.getTypeFilm();
+  $scope.getDirectors();
+  $scope.getNationalities();
+  $scope.getFilms();
 });
