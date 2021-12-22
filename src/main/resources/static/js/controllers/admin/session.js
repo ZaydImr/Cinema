@@ -96,8 +96,10 @@ myApp.controller("sessionController", function($scope,$http){
             });
     }
     $scope.prerareUpdate = function($id) {
-        $scope.session=$scope.all.list.filter(sec=>sec.id ===$id)[0];        $scope.nationalite = $nat;
+        $scope.session=$scope.all.list.filter(sec=>sec.id ===$id)[0];        
 
+        if($scope.session.dateBeginSession)
+            $scope.session.dateBeginSession = new Date($scope.session.dateBeginSession);
         if($scope.addNat)
             $scope.addNat = false;
         $scope.editNat = true;

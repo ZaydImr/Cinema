@@ -11,11 +11,8 @@ myApp.controller("nationalityController", function($scope,$http){
     $scope.idNat = '';
     $scope.nationalite = '';
     $scope.searchIn = '';
-
-<<<<<<< HEAD
-=======
+    
     // Methodes
->>>>>>> cec7afe7e909209be4695e212477843e7f8341a6
     $scope.getNat = function ($page){
         $scope.loading = true;
         $http.get('/api/nationality/all/'+$scope.unPage)

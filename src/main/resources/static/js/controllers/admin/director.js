@@ -12,8 +12,9 @@ myApp.controller("directorController", function($scope,$http){
         fullnameDirector:'',
         birthdayDirector:'',
         nationalityDirector: {},
-        imgDirector: ''
+        img: {}
     };
+    $scope.file = '';
     $scope.nationalities = [];
     $scope.searchIn = '';
     $scope.getNat = function ($page){
@@ -50,9 +51,8 @@ myApp.controller("directorController", function($scope,$http){
                 fullnameDirector:'',
                 birthdayDirector:'',
                 nationalityDirector: $scope.nationalities[0],
-                imgDirector: ''
+                file: ''
             };
-            console.log($scope.director);
         $scope.addNat = !$scope.addNat;
     }
     $scope.setEdit = function(){
@@ -60,7 +60,8 @@ myApp.controller("directorController", function($scope,$http){
             $scope.addNat = false;
          $scope.editNat = !$scope.editNat;}
     $scope.addNationalite = function() {
-        $http.post('/api/director/add/', $scope.director )
+        console.log($scope.director);
+        $http.post('/api/director/add/', [$scope.director, $scope.file]  )
             .then(function successCallback(){
                 $scope.getNat();
                 $scope.setAdd();
@@ -79,10 +80,10 @@ myApp.controller("directorController", function($scope,$http){
                 console.log(response);
             });
     }
-    $scope.prerareUpdate = function($id,$nat) {
-        $scope.idNat = $id;
-        $scope.nationalite = $nat;
-
+    $scope.prerareUpdate = function($id) {
+        $scope.director = $scope.all.list.filter(di=> di.id === $id)[0];
+        if($scope.director.birthdayDirector)
+            $scope.director.birthdayDirector = new Date($scope.director.birthdayDirector);
         if($scope.addNat)
             $scope.addNat = false;
         $scope.editNat = true;
@@ -121,6 +122,14 @@ myApp.controller("directorController", function($scope,$http){
                         console.log(response);
                 });  
         }
+    }
+    
+    $scope.onchan = function (elm) {
+        $scope.file = elm.files[0];
+        var frm = new FormData();
+        frm.append('file', $scope.file );
+
+        $http.post('' , frm , { headers:{'Content-Type' : 'multipart/form-data'}})
     }
 
     $scope.getNationalities();

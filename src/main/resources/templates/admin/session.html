@@ -80,7 +80,7 @@
         <h4 class="mt-2 mb-3 text-xl font-semibold text-gray-700 dark:text-gray-200">Edit Session</h4>
         <label class="block text-sm">
           <span class="text-gray-700 dark:text-gray-400">id</span>
-          <input ng-model="idNat" ng-disabled="true"
+          <input ng-model="session.id" ng-disabled="true"
             class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
             placeholder="Marocaine" />
           <span class="text-gray-700 dark:text-gray-400">Date Begin Session</span>
@@ -158,7 +158,7 @@
                   {{session.film}}
                 </td>
                 <td class="px-4 py-3">
-                  {{session.room}}
+                  {{session.room.nameRoom}}
                 </td>
                 <td class="px-4 py-3">
                   <div class="flex items-center space-x-4 text-sm">
