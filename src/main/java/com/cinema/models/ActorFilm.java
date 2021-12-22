@@ -16,11 +16,11 @@ import java.util.UUID;
 public class ActorFilm extends AbstractModel<UUID> implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @MapsId("idFilm")
     @JoinColumn(name = "idFilm")
     private Film film;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @MapsId("idActor")
     @JoinColumn(name = "idActor")
     private Actor actor;

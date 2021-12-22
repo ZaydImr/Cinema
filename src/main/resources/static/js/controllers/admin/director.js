@@ -61,7 +61,7 @@ myApp.controller("directorController", function($scope,$http){
          $scope.editNat = !$scope.editNat;}
     $scope.addNationalite = function() {
         console.log($scope.director);
-        $http.post('/api/director/add/', [$scope.director, $scope.file]  )
+        $http.post('/api/director/add/', $scope.director  )
             .then(function successCallback(){
                 $scope.getNat();
                 $scope.setAdd();

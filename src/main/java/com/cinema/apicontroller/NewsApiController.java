@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/nationality")
+@RequestMapping("/api/news")
 @RequiredArgsConstructor
 public class NewsApiController {
     public final NewsService newsService;
@@ -32,7 +32,7 @@ public class NewsApiController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<News>> getAllNationalities(){
+    public ResponseEntity<List<News>> getAllNews(){
         List<News> news = newsService.getAll();
         return new ResponseEntity<>(news, HttpStatus.OK);
     }
@@ -44,7 +44,7 @@ public class NewsApiController {
     }
 
     @GetMapping("/find/{id}")
-    public ResponseEntity<News> getNationalityById(@PathVariable("id") UUID id) {
+    public ResponseEntity<News> getNewsById(@PathVariable("id") UUID id) {
         News news = null;
         try {
             news = newsService.getElementById(id);
@@ -55,13 +55,13 @@ public class NewsApiController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<News> addNationality(@RequestBody News news) {
+    public ResponseEntity<News> addNews(@RequestBody News news) {
         News newNews = newsService.addEntity(news);
         return new ResponseEntity<>(newNews, HttpStatus.CREATED);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<News> updateNationality(@RequestBody News news) {
+    public ResponseEntity<News> updateNews(@RequestBody News news) {
         News updatedNews = newsService.updateEntity(news);
         return new ResponseEntity<>(updatedNews, HttpStatus.OK);
     }

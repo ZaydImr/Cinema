@@ -35,7 +35,7 @@
 
       <!--  Add Formulaire  -->
       <div ng-if="addEvent" class="px-4 py-3 m-auto mt-6 bg-white rounded-lg shadow-md dark:bg-gray-800"
-        style="max-width: 350px;">
+      style="max-width: 500px;width: 100%;">
         <h4 class="mt-2 mb-3 text-xl font-semibold text-gray-700 dark:text-gray-200">Add Event</h4>
         <label class="block text-sm">
           <span class="text-gray-700 dark:text-gray-400">Start Date</span>
@@ -88,7 +88,7 @@
 
       <!--  Edit Formulaire  -->
       <div ng-if="editEvent" class="px-4 py-3 m-auto mt-6 bg-white rounded-lg shadow-md dark:bg-gray-800"
-        style="max-width: 400px;width: 100%;">
+      style="max-width: 500px;width: 100%;">
         <h4 class="mt-2 mb-3 text-xl font-semibold text-gray-700 dark:text-gray-200">Edit Event</h4>
         <label class="block text-sm">
           <span class="text-gray-700 dark:text-gray-400">Date Start Event</span>
@@ -153,7 +153,6 @@
             <thead>
               <tr
                 class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                <th class="px-4 py-3">Id Event</th>
                 <th class="px-4 py-3">Start Date</th>
                 <th class="px-4 py-3">End Date</th>
                 <th class="px-4 py-3">Image URL</th>
@@ -165,9 +164,6 @@
             <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
 
               <tr class="text-gray-700 dark:text-gray-400" ng-repeat="ev in all.list">
-                <td class="px-4 py-3">
-                  {{ev.idEvent}}
-                </td>
                 <td class="px-4 py-3">
                   {{ev.dateEvent}}
                 </td>
@@ -280,7 +276,6 @@
           </span>
         </div>
       </div>
-    -->
     </div>
 
     <!-- Modal backdrop. This what you want to place close to the closing body tag -->

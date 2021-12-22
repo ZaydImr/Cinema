@@ -35,7 +35,7 @@
 
       <!--  Add Formulaire  -->
       <div ng-if="addFilm" class="px-4 py-3 m-auto mt-6 bg-white rounded-lg shadow-md dark:bg-gray-800"
-        style="max-width: 350px;">
+        style="max-width: 500px;width: 100%;">
         <h4 class="mt-2 mb-3 text-xl font-semibold text-gray-700 dark:text-gray-200">Add Film</h4>
         <label class="block text-sm">
           <span class="text-gray-700 dark:text-gray-400">Film Title</span>
@@ -92,7 +92,7 @@
 
       <!--  Edit Formulaire  -->
       <div ng-if="editFilm" class="px-4 py-3 m-auto mt-6 bg-white rounded-lg shadow-md dark:bg-gray-800"
-        style="max-width: 400px;width: 100%;">
+        style="max-width: 500px;width: 100%;">
         <h4 class="mt-2 mb-3 text-xl font-semibold text-gray-700 dark:text-gray-200">Edit Film</h4>
         <label class="block text-sm">
           <span class="text-gray-700 dark:text-gray-400">id</span>
@@ -165,7 +165,6 @@
             <thead>
               <tr
                 class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                <th class="px-4 py-3">ID Film</th>
                 <th class="px-4 py-3">Title Film</th>
                 <th class="px-4 py-3">Description Film</th>
                 <th class="px-4 py-3">Date Release</th>
@@ -178,9 +177,6 @@
             <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
 
               <tr class="text-gray-700 dark:text-gray-400" ng-repeat="film in all.list">
-                <td class="px-4 py-3">
-                  {{film.idFilm}}
-                </td>
                 <td class="px-4 py-3">
                   {{film.titleFilm}}
                 </td>
@@ -297,7 +293,6 @@
           </span>
         </div>
       </div>
-    -->
     </div>
 
     <!-- Modal backdrop. This what you want to place close to the closing body tag -->

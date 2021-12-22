@@ -29,16 +29,21 @@ public class Film extends AbstractModel<UUID> implements Serializable {
     private LocalDate dateRelease;
     @Column(name = "durationFilm")
     private LocalDateTime durationFilm;
-    @ManyToOne(fetch = FetchType.EAGER)
+
+    @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "idTypeFilm")
     private FilmType filmType;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "idActor")
     private Actor actor;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "idLanguage")
+    @JsonIgnore
     private Nationality nationality;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "idDirector")
     private Director director;
     @OneToMany(mappedBy = "film",targetEntity = Comment.class)

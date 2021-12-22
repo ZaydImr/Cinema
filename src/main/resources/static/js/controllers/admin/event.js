@@ -17,7 +17,7 @@ myApp.controller("eventController", function ($scope, $http) {
   $scope.searchIn = "";
   $scope.getEvent = function ($page) {
     $scope.loading = true;
-    $http.get("/api/events/all/" + $scope.unPage).then(
+    $http.get("/api/event/all/" + $scope.unPage).then(
       function successCallback(response) {
         $scope.loading = false;
         $scope.all = response.data;
@@ -71,7 +71,7 @@ myApp.controller("eventController", function ($scope, $http) {
     $scope.editEvent = !$scope.editEvent;
   };
   $scope.addEvents = function () {
-    $http.post("/api/events/add/", $scope.event).then(
+    $http.post("/api/event/add/", $scope.event).then(
       function successCallback() {
         $scope.getEvent();
         $scope.setAdd();
@@ -83,7 +83,7 @@ myApp.controller("eventController", function ($scope, $http) {
     );
   };
   $scope.updateEvent = function () {
-    $http.put("/api/events/update/", $scope.event).then(
+    $http.put("/api/event/update/", $scope.event).then(
       function successCallback() {
         $scope.getEvent();
         $scope.setEdit();
@@ -103,7 +103,7 @@ myApp.controller("eventController", function ($scope, $http) {
     $scope.idEvent = $idEvent;
   };
   $scope.deleteEvent = function ($idEvent) {
-    $http.delete("/api/events/delete/" + $idEvent).then(
+    $http.delete("/api/event/delete/" + $idEvent).then(
       function successCallback() {
         $scope.getEvent();
       },
@@ -120,7 +120,7 @@ myApp.controller("eventController", function ($scope, $http) {
       $scope.getEvent(1);
     } else {
       $scope.loading = true;
-      $http.get("/api/events/all/keyword/" + $scope.searchIn).then(
+      $http.get("/api/event/all/keyword/" + $scope.searchIn).then(
         function successCallback(response) {
           console.log(response);
           $scope.loading = false;

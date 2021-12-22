@@ -32,6 +32,6 @@ public class Director extends AbstractModel<UUID> implements Serializable {
     private String imgDirector;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "director",fetch = FetchType.EAGER,targetEntity = Film.class)
+    @OneToMany(mappedBy = "director",targetEntity = Film.class)
     private Set<Film> films;
 }
