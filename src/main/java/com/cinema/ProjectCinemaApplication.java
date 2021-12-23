@@ -1,8 +1,10 @@
 package com.cinema;
 
+import com.cinema.repositories.IUserRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -11,6 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @SpringBootApplication
+@EnableJpaRepositories(basePackageClasses = IUserRepository.class)
 public class ProjectCinemaApplication {
 
 	public static void main(String[] args) {

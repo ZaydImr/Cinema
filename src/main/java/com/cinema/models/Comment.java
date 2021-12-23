@@ -17,12 +17,12 @@ import java.util.UUID;
 public class Comment extends AbstractModel<UUID> implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "idUser")
     private User user;
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "idFilm")
+    @JsonIgnore
     private Film film;
     @Column(name = "contentComment")
     private String contentComment;

@@ -20,7 +20,7 @@ public class AdminController {
     private final String session = "admin/session";
     private final String account = "admin/create-account";
 
-    @GetMapping
+    @GetMapping()
     public String index()
     {
         return index;
