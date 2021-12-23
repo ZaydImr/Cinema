@@ -5,6 +5,7 @@ import com.cinema.models.Visitors;
 import com.cinema.repositories.INewsRepository;
 import com.cinema.repositories.IVisitorsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -25,15 +26,20 @@ public class VisitorsService extends AbstractService<Visitors, UUID> {
     }
 
     public int GetTodaysVisitors(LocalDate date) {
-        return visitorsRepository.getVisitorsCountBYDate(date);
+        return visitorsRepository.getVisitorsCountByDate(date);
     }
 
-    public List<Integer> GetMonthVisitors(LocalDate date) {
+    public List<Integer> GetMonthVisitors() {
+        return visitorsRepository.getVisitorsCountByMonth(PageRequest.of(0,30));
+    }
+
+
+    /*public List<Integer> GetMonthVisitors(LocalDate date) {
         List<Integer> list = new ArrayList<>();
         for (int i = -29; i <=0; i++) {
             LocalDate newDate = date.plusDays(i);
             list.add(GetTodaysVisitors(newDate));
         }
         return list;
-    }
+    }*/
 }

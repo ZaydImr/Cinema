@@ -57,7 +57,7 @@
                                     </button>
                                 </li>
                                 <!-- Profile menu -->
-                                <li class="relative">
+                                <li ng-if="account" class="relative">
                                     <button
                                         class="align-middle rounded-full focus:shadow-outline-sky focus:outline-none"
                                         @click="toggleProfileMenu" @keydown.escape="closeProfileMenu"
@@ -114,6 +114,11 @@
                                             </li>
                                         </ul>
                                     </template>
+                                </li>
+                                <li>
+                                    <a href="/login">
+                                        <button class="px-3 py-1 text-white transition-colors duration-150 bg-sky-600 border border-r-0 border-sky-600 rounded-md focus:outline-none focus:shadow-outline-sky ng-binding">login</button>
+                                    </a>
                                 </li>
                             </ul>
                         </div>

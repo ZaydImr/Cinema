@@ -47,7 +47,7 @@ public class VisitorsApiController {
 
     @GetMapping("/month")
     public ResponseEntity<List<Integer>> getAllVisitorsByMonth(){
-        List<Integer> visitors = visitorsService.GetMonthVisitors(LocalDate.now());
+        List<Integer> visitors = visitorsService.GetMonthVisitors();
         return new ResponseEntity<>(visitors, HttpStatus.OK);
     }
 
@@ -64,6 +64,7 @@ public class VisitorsApiController {
 
     @PostMapping("/add")
     public ResponseEntity<Visitors> addVisitor(@RequestBody Visitors visitors) {
+        visitors.setDateVisit(LocalDate.now().plusDays(-1));
         Visitors newVisitors = visitorsService.addEntity(visitors);
         return new ResponseEntity<>(newVisitors, HttpStatus.CREATED);
     }

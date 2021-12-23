@@ -1,4 +1,4 @@
-Date.prototype.addDays = function(days) {
+Date.prototype.addDays = function (days) {
   var date = new Date(this.valueOf());
   date.setDate(date.getDate() + days);
   return date;
@@ -71,7 +71,14 @@ myApp.controller("dashboardController", function ($scope, $http) {
     $http.get("/api/visitors/month").then(
       function successCallback(response) {
 
-        $scope.monthVisitors = response.data;
+        let list = [];
+        for (let i = 29; i >= 0; i--){
+          if(response.data[i] == null)
+            list.push(0)
+          else
+            list.push(response.data[i])
+        }
+        $scope.monthVisitors = list;
 
         const lineConfig = {
           type: 'line',
@@ -82,7 +89,7 @@ myApp.controller("dashboardController", function ($scope, $http) {
                 label: 'Visitors per day',
                 backgroundColor: '#0694a2',
                 borderColor: '#0694a2',
-                data: response.data,
+                data: $scope.monthVisitors,
                 fill: false,
               }
             ],
