@@ -1,6 +1,5 @@
 package com.cinema.services;
 
-import com.cinema.models.Nationality;
 import com.cinema.models.Room;
 import com.cinema.repositories.IRoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,5 +1,6 @@
 package com.cinema.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,6 +21,7 @@ public class Role extends AbstractModel<UUID> implements Serializable {
 
     @Column(name = "role")
     private String role ;
+    @JsonIgnore
     @ManyToMany(mappedBy = "roles")
     private Set<User> users ;
 
