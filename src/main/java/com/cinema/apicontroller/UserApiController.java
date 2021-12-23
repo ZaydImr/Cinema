@@ -32,6 +32,12 @@ public class UserApiController {
         return new ResponseEntity<>(page,HttpStatus.OK) ;
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<Long> countAllFilms(){
+        Long count = userService.getCountOfUsers();
+        return new ResponseEntity<>(count,HttpStatus.OK);
+    }
+
     @GetMapping("/all")
     public ResponseEntity<List<User>> getAllUsers(){
         List<User> Users = userService.getAll();

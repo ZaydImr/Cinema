@@ -19,7 +19,6 @@ public class TypeUser extends AbstractModel<UUID> implements Serializable {
 
     @Column(name = "typeUser")
     private String typeUser ;
-    @OneToMany(mappedBy = "typeUser",fetch = FetchType.EAGER,targetEntity = User.class)
-    private Set<User> users ;
+
 
 }

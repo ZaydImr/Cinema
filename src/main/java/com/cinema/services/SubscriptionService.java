@@ -20,29 +20,7 @@ public class SubscriptionService extends AbstractService<Subscription, UUID> {
         return subscriptionRepository;
     }
 
-    /*@Override
-    public List<Subscription> GetAll() {
-        return subscriptionRepository.findAll();
+    public long getCountOfSubscriptions(){
+        return subscriptionRepository.count();
     }
-
-    @Override
-    public Subscription AddEntity(Subscription subscription) {
-        return subscriptionRepository.save(subscription);
-    }
-
-    @Override
-    public Subscription UpdateEntity(Subscription subscription) {
-        return subscriptionRepository.save(subscription);
-    }
-
-    @Override
-    public Subscription GetOneById(UUID id) {
-        return subscriptionRepository.findSubscriptionById(id)
-                .orElseThrow(() -> new ElementNotFoundException("Subscription was not found !"));
-    }
-
-    @Override
-    public void DeleteEntity(UUID id) {
-        subscriptionRepository.deleteSubscriptionById(id);
-    }*/
 }

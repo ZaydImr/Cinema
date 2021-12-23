@@ -20,30 +20,7 @@ public class UserService extends AbstractService<User, UUID> {
         return userRepository;
     }
 
-
- /*   @Override
-    public List<User> GetAll() {
-        return userRepository.findAll();
+    public long getCountOfUsers(){
+        return userRepository.count();
     }
-
-    @Override
-    public User AddEntity(User user) {
-        return userRepository.save(user);
-    }
-
-    @Override
-    public User UpdateEntity(User user) {
-        return userRepository.save(user);
-    }
-
-    @Override
-    public User GetOneById(UUID id) {
-        return userRepository.findUserById(id)
-                .orElseThrow(() -> new ElementNotFoundException("User was not found !"));
-    }
-
-    @Override
-    public void DeleteEntity(UUID id) {
-        userRepository.deleteUserById(id);
-    }*/
 }

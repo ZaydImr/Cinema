@@ -19,29 +19,7 @@ public class FilmService extends AbstractService<Film, UUID> {
         return filmRepository;
     }
 
-    /*@Override
-    public List<Film> GetAll() {
-        return filmRepository.findAll();
-    }
-
-    @Override
-    public Film AddEntity(Film film) {
-        return filmRepository.save(film);
-    }
-
-    @Override
-    public Film UpdateEntity(Film film) {
-        return filmRepository.save(film);
-    }
-
-    @Override
-    public Film GetOneById(UUID id) {
-        return filmRepository.findFilmById(id)
-                .orElseThrow(() -> new ElementNotFoundException("Film was not found !"));
-    }
-
-    @Override
-    public void DeleteEntity(UUID id) {
-        filmRepository.deleteFilmById(id);
-    }*/
+   public long getCountOfFilms(){
+        return filmRepository.count();
+   }
 }

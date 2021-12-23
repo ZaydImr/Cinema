@@ -32,6 +32,12 @@ public class SubscriptionApiController {
         return new ResponseEntity<>(page,HttpStatus.OK) ;
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<Long> countAllFilms(){
+        Long count = subscriptionService.getCountOfSubscriptions();
+        return new ResponseEntity<>(count,HttpStatus.OK);
+    }
+
     @GetMapping("/all")
     public ResponseEntity<List<Subscription>> getAllSubscriptions(){
         List<Subscription> Subscriptions = subscriptionService.getAll();

@@ -1,14 +1,11 @@
 package com.cinema.apicontroller;
 
 import com.cinema.classGeneric.Page;
-import com.cinema.models.Director;
 import com.cinema.models.Film;
-import com.cinema.models.Nationality;
 import com.cinema.services.FilmService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,8 +18,8 @@ public class FilmApiController {
     public final FilmService filmService;
 
     @GetMapping(value = "all/{pageNumber}")
-    public ResponseEntity<com.cinema.classGeneric.Page<Film>> list(@PathVariable Integer pageNumber) {
-        com.cinema.classGeneric.Page<Film> page = new Page<>();
+    public ResponseEntity<Page<Film>> list(@PathVariable Integer pageNumber) {
+        Page<Film> page = new Page<>();
         page.setList(filmService.getList(pageNumber));
         page.setNext(filmService.getList(pageNumber + 1).size() > 0);
         if(pageNumber -1 > 0)
@@ -37,6 +34,13 @@ public class FilmApiController {
         List<Film> films = filmService.getAll();
         return new ResponseEntity<>(films, HttpStatus.OK);
     }
+
+    @GetMapping("/count")
+    public ResponseEntity<Long> countAllFilms(){
+        Long count = filmService.getCountOfFilms();
+        return new ResponseEntity<>(count,HttpStatus.OK);
+    }
+
     @GetMapping("/find/{id}")
     public ResponseEntity<Film> getFilmById(@PathVariable("id")UUID id){
         Film film = null;
