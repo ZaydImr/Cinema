@@ -1,77 +1,80 @@
 myApp.controller("filmTypeController", function($scope,$http){
 
+    // Variables
 	$scope.all = { list:[], next:true, prev:false};
-	$scope.addNat = false;
-	$scope.editNat = false;
+	$scope.add = false;
+	$scope.edit = false;
 	$scope.page= 1;
     $scope.unPage = 1;
 	$scope.loading = false;
     $scope.isDeleteOpen = false;
-    $scope.idNat = '';
-    $scope.nationalite = '';
+    $scope.idCategory = '';
+    $scope.category = '';
     $scope.searchIn = '';
-    $scope.getNat = function ($page){
+    
+    // Functions
+    $scope.getFilmTypes = function ($page){
         $scope.loading = true;
         $http.get('/api/filmtypes/all/'+$scope.unPage)
             .then(function successCallback(response){
                     $scope.loading = false;
                     $scope.all = response.data;
-        			$scope.natsCount = response.data.length-1;
+        			$scope.categoryCount = response.data.length-1;
                     if($page) $scope.page = $page;
             }, function errorCallback(response) {
         			console.log('Error....');
         			console.log(response);
             });
     }
-    $scope.next = function(){ $scope.unPage = $scope.unPage + 1; $scope.getNat($scope.unPage);}
-    $scope.prev = function(){ $scope.unPage = $scope.unPage - 1; $scope.getNat($scope.unPage);}
+    $scope.next = function(){ $scope.unPage = $scope.unPage + 1; $scope.getFilmTypes($scope.unPage);}
+    $scope.prev = function(){ $scope.unPage = $scope.unPage - 1; $scope.getFilmTypes($scope.unPage);}
     $scope.setAdd = function(){
-        if($scope.editNat)
-            $scope.editNat = false;
-        if(!$scope.addNat)
-            $scope.nationalite = '';
-        $scope.addNat = !$scope.addNat;
+        if($scope.edit)
+            $scope.edit = false;
+        if(!$scope.add)
+            $scope.category = '';
+        $scope.add = !$scope.add;
     }
     $scope.setEdit = function(){
-        if($scope.addNat)
-            $scope.addNat = false;
-         $scope.editNat = !$scope.editNat;}
-    $scope.addNationalite = function($nationalite) {
-        $http.post('/api/filmtypes/add/',{ nationality: $nationalite })
+        if($scope.add)
+            $scope.add = false;
+         $scope.edit = !$scope.edit;}
+    $scope.addCategory = function($category) {
+        $http.post('/api/filmtypes/add/',{ typeFilm: $category })
             .then(function successCallback(){
-                $scope.getNat();
+                $scope.getFilmTypes();
                 $scope.setAdd();
             }, function errorCallback(response) {
                 console.log('Error....');
                 console.log(response);
             });
     }
-    $scope.updateNationalite = function($id,$nationalite) {
-        $http.put('/api/filmtypes/update/',{ id: $id, nationality: $nationalite })
+    $scope.updateCategory = function($id,$category) {
+        $http.put('/api/filmtypes/update/',{ id: $id, typeFilm: $category })
             .then(function successCallback(){
-                $scope.getNat();
+                $scope.getFilmTypes();
                 $scope.setEdit();
             }, function errorCallback(response) {
                 console.log('Error....');
                 console.log(response);
             });
     }
-    $scope.prerareUpdate = function($id,$nat) {
-        $scope.idNat = $id;
-        $scope.nationalite = $nat;
+    $scope.prerareUpdate = function($id,category) {
+        $scope.idCategory = $id;
+        $scope.category = category;
 
-        if($scope.addNat)
-            $scope.addNat = false;
-        $scope.editNat = true;
+        if($scope.add)
+            $scope.add = false;
+        $scope.edit = true;
     }
-    $scope.prepareDelete = function($idNat){
+    $scope.prepareDelete = function($idCategory){
         $scope.isDeleteOpen = true;
-        $scope.idNat = $idNat;
+        $scope.idCategory = $idCategory;
     }
-    $scope.deleteNat = function($idNat){
-        $http.delete('/api/filmtypes/delete/'+$idNat)
+    $scope.deleteCategory = function($idCategory){
+        $http.delete('/api/filmtypes/delete/'+$idCategory)
             .then(function successCallback(){
-                $scope.getNat();
+                $scope.getFilmTypes();
             }, function errorCallback(response) {
                 console.log('Error....');
                 console.log(response);
@@ -82,7 +85,7 @@ myApp.controller("filmTypeController", function($scope,$http){
         {
             $scope.page = 1;
             $scope.unPage = 1;
-            $scope.getNat(1);
+            $scope.getFilmTypes(1);
         }
         else{
             $scope.loading = true;
@@ -92,7 +95,7 @@ myApp.controller("filmTypeController", function($scope,$http){
                         $scope.loading = false;
                         $scope.all = { list :response.data, next: false, prev:false};
 
-                        $scope.natsCount = response.data.length-1;
+                        $scope.categoryCount = response.data.length-1;
                 }, function errorCallback(response) {
                         console.log('Error....');
                         console.log(response);
@@ -100,6 +103,6 @@ myApp.controller("filmTypeController", function($scope,$http){
         }
     }
 
-    $scope.getNat();
+    $scope.getFilmTypes();
 
 });

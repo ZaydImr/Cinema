@@ -1,5 +1,6 @@
 package com.cinema.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,10 +23,15 @@ public class Actor extends AbstractModel<UUID> implements Serializable {
     private String fullNameActor;
     @Column(name = "birthdayActor")
     private LocalDate birthdayActor;
-    @Column(name = "nationalityActor")
-    private String nationalityActor;
+    @ManyToOne
+    @JoinColumn(name = "idNationalityActor")
+    private Nationality nationalityActor;
+
     @Column(name = "imgActor")
     private String imgActor;
-    @OneToMany(mappedBy = "actor",fetch = FetchType.EAGER,targetEntity = ActorFilm.class)
+    @OneToMany(mappedBy = "actor",targetEntity = ActorFilm.class)
+    @JsonIgnore
     private Set<ActorFilm> actorFilms;
+    
+
 }

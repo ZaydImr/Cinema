@@ -1,5 +1,6 @@
 package com.cinema.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -27,7 +28,7 @@ public class Events extends AbstractModel<UUID> implements Serializable {
     private String titleEvent;
     @Column(name = "descriptionEvent")
     private String descriptionEvent;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "idFilm")
     private Film film;
 }

@@ -1,5 +1,6 @@
 package com.cinema.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,10 +22,10 @@ public class Session extends AbstractModel<UUID> implements Serializable {
     private LocalDateTime dateBeginSession;
     @Column(name = "tarif")
     private double tarif;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "idFilm")
     private Film film;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "idRoom")
     private Room room;
 }
