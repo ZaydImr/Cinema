@@ -23,11 +23,9 @@ public class Session extends AbstractModel<UUID> implements Serializable {
     @Column(name = "tarif")
     private double tarif;
     @ManyToOne
-    @JsonIgnore
     @JoinColumn(name = "idFilm")
     private Film film;
     @ManyToOne
-    @JsonIgnore
     @JoinColumn(name = "idRoom")
     private Room room;
 }

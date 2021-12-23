@@ -29,7 +29,6 @@ public class Events extends AbstractModel<UUID> implements Serializable {
     @Column(name = "descriptionEvent")
     private String descriptionEvent;
     @ManyToOne
-    @JsonIgnore
     @JoinColumn(name = "idFilm")
     private Film film;
 }

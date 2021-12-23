@@ -1,5 +1,6 @@
 package com.cinema.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -18,7 +19,8 @@ public class FilmType extends AbstractModel<UUID> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Column(name = "typeFilm")
-        private String typeFilm;
-    @OneToMany(mappedBy = "filmType",fetch = FetchType.EAGER,targetEntity = Film.class)
+    private String typeFilm;
+    @OneToMany(mappedBy = "filmType",targetEntity = Film.class)
+    @JsonIgnore
     private Set<Film> films;
 }

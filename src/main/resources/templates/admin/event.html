@@ -70,7 +70,7 @@
         <label class="block text-sm">
           <span class="text-gray-700 dark:text-gray-400">Film</span>
           <select  ng-model="event.film.id"  class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input">
-            <option ng-repeat="film in films" value="{{film.id}}">{{event.film}}</option>
+            <option ng-repeat="film in films" value="{{film.id}}">{{film.titleFilm}}</option>
           </select>
         </label>
         <footer
@@ -112,9 +112,9 @@
                  class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
           ></textarea>
           <span class="text-gray-700 dark:text-gray-400">Film</span>
-          <input ng-model="event.film" autofocus="true"
-                 class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-          />
+          <select  ng-model="event.film.id"  class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input">
+            <option ng-repeat="film in films" value="{{film.id}}">{{film.titleFilm}}</option>
+          </select>
         </label>
 
         <footer
@@ -159,6 +159,7 @@
                 <th class="px-4 py-3">Title</th>
                 <th class="px-4 py-3">Description</th>
                 <th class="px-4 py-3">Film</th>
+                <th class="px-4 py-3">Action</th>
               </tr>
             </thead>
             <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
@@ -180,11 +181,11 @@
                   {{ev.descriptionEvent}}
                 </td>
                 <td class="px-4 py-3">
-                  {{ev.film}}
+                  {{ev.film.titleFilm}}
                 </td>
                 <td class="px-4 py-3">
                   <div class="flex items-center space-x-4 text-sm">
-                    <button ng-click="prepareUpdate(ev.idEvent,ev.dateEvent,ev.dateEndEvent,ev.imgEvent,ev.titleEvent,ev.descriptionEvent,ev.film)"
+                    <button ng-click="prepareUpdate(ev.id)"
                       class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-sky-600 rounded-lg  focus:outline-none focus:shadow-outline-gray"
                       aria-label="Edit">
                       <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
@@ -193,7 +194,7 @@
                         </path>
                       </svg>
                     </button>
-                    <button @click="openModal" ng-click="prepareDelete(ev.idEvent)"
+                    <button @click="openModal" ng-click="prepareDelete(ev.id)"
                       class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-600 rounded-lg focus:outline-none focus:shadow-outline-gray"
                       aria-label="Delete">
                       <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">

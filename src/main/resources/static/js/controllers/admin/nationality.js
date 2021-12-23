@@ -13,7 +13,7 @@ myApp.controller("nationalityController", function($scope,$http){
     $scope.searchIn = '';
     
     // Methodes
-    $scope.getNat = function ($page){
+    $scope.getNationalities = function ($page){
         $scope.loading = true;
         $http.get('/api/nationality/all/'+$scope.unPage)
             .then(function successCallback(response){
@@ -26,8 +26,8 @@ myApp.controller("nationalityController", function($scope,$http){
         			console.log(response);
             });
     }
-    $scope.next = function(){ $scope.unPage = $scope.unPage + 1; $scope.getNat($scope.unPage);}
-    $scope.prev = function(){ $scope.unPage = $scope.unPage - 1; $scope.getNat($scope.unPage);}
+    $scope.next = function(){ $scope.unPage = $scope.unPage + 1; $scope.getNationalities($scope.unPage);}
+    $scope.prev = function(){ $scope.unPage = $scope.unPage - 1; $scope.getNationalities($scope.unPage);}
 
     $scope.setAdd = function(){
         if($scope.editNat)
@@ -42,11 +42,10 @@ myApp.controller("nationalityController", function($scope,$http){
             $scope.addNat = false;
          $scope.editNat = !$scope.editNat;
         }
-
     $scope.addNationalite = function($nationalite) {
         $http.post('/api/nationality/add/',{ nationality: $nationalite })
             .then(function successCallback(){
-                $scope.getNat();
+                $scope.getNationalities();
                 $scope.setAdd();
             }, function errorCallback(response) {
                 console.log('Error....');
@@ -56,7 +55,7 @@ myApp.controller("nationalityController", function($scope,$http){
     $scope.updateNationalite = function($id,$nationalite) {
         $http.put('/api/nationality/update/',{ id: $id, nationality: $nationalite })
             .then(function successCallback(){
-                $scope.getNat();
+                $scope.getNationalities();
                 $scope.setEdit();
             }, function errorCallback(response) {
                 console.log('Error....');
@@ -78,7 +77,7 @@ myApp.controller("nationalityController", function($scope,$http){
     $scope.deleteNat = function($idNat){
         $http.delete('/api/nationality/delete/'+$idNat)
             .then(function successCallback(){
-                $scope.getNat();
+                $scope.getNationalities();
             }, function errorCallback(response) {
                 console.log('Error....');
                 console.log(response);
@@ -89,7 +88,7 @@ myApp.controller("nationalityController", function($scope,$http){
         {
             $scope.page = 1;
             $scope.unPage = 1;
-            $scope.getNat(1);
+            $scope.getNationalities(1);
         }
         else{
             $scope.loading = true;
@@ -106,7 +105,7 @@ myApp.controller("nationalityController", function($scope,$http){
         }
     }
 
-    
-    $scope.getNat();
+    // Initialization
+    $scope.getNationalities();
 
 });

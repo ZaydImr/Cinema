@@ -1,4 +1,6 @@
 myApp.controller("filmController", function ($scope, $http) {
+
+  // Variables
   $scope.all = { list: [], next: true, prev: false };
   $scope.addFilm = false;
   $scope.editFilm = false;
@@ -16,8 +18,9 @@ myApp.controller("filmController", function ($scope, $http) {
     nationality: {},
     director: {},
   };
-
   $scope.searchIn = "";
+
+  // Functions
   $scope.getFilms = function ($page) {
     $scope.loading = true;
     $http.get("/api/film/all/" + $scope.unPage).then(
@@ -126,16 +129,25 @@ myApp.controller("filmController", function ($scope, $http) {
       }
     );
   };
-  $scope.prepareUpdate = function () {
+  $scope.prepareUpdate = function (idFilm) {
+    $scope.film = $scope.all.list.filter(film=>film.id===idFilm)[0];
+
+    if($scope.film.dateRelease)
+      $scope.film.dateRelease = new Date($scope.film.dateRelease);
+    if($scope.film.durationFilm)
+      $scope.film.durationFilm = new Date($scope.film.durationFilm);
+    
+
     if ($scope.addFilm) $scope.addFilm = false;
     $scope.editFilm = true;
   };
-  $scope.prepareDelete = function ($idFil) {
+  $scope.prepareDelete = function (idFilm) {
     $scope.isDeleteOpen = true;
-    $scope.idFilm = $idFil;
+    $scope.idFilm = idFilm;
+    console.log(idFilm);
   };
-  $scope.deleteFilm = function ($idFilm) {
-    $http.delete("/api/film/delete/" + $idFilm).then(
+  $scope.deleteFilm = function () {
+    $http.delete("/api/film/delete/"+ $scope.idFilm).then(
       function successCallback() {
         $scope.getFilms();
       },
@@ -167,6 +179,8 @@ myApp.controller("filmController", function ($scope, $http) {
       );
     }
   };
+
+  // Initialization
   $scope.getTypeFilm();
   $scope.getDirectors();
   $scope.getNationalities();

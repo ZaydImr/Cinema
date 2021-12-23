@@ -40,14 +40,14 @@ public class VisitorsApiController {
     }
 
     @GetMapping("/today")
-    public ResponseEntity<Integer> getAllVisitorsByDay(@PathVariable("keyword") LocalDate date){
-        Integer visitors = visitorsService.GetTodaysVisitors(date);
+    public ResponseEntity<Integer> getAllVisitorsByDay(){
+        Integer visitors = visitorsService.GetTodaysVisitors(LocalDate.now());
         return new ResponseEntity<>(visitors, HttpStatus.OK);
     }
 
     @GetMapping("/month")
-    public ResponseEntity<List<Integer>> getAllVisitorsByMonth(@PathVariable("keyword") LocalDate date){
-        List<Integer> visitors = visitorsService.GetMonthVisitors(date);
+    public ResponseEntity<List<Integer>> getAllVisitorsByMonth(){
+        List<Integer> visitors = visitorsService.GetMonthVisitors(LocalDate.now());
         return new ResponseEntity<>(visitors, HttpStatus.OK);
     }
 

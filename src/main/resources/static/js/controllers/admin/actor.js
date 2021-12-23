@@ -1,13 +1,14 @@
 myApp.controller("actorController", function($scope,$http){
 
+    // Variables
 	$scope.all = { list:[], next:true, prev:false};
-	$scope.addNat = false;
-	$scope.editNat = false;
+	$scope.add = false;
+	$scope.edit = false;
 	$scope.page= 1;
     $scope.unPage = 1;
 	$scope.loading = false;
     $scope.isDeleteOpen = false;
-    $scope.idNat = '';
+    $scope.idActor = '';
     $scope.actor =  {
         fullNameActor:'',
         birthdayActor:'',
@@ -16,20 +17,20 @@ myApp.controller("actorController", function($scope,$http){
     };
     $scope.nationalities = [];
     $scope.searchIn = '';
-    $scope.getNat = function ($page){
+
+    // Functions
+    $scope.getActors = function ($page){
         $scope.loading = true;
         $http.get('/api/actor/all/'+$scope.unPage)
             .then(function successCallback(response){
                     $scope.loading = false;
                     $scope.all = response.data;
-        			$scope.natsCount = response.data.length-1;
                     if($page) $scope.page = $page;
             }, function errorCallback(response) {
         			console.log('Error....');
         			console.log(response);
             });
     }
-
     $scope.getNationalities = function (){
         $http.get('/api/nationality/all')
             .then(function successCallback(response){
@@ -40,12 +41,12 @@ myApp.controller("actorController", function($scope,$http){
         			console.log(response);
             });
     }
-    $scope.next = function(){ $scope.unPage = $scope.unPage + 1; $scope.getNat($scope.unPage);}
-    $scope.prev = function(){ $scope.unPage = $scope.unPage - 1; $scope.getNat($scope.unPage);}
+    $scope.next = function(){ $scope.unPage = $scope.unPage + 1; $scope.getActors($scope.unPage);}
+    $scope.prev = function(){ $scope.unPage = $scope.unPage - 1; $scope.getActors($scope.unPage);}
     $scope.setAdd = function(){
-        if($scope.editNat)
-            $scope.editNat = false;
-        if(!$scope.addNat)
+        if($scope.edit)
+            $scope.edit = false;
+        if(!$scope.add)
             $scope.actor = {
                 fullnameActor:'',
                 birthdayActor:'',
@@ -53,26 +54,26 @@ myApp.controller("actorController", function($scope,$http){
                 imgActorr: ''
             };
             console.log($scope.Actor);
-        $scope.addNat = !$scope.addNat;
+        $scope.add = !$scope.add;
     }
     $scope.setEdit = function(){
-        if($scope.addNat)
-            $scope.addNat = false;
-         $scope.editNat = !$scope.editNat;}
-    $scope.addNationalite = function() {
+        if($scope.add)
+            $scope.add = false;
+         $scope.edit = !$scope.edit;}
+    $scope.addActor = function() {
         $http.post('/api/actor/add/', $scope.actor )
             .then(function successCallback(){
-                $scope.getNat();
+                $scope.getActors();
                 $scope.setAdd();
             }, function errorCallback(response) {
                 console.log('Error....');
                 console.log(response);
             });
     }
-    $scope.updateNationalite = function($id,$nationalite) {
+    $scope.updateActor = function($id,$actor) {
         $http.put('/api/actor/update/', $scope.actor )
             .then(function successCallback(){
-                $scope.getNat();
+                $scope.getActors();
                 $scope.setEdit();
             }, function errorCallback(response) {
                 console.log('Error....');
@@ -81,20 +82,20 @@ myApp.controller("actorController", function($scope,$http){
     }
     $scope.prerareUpdate = function($id) {
         $scope.actor=$scope.all.list.filter(ac=>ac.id ===$id)[0];
-        $scope.actor.birthdayActor= new Date ($scope.actor.birthdayActor);
-
-        if($scope.addNat)
-            $scope.addNat = false;
-        $scope.editNat = true;
+        if($scope.actor.birthdayActor)
+            $scope.actor.birthdayActor= new Date ($scope.actor.birthdayActor);
+        if($scope.add)
+            $scope.add = false;
+        $scope.edit = true;
     }
-    $scope.prepareDelete = function($idNat){
+    $scope.prepareDelete = function($idActor){
         $scope.isDeleteOpen = true;
-        $scope.idNat = $idNat;
+        $scope.idActor = $idActor;
     }
-    $scope.deleteNat = function($idNat){
-        $http.delete('/api/actor/delete/'+$idNat)
+    $scope.deleteActor = function($idActor){
+        $http.delete('/api/actor/delete/'+$idActor)
             .then(function successCallback(){
-                $scope.getNat();
+                $scope.getActors();
             }, function errorCallback(response) {
                 console.log('Error....');
                 console.log(response);
@@ -105,7 +106,7 @@ myApp.controller("actorController", function($scope,$http){
         {
             $scope.page = 1;
             $scope.unPage = 1;
-            $scope.getNat(1);
+            $scope.getActors(1);
         }
         else{
             $scope.loading = true;
@@ -114,8 +115,6 @@ myApp.controller("actorController", function($scope,$http){
                     console.log(response);
                         $scope.loading = false;
                         $scope.all = { list :response.data, next: false, prev:false};
-
-                        $scope.natsCount = response.data.length-1;
                 }, function errorCallback(response) {
                         console.log('Error....');
                         console.log(response);
@@ -123,7 +122,8 @@ myApp.controller("actorController", function($scope,$http){
         }
     }
 
+    // Initialization
     $scope.getNationalities();
-    $scope.getNat();
+    $scope.getActors();
 
 });

@@ -1,13 +1,14 @@
 myApp.controller("directorController", function($scope,$http){
 
+    // Variables
 	$scope.all = { list:[], next:true, prev:false};
-	$scope.addNat = false;
-	$scope.editNat = false;
+	$scope.add = false;
+	$scope.edit = false;
 	$scope.page= 1;
     $scope.unPage = 1;
 	$scope.loading = false;
     $scope.isDeleteOpen = false;
-    $scope.idNat = '';
+    $scope.idDirector = '';
     $scope.director =  {
         fullnameDirector:'',
         birthdayDirector:'',
@@ -17,20 +18,21 @@ myApp.controller("directorController", function($scope,$http){
     $scope.file = '';
     $scope.nationalities = [];
     $scope.searchIn = '';
-    $scope.getNat = function ($page){
+
+    // Functions
+    $scope.getDirectors = function ($page){
         $scope.loading = true;
         $http.get('/api/director/all/'+$scope.unPage)
             .then(function successCallback(response){
                     $scope.loading = false;
                     $scope.all = response.data;
-        			$scope.natsCount = response.data.length-1;
+        			$scope.directorsCount = response.data.length-1;
                     if($page) $scope.page = $page;
             }, function errorCallback(response) {
         			console.log('Error....');
         			console.log(response);
             });
     }
-
     $scope.getNationalities = function (){
         $http.get('/api/nationality/all')
             .then(function successCallback(response){
@@ -41,39 +43,39 @@ myApp.controller("directorController", function($scope,$http){
         			console.log(response);
             });
     }
-    $scope.next = function(){ $scope.unPage = $scope.unPage + 1; $scope.getNat($scope.unPage);}
-    $scope.prev = function(){ $scope.unPage = $scope.unPage - 1; $scope.getNat($scope.unPage);}
+    $scope.next = function(){ $scope.unPage = $scope.unPage + 1; $scope.getDirectors($scope.unPage);}
+    $scope.prev = function(){ $scope.unPage = $scope.unPage - 1; $scope.getDirectors($scope.unPage);}
     $scope.setAdd = function(){
-        if($scope.editNat)
-            $scope.editNat = false;
-        if(!$scope.addNat)
+        if($scope.edit)
+            $scope.edit = false;
+        if(!$scope.add)
             $scope.director = {
                 fullnameDirector:'',
                 birthdayDirector:'',
                 nationalityDirector: $scope.nationalities[0],
                 file: ''
             };
-        $scope.addNat = !$scope.addNat;
+        $scope.add = !$scope.add;
     }
     $scope.setEdit = function(){
-        if($scope.addNat)
-            $scope.addNat = false;
-         $scope.editNat = !$scope.editNat;}
-    $scope.addNationalite = function() {
+        if($scope.add)
+            $scope.add = false;
+         $scope.edit = !$scope.edit;}
+    $scope.addDirector = function() {
         console.log($scope.director);
         $http.post('/api/director/add/', $scope.director  )
             .then(function successCallback(){
-                $scope.getNat();
+                $scope.getDirectors();
                 $scope.setAdd();
             }, function errorCallback(response) {
                 console.log('Error....');
                 console.log(response);
             });
     }
-    $scope.updateNationalite = function($id,$nationalite) {
+    $scope.updateDirector = function() {
         $http.put('/api/director/update/', $scope.director )
             .then(function successCallback(){
-                $scope.getNat();
+                $scope.getDirectors();
                 $scope.setEdit();
             }, function errorCallback(response) {
                 console.log('Error....');
@@ -84,18 +86,18 @@ myApp.controller("directorController", function($scope,$http){
         $scope.director = $scope.all.list.filter(di=> di.id === $id)[0];
         if($scope.director.birthdayDirector)
             $scope.director.birthdayDirector = new Date($scope.director.birthdayDirector);
-        if($scope.addNat)
-            $scope.addNat = false;
-        $scope.editNat = true;
+        if($scope.add)
+            $scope.add = false;
+        $scope.edit = true;
     }
-    $scope.prepareDelete = function($idNat){
+    $scope.prepareDelete = function($idDirector){
         $scope.isDeleteOpen = true;
-        $scope.idNat = $idNat;
+        $scope.idDirector = $idDirector;
     }
-    $scope.deleteNat = function($idNat){
-        $http.delete('/api/director/delete/'+$idNat)
+    $scope.deleteDirector = function($idDirector){
+        $http.delete('/api/director/delete/'+$idDirector)
             .then(function successCallback(){
-                $scope.getNat();
+                $scope.getDirectors();
             }, function errorCallback(response) {
                 console.log('Error....');
                 console.log(response);
@@ -106,7 +108,7 @@ myApp.controller("directorController", function($scope,$http){
         {
             $scope.page = 1;
             $scope.unPage = 1;
-            $scope.getNat(1);
+            $scope.getDirectors(1);
         }
         else{
             $scope.loading = true;
@@ -116,7 +118,7 @@ myApp.controller("directorController", function($scope,$http){
                         $scope.loading = false;
                         $scope.all = { list :response.data, next: false, prev:false};
 
-                        $scope.natsCount = response.data.length-1;
+                        $scope.directorsCount = response.data.length-1;
                 }, function errorCallback(response) {
                         console.log('Error....');
                         console.log(response);
@@ -132,7 +134,8 @@ myApp.controller("directorController", function($scope,$http){
         $http.post('' , frm , { headers:{'Content-Type' : 'multipart/form-data'}})
     }
 
+    // Initialization
     $scope.getNationalities();
-    $scope.getNat();
+    $scope.getDirectors();
 
 });

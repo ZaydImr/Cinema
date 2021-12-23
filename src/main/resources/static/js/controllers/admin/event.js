@@ -94,16 +94,17 @@ myApp.controller("eventController", function ($scope, $http) {
       }
     );
   };
-  $scope.prepareUpdate = function () {
+  $scope.prepareUpdate = function (idEvent) {
+    $scope.event = $scope.all.list.filter(ev => ev.id === idEvent)[0];
     if ($scope.addEvent) $scope.addEvent = false;
     $scope.editEvent = true;
   };
-  $scope.prepareDelete = function () {
+  $scope.prepareDelete = function (idEvent) {
     $scope.isDeleteOpen = true;
-    $scope.idEvent = $idEvent;
+    $scope.idEvent = idEvent;
   };
-  $scope.deleteEvent = function ($idEvent) {
-    $http.delete("/api/event/delete/" + $idEvent).then(
+  $scope.deleteEvent = function () {
+    $http.delete("/api/event/delete/" + $scope.idEvent).then(
       function successCallback() {
         $scope.getEvent();
       },

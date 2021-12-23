@@ -1,77 +1,58 @@
 myApp.controller("newsController", function($scope,$http){
 
+    // Variables
 	$scope.all = { list:[], next:true, prev:false};
-	$scope.addNat = false;
-	$scope.editNat = false;
+	$scope.add = false;
 	$scope.page= 1;
     $scope.unPage = 1;
 	$scope.loading = false;
     $scope.isDeleteOpen = false;
-    $scope.idNat = '';
-    $scope.nationalite = '';
+    $scope.idNews = '';
+    $scope.news = {
+        subject: '',
+        content: ''
+    };
     $scope.searchIn = '';
-    $scope.getNat = function ($page){
+
+    // Functions
+    $scope.getAll = function ($page){
         $scope.loading = true;
-        $http.get('/api/nationality/all/'+$scope.unPage)
+        $http.get('/api/news/all/'+$scope.unPage)
             .then(function successCallback(response){
                     $scope.loading = false;
                     $scope.all = response.data;
-        			$scope.natsCount = response.data.length-1;
+        			$scope.newsCount = response.data.length-1;
                     if($page) $scope.page = $page;
             }, function errorCallback(response) {
         			console.log('Error....');
         			console.log(response);
             });
     }
-    $scope.next = function(){ $scope.unPage = $scope.unPage + 1; $scope.getNat($scope.unPage);}
-    $scope.prev = function(){ $scope.unPage = $scope.unPage - 1; $scope.getNat($scope.unPage);}
+    $scope.next = function(){ $scope.unPage = $scope.unPage + 1; $scope.getAll($scope.unPage);}
+    $scope.prev = function(){ $scope.unPage = $scope.unPage - 1; $scope.getAll($scope.unPage);}
     $scope.setAdd = function(){
-        if($scope.editNat)
-            $scope.editNat = false;
-        if(!$scope.addNat)
-            $scope.nationalite = '';
-        $scope.addNat = !$scope.addNat;
+        if(!$scope.add)
+            $scope.news = {
+                subject: '',
+                content: ''
+            };
+        $scope.add = !$scope.add;
     }
-    $scope.setEdit = function(){
-        if($scope.addNat)
-            $scope.addNat = false;
-         $scope.editNat = !$scope.editNat;}
-    $scope.addNationalite = function($nationalite) {
-        $http.post('/api/nationality/add/',{ nationality: $nationalite })
+    $scope.addNews = function() {
+        $http.post('/api/news/add/',$scope.news )
             .then(function successCallback(){
-                $scope.getNat();
+                $scope.getAll();
                 $scope.setAdd();
             }, function errorCallback(response) {
                 console.log('Error....');
                 console.log(response);
             });
     }
-    $scope.updateNationalite = function($id,$nationalite) {
-        $http.put('/api/nationality/update/',{ id: $id, nationality: $nationalite })
+    $scope.updateNews = function($id,$news) {
+        $http.put('/api/news/update/',{ id: $id, nationality: $news })
             .then(function successCallback(){
-                $scope.getNat();
+                $scope.getAll();
                 $scope.setEdit();
-            }, function errorCallback(response) {
-                console.log('Error....');
-                console.log(response);
-            });
-    }
-    $scope.prerareUpdate = function($id,$nat) {
-        $scope.idNat = $id;
-        $scope.nationalite = $nat;
-
-        if($scope.addNat)
-            $scope.addNat = false;
-        $scope.editNat = true;
-    }
-    $scope.prepareDelete = function($idNat){
-        $scope.isDeleteOpen = true;
-        $scope.idNat = $idNat;
-    }
-    $scope.deleteNat = function($idNat){
-        $http.delete('/api/nationality/delete/'+$idNat)
-            .then(function successCallback(){
-                $scope.getNat();
             }, function errorCallback(response) {
                 console.log('Error....');
                 console.log(response);
@@ -82,17 +63,17 @@ myApp.controller("newsController", function($scope,$http){
         {
             $scope.page = 1;
             $scope.unPage = 1;
-            $scope.getNat(1);
+            $scope.getAll(1);
         }
         else{
             $scope.loading = true;
-            $http.get('/api/nationality/all/keyword/'+$scope.searchIn)
+            $http.get('/api/news/all/keyword/'+$scope.searchIn)
                 .then(function successCallback(response){
                     console.log(response);
                         $scope.loading = false;
                         $scope.all = { list :response.data, next: false, prev:false};
 
-                        $scope.natsCount = response.data.length-1;
+                        $scope.newsCount = response.data.length-1;
                 }, function errorCallback(response) {
                         console.log('Error....');
                         console.log(response);
@@ -100,6 +81,7 @@ myApp.controller("newsController", function($scope,$http){
         }
     }
 
-    $scope.getNat();
+    // Initialization
+    $scope.getAll();
 
 });

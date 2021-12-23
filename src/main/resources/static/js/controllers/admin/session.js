@@ -1,14 +1,14 @@
 myApp.controller("sessionController", function($scope,$http){
 
+    // Variables
 	$scope.all = { list:[], next:true, prev:false};
-	$scope.addNat = false;
-	$scope.editNat = false;
+	$scope.add = false;
+	$scope.edit = false;
 	$scope.page= 1;
     $scope.unPage = 1;
 	$scope.loading = false;
     $scope.isDeleteOpen = false;
-    $scope.idNat = '';
-    //$scope.nationalite = '';
+    $scope.idSession = '';
     $scope.session = {
         dateBeginSession:'',
         tarif:'',
@@ -18,7 +18,9 @@ myApp.controller("sessionController", function($scope,$http){
     $scope.rooms=[];
     $scope.films=[];
     $scope.searchIn = '';
-    $scope.getNat = function ($page){
+
+    // Functions
+    $scope.getSessions = function ($page){
         $scope.loading = true;
         $http.get('/api/session/all/'+$scope.unPage)
             .then(function successCallback(response){
@@ -31,8 +33,6 @@ myApp.controller("sessionController", function($scope,$http){
         			console.log(response);
             });
     }
-// to be continued
-
     $scope.getFilms = function (){
         $http.get('/api/film/all')
             .then(function successCallback(response){
@@ -43,8 +43,6 @@ myApp.controller("sessionController", function($scope,$http){
         			console.log(response);
             });
     }
-
-// to be continued
     $scope.getRooms = function (){
         $http.get('/api/room/all')
             .then(function successCallback(response){
@@ -55,40 +53,39 @@ myApp.controller("sessionController", function($scope,$http){
         			console.log(response);
             });
     }
-
-    $scope.next = function(){ $scope.unPage = $scope.unPage + 1; $scope.getNat($scope.unPage);}
-    $scope.prev = function(){ $scope.unPage = $scope.unPage - 1; $scope.getNat($scope.unPage);}
+    $scope.next = function(){ $scope.unPage = $scope.unPage + 1; $scope.getSessions($scope.unPage);}
+    $scope.prev = function(){ $scope.unPage = $scope.unPage - 1; $scope.getSessions($scope.unPage);}
     $scope.setAdd = function(){
-        if($scope.editNat)
-            $scope.editNat = false;
-        if(!$scope.addNat)
+        if($scope.edit)
+            $scope.edit = false;
+        if(!$scope.add)
             $scope.session = {
                 dateBeginSession:'',
                 tarif:'',
                 film:$scope.films[0],
                 room:$scope.rooms[0]
             };
-            console.log($scope.session);
-        $scope.addNat = !$scope.addNat;
+        $scope.add = !$scope.add;
     }
     $scope.setEdit = function(){
-        if($scope.addNat)
-            $scope.addNat = false;
-         $scope.editNat = !$scope.editNat;}
-    $scope.addNationalite = function() {
+        if($scope.add)
+            $scope.add = false;
+         $scope.edit = !$scope.edit;
+    }
+    $scope.addSession = function() {
         $http.post('/api/session/add/', $scope.session)
             .then(function successCallback(){
-                $scope.getNat();
+                $scope.getSessions();
                 $scope.setAdd();
             }, function errorCallback(response) {
                 console.log('Error....');
                 console.log(response);
             });
     }
-    $scope.updateNationalite = function($id,$nationalite) {
+    $scope.updateSession = function() {
         $http.put('/api/session/update/', $scope.session)
             .then(function successCallback(){
-                $scope.getNat();
+                $scope.getSessions();
                 $scope.setEdit();
             }, function errorCallback(response) {
                 console.log('Error....');
@@ -100,18 +97,18 @@ myApp.controller("sessionController", function($scope,$http){
 
         if($scope.session.dateBeginSession)
             $scope.session.dateBeginSession = new Date($scope.session.dateBeginSession);
-        if($scope.addNat)
-            $scope.addNat = false;
-        $scope.editNat = true;
+        if($scope.add)
+            $scope.add = false;
+        $scope.edit = true;
     }
-    $scope.prepareDelete = function($idNat){
+    $scope.prepareDelete = function($idSession){
         $scope.isDeleteOpen = true;
-        $scope.idNat = $idNat;
+        $scope.idSession = $idSession;
     }
-    $scope.deleteNat = function($idNat){
-        $http.delete('/api/session/delete/'+$idNat)
+    $scope.deleteSession = function($idSession){
+        $http.delete('/api/session/delete/'+$idSession)
             .then(function successCallback(){
-                $scope.getNat();
+                $scope.getSessions();
             }, function errorCallback(response) {
                 console.log('Error....');
                 console.log(response);
@@ -122,7 +119,7 @@ myApp.controller("sessionController", function($scope,$http){
         {
             $scope.page = 1;
             $scope.unPage = 1;
-            $scope.getNat(1);
+            $scope.getSessions(1);
         }
         else{
             $scope.loading = true;
@@ -140,7 +137,8 @@ myApp.controller("sessionController", function($scope,$http){
         }
     }
 
-    $scope.getNat();
+    // Initialization
+    $scope.getSessions();
     $scope.getRooms();
     $scope.getFilms();
 
