@@ -2,11 +2,7 @@ package com.cinema.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
 import javax.persistence.*;
-import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -16,7 +12,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name="User")
-//@Data
+@Data
 @Getter
 @Setter
 @NoArgsConstructor
@@ -28,6 +24,8 @@ public class User extends AbstractModel<UUID> implements Serializable {
     private String email ;
     @Column(name = "password")
     private String password ;
+    @Column(name="reset_password_token")
+    private String resetPasswordToken;
     @Column(name = "fullnameUser")
     private String fullnameUser ;
     @Column(name = "birthdayUser")

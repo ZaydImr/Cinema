@@ -9,6 +9,8 @@ import com.cinema.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,9 +18,15 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/api/user")
-@RequiredArgsConstructor
+
 public class UserApiController {
-    public final UserService userService;
+    private UserService userService;
+    private PasswordEncoder passwordEncoder;
+
+    public UserApiController(UserService userService){
+        this.userService = userService;
+        this.passwordEncoder = new BCryptPasswordEncoder();
+    }
 
     @GetMapping(value = "all/{pageNumber}")
     public ResponseEntity<com.cinema.classGeneric.Page<User>> list(@PathVariable Integer pageNumber) {
@@ -57,20 +65,9 @@ public class UserApiController {
 
     @PostMapping("/add")
     public ResponseEntity<User> addUser(@RequestBody User user) {
+        String encoderPassword = this.passwordEncoder.encode(user.getPassword());
+        user.setPassword(encoderPassword);
         User newUser = userService.addEntity(user);
-        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
-    }
-
-    @GetMapping("/add")
-    public ResponseEntity<User> addUserD() {
-        User u = new User();
-        Role r = new Role();
-        r.setId(UUID.fromString("75736572-0000-0000-0000-000000000000"));
-        Set<Role> roles = new HashSet<>();
-        roles.add(r);
-        u.setRoles(roles);
-
-        User newUser = userService.addEntity(u);
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
 

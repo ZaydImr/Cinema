@@ -2,6 +2,7 @@ package com.cinema.security;
 
 import com.cinema.models.Role;
 import com.cinema.models.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -11,16 +12,8 @@ import java.util.*;
 public class MyUserDetails extends org.springframework.security.core.userdetails.User {
 
     private User user;
-    /*private String email;
-    private String password;
-    private List<GrantedAuthority> authorities;*/
 
     public MyUserDetails(User user){
-        /*this.email = user.getEmail();
-        this.password = user.getPassword();
-        this.authorities = Arrays.stream(user.getRole().split(","))
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());*/
         super(user.getEmail(),user.getPassword(),getAuthorities(user));
         this.user = user;
     }
@@ -39,7 +32,7 @@ public class MyUserDetails extends org.springframework.security.core.userdetails
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return (user.getPassword());
     }
 
     @Override
