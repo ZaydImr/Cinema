@@ -1,3 +1,26 @@
+myApp.directive('input',function(){
+    return {
+      restrict: 'E',
+      scope: {
+        ngModel: '=',
+        ngChange: '&',
+        type: '@'
+      },
+      link: function (scope, element, attrs) {
+        if(scope.type.toLowerCase()!='file'){
+          return;
+        }
+        element.bind('change', function(){
+          let files =  element[0].files;
+          scope.ngModel = files;
+          scope.$apply();
+          scope.ngChange();
+        });
+      }
+    }
+    
+})
+
 myApp.controller("actorController", function($scope,$http){
 
     // Variables
@@ -17,6 +40,7 @@ myApp.controller("actorController", function($scope,$http){
     };
     $scope.nationalities = [];
     $scope.searchIn = '';
+    $scope.picture = [];
 
     // Functions
     $scope.getActors = function ($page){
@@ -46,14 +70,15 @@ myApp.controller("actorController", function($scope,$http){
     $scope.setAdd = function(){
         if($scope.edit)
             $scope.edit = false;
-        if(!$scope.add)
+        if(!$scope.add){
             $scope.actor = {
                 fullnameActor:'',
                 birthdayActor:'',
                 nationalityActor: $scope.nationalities[0],
-                imgActorr: ''
+                imgActor: ''
             };
-            console.log($scope.Actor);
+            $scope.picture = [];
+        }
         $scope.add = !$scope.add;
     }
     $scope.setEdit = function(){
@@ -121,6 +146,60 @@ myApp.controller("actorController", function($scope,$http){
                 });  
         }
     }
+    $scope.fileuploads = function(event){
+        console.log("fewfew");
+        const files = event.target.files;
+        this.filesGallerie = files;
+        console.log(files);
+        console.log(event);
+        if(files){
+          for(let i=0; i< files.length;i++){
+            this.allfiles.push(files[i]);
+            const readerfiles = new FileReader();
+            readerfiles.onload=(filedata)=>{
+              this.image = readerfiles.result + '';
+              this.images.push(this.image);
+            };
+            readerfiles.readAsDataURL(files[i]);
+          }
+        }
+      }
+
+    $scope.addPhoto = function() {  
+
+        var url = "/api/upload/add";
+
+
+        var data = new FormData();
+
+        data.append("description", "actor");
+        console.log($scope.actor.imgActor);
+        for (i = 0; i < $scope.actor.imgActor.length; i++) {
+            data.append("files", $scope.actor.imgActor[i]);
+        }
+
+        var config = {
+            transformRequest: angular.identity,
+            transformResponse: angular.identity,
+            headers: {
+                'Content-Type': undefined
+            }
+        }
+       
+
+       $http.post(url, data, config).then(
+            // Success
+            function(response) {
+                $scope.actor.imgActor =  response.data;
+                if($scope.add) $scope.addActor();
+                else $scope.updateActor();
+            },
+            // Error
+            function(response) {
+                console.log(response.data);
+            });
+    };
+      
 
     // Initialization
     $scope.getNationalities();

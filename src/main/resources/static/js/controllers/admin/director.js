@@ -1,3 +1,26 @@
+myApp.directive('input',function(){
+    return {
+      restrict: 'E',
+      scope: {
+        ngModel: '=',
+        ngChange: '&',
+        type: '@'
+      },
+      link: function (scope, element, attrs) {
+        if(scope.type.toLowerCase()!='file'){
+          return;
+        }
+        element.bind('change', function(){
+          let files =  element[0].files;
+          scope.ngModel = files;
+          scope.$apply();
+          scope.ngChange();
+        });
+      }
+    }
+    
+})
+
 myApp.controller("directorController", function($scope,$http){
 
     // Variables
@@ -13,7 +36,7 @@ myApp.controller("directorController", function($scope,$http){
         fullnameDirector:'',
         birthdayDirector:'',
         nationalityDirector: {},
-        img: {}
+        imgDirector: {}
     };
     $scope.file = '';
     $scope.nationalities = [];
@@ -53,7 +76,7 @@ myApp.controller("directorController", function($scope,$http){
                 fullnameDirector:'',
                 birthdayDirector:'',
                 nationalityDirector: $scope.nationalities[0],
-                file: ''
+                imgDirector: ''
             };
         $scope.add = !$scope.add;
     }
@@ -62,7 +85,6 @@ myApp.controller("directorController", function($scope,$http){
             $scope.add = false;
          $scope.edit = !$scope.edit;}
     $scope.addDirector = function() {
-        console.log($scope.director);
         $http.post('/api/director/add/', $scope.director  )
             .then(function successCallback(){
                 $scope.getDirectors();
@@ -126,13 +148,38 @@ myApp.controller("directorController", function($scope,$http){
         }
     }
     
-    $scope.onchan = function (elm) {
-        $scope.file = elm.files[0];
-        var frm = new FormData();
-        frm.append('file', $scope.file );
+    $scope.addPhoto = function() {  
 
-        $http.post('' , frm , { headers:{'Content-Type' : 'multipart/form-data'}})
-    }
+        var url = "/api/upload/add";
+
+        var data = new FormData();
+
+        data.append("description", "director");
+        console.log($scope.director.imgDirector);
+        for (i = 0; i < $scope.director.imgDirector.length; i++) {
+            data.append("files", $scope.director.imgDirector[i]);
+        }
+
+        var config = {
+            transformRequest: angular.identity,
+            transformResponse: angular.identity,
+            headers: {
+                'Content-Type': undefined
+            }
+        }
+
+       $http.post(url, data, config).then(
+            // Success
+            function(response) {
+                $scope.director.imgDirector =  response.data;
+                if($scope.add) $scope.addDirector();
+                else $scope.updateDirector();
+            },
+            // Error
+            function(response) {
+                console.log(response.data);
+            });
+    };
 
     // Initialization
     $scope.getNationalities();

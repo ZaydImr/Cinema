@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -47,7 +48,9 @@ public class VisitorsApiController {
 
     @GetMapping("/month")
     public ResponseEntity<List<Integer>> getAllVisitorsByMonth(){
-        List<Integer> visitors = visitorsService.GetMonthVisitors();
+        List<Integer> visitors = new ArrayList<>();
+        for(int i = 29 ;i>=0;i--)
+            visitors.add(visitorsService.GetTodaysVisitors(LocalDate.now().plusDays(-i)));
         return new ResponseEntity<>(visitors, HttpStatus.OK);
     }
 

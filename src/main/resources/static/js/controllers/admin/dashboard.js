@@ -70,15 +70,8 @@ myApp.controller("dashboardController", function ($scope, $http) {
   $scope.getVisitors = function () {
     $http.get("/api/visitors/month").then(
       function successCallback(response) {
-
-        let list = [];
-        for (let i = 29; i >= 0; i--){
-          if(response.data[i] == null)
-            list.push(0)
-          else
-            list.push(response.data[i])
-        }
-        $scope.monthVisitors = list;
+        
+        $scope.monthVisitors = response.data;
 
         const lineConfig = {
           type: 'line',

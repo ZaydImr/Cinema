@@ -1,0 +1,14 @@
+package com.cinema.form;
+
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
+
+@Getter
+@Setter
+public class UploadForm {
+
+    private String description;
+    private MultipartFile[] files;
+
+}
