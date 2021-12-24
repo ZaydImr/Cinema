@@ -1,6 +1,8 @@
-myApp.controller("registerController", function ($scope, $http) {
+var myApp = angular.module('myApp',[]);
 
-    $scope.message = "igtg";
+myApp.controller("registerController", function ($scope, $http) {
+  
+  $scope.message = "";
 	$scope.user = {
 	    fullnameUser: "",
 	    phoneNumberUser: "",
@@ -10,15 +12,13 @@ myApp.controller("registerController", function ($scope, $http) {
 	    birthdayUser: "",
 	    imgUser: "",
 	    check: false,
-	    role: []
+	    roles: []
 	};
-	$scope.roles = [];
 
     $scope.getRoles = function () {
-        $http.get("/api/role/all").then(
+        $http.get("/api/role/find/ROLE_USER").then(
           function successCallback(response) {
-            $scope.roles = response.data;
-            $scope.user.role[0] = $scope.roles[0];
+            $scope.user.roles[0] = response.data;
           },
           function errorCallback(response) {
             console.log("Error....");

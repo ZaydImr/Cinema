@@ -64,7 +64,7 @@ public class VisitorsApiController {
 
     @PostMapping("/add")
     public ResponseEntity<Visitors> addVisitor(@RequestBody Visitors visitors) {
-        visitors.setDateVisit(LocalDate.now().plusDays(-1));
+        visitors.setDateVisit(LocalDate.now());
         Visitors newVisitors = visitorsService.addEntity(visitors);
         return new ResponseEntity<>(newVisitors, HttpStatus.CREATED);
     }

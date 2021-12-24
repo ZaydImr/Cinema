@@ -8,8 +8,6 @@
     
     <!--    AngularJs   -->
     <script src="../js/angular/angular.min.js"></script>
-
-    <script src="../js/controllers/admin/sidebar.js"></script>
     <script src="../js/controllers/register.js"></script>
 
     <!--    Tailwind    -->
@@ -21,7 +19,7 @@
 
 </head>
 
-<body ng-controller="registerController">
+<body ng-app="myApp" ng-controller="registerController">
     <div class="flex items-center min-h-screen p-6 bg-gray-50 dark:bg-gray-900">
         <div class="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-xl dark:bg-gray-800">
             <div class="flex flex-col overflow-y-auto md:flex-row">
@@ -42,7 +40,6 @@
                             <input
                                 class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                 placeholder="Jane Doe" ng-model="user.fullnameUser"/>
-                            {{user.fullnameUser}}
                         </label>
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Birthday</span>
