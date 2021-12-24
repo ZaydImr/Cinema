@@ -4,6 +4,7 @@ import com.cinema.classGeneric.Page;
 import com.cinema.models.Director;
 import com.cinema.models.Nationality;
 import com.cinema.models.Subscription;
+import com.cinema.services.EmailSenderService;
 import com.cinema.services.SubscriptionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,6 +21,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class SubscriptionApiController {
     public final SubscriptionService subscriptionService;
+    public final EmailSenderService emailSenderService;
 
     @GetMapping(value = "all/{pageNumber}")
     public ResponseEntity<com.cinema.classGeneric.Page<Subscription>> list(@PathVariable Integer pageNumber) {
@@ -42,6 +45,22 @@ public class SubscriptionApiController {
     public ResponseEntity<List<Subscription>> getAllSubscriptions(){
         List<Subscription> Subscriptions = subscriptionService.getAll();
         return new ResponseEntity<>(Subscriptions, HttpStatus.OK);
+    }
+
+    @PostMapping("/sendEmail")
+    public ResponseEntity<?> sendSimpleEmail(String body,String subject) {
+        this.emailSenderService.sendSimpleEmail(body,subject);
+        return new ResponseEntity<>( HttpStatus.OK);
+    }
+
+    @PostMapping("/sendEmailAttachment")
+    public ResponseEntity<?> sendAttachmentEmail(String body,String subject,String Attach) {
+        try {
+            this.emailSenderService.sendEmailWithAttachment(body,subject,Attach);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>( HttpStatus.OK);
     }
 
     @GetMapping("/find/{id}")

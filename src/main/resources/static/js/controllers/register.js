@@ -30,7 +30,7 @@ myApp.controller("registerController", function ($scope, $http) {
     $scope.addUser = function () {
         $http.post('/api/user/add/', $scope.user ).then(
           function successCallback() {
-                location.replace('/login');
+                location.replace('/login);
                 $scope.message = "The user with Email:" + $user.email + "was added successfully !" ;
                 console.log("Success");
           },
