@@ -8,9 +8,19 @@
   <title>Cinema - Events</title>
 
   <script src="../js/controllers/admin/event.js"></script>
+  <style>
+
+    
+    button[disabled="disabled"]{
+      opacity: 0.4;
+      cursor: not-allowed !important;
+    }
+    
+
+  </style>
 </head>
 
-<body ng-controller="eventController">
+<body ng-controller="eventController" >
 
   <div layout:fragment="header" class="flex justify-center flex-1 lg:mr-32">
     <div class="relative w-full max-w-xl mr-6 focus-within:text-sky-500">
@@ -34,38 +44,54 @@
 
 
       <!--  Add Formulaire  -->
+      <form name="eventForm" novalidate>
       <div ng-if="addEvent" class="px-4 py-3 m-auto mt-6 bg-white rounded-lg shadow-md dark:bg-gray-800"
       style="max-width: 500px;width: 100%;">
         <h4 class="mt-2 mb-3 text-xl font-semibold text-gray-700 dark:text-gray-200">Add Event</h4>
         <label class="block text-sm">
           <span class="text-gray-700 dark:text-gray-400">Start Date</span>
-          <input type="datetime-local" id="addEvent" ng-model="event.dateEvent" auto-focus="true"
+          <input type="datetime-local" id="addEvent" ng-model="event.dateEvent" auto-focus="true"  ng-required="true" name="startdate"
             class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
              />
+             <div ng-show="eventForm.startdate.$touched && eventForm.startdate.$invalid" >
+              <small style="color: red ; display:block; text-align: center;">Enter a valid date </small>
+          </div>
         </label>
         <label class="block text-sm">
           <span class="text-gray-700 dark:text-gray-400">End Date</span>
-          <input type="datetime-local" id=" " ng-model="event.dateEndEvent" auto-focus="true"
+          <input type="datetime-local" id=" " ng-model="event.dateEndEvent" auto-focus="true" ng-required="true" name="enddate"
                  class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                   />
+                  <div ng-show="eventForm.enddate.$touched && eventForm.enddate.$invalid" >
+                    <small style="color: red ; display:block; text-align: center;">Enter a valid date </small>
+                </div>
         </label>
         <label class="block text-sm">
           <span class="text-gray-700 dark:text-gray-400">Image URL</span>
-          <input id="" ng-model="event.imgEvent" auto-focus="true"
+          <input id="" ng-model="event.imgEvent" auto-focus="true"  ng-required="true" name="image"
                  class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                  placeholder="Picture URL .." />
+                 <div ng-show="eventForm.image.$touched && eventForm.image.$invalid" >
+                  <small style="color: red ; display:block; text-align: center;">Enter a valid URL </small>
+              </div>
         </label>
         <label class="block text-sm">
           <span class="text-gray-700 dark:text-gray-400">Title</span>
-          <input id="  " ng-model="event.titleEvent" auto-focus="true"
+          <input id="  " ng-model="event.titleEvent" auto-focus="true"  ng-required="true" name="title"
                  class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                  placeholder="Title of Event .." />
+                 <div ng-show="eventForm.title.$touched && eventForm.title.$invalid" >
+                  <small style="color: red ; display:block; text-align: center;">Enter a valid Title </small>
+              </div>
         </label>
         <label class="block text-sm">
           <span class="text-gray-700 dark:text-gray-400">Description</span>
-          <textarea id="    " ng-model="event.descriptionEvent" auto-focus="true"
+          <textarea id="    " ng-model="event.descriptionEvent" auto-focus="true"  ng-required="true" name="description"
                  class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                     placeholder="Description of Event .." ></textarea>
+                    <div ng-show="eventForm.description.$touched && eventForm.description.$invalid" >
+                      <small style="color: red ; display:block; text-align: center;">Enter a valid Title </small>
+                  </div>
         </label>
         <label class="block text-sm">
           <span class="text-gray-700 dark:text-gray-400">Film</span>
@@ -79,13 +105,13 @@
             class="w-full px-5 py-3 text-sm font-medium leading-5 text-white text-gray-700 transition-colors duration-150 border border-gray-300 rounded-lg dark:text-gray-400 sm:px-4 sm:py-2 sm:w-auto active:bg-transparent hover:border-gray-500 focus:border-gray-500 active:text-gray-500 focus:outline-none focus:shadow-outline-gray">
             Cancel
           </button>
-          <button ng-click="addEvents(event)"
+          <button ng-click="addEvents(event)"  ng-disabled="eventForm.filmname.$invalid ||eventForm.startdate.$invalid ||eventForm.enddate.$invalid ||  eventForm.image.$invalid || eventForm.title.$invalid ||eventForm.description.$invalid  "
             class="w-full px-5 py-3 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-sky-600 border border-transparent rounded-lg sm:w-auto sm:px-4 sm:py-2 active:bg-sky-600 hover:bg-sky-700 focus:outline-none focus:shadow-outline-sky">
             Save
           </button>
         </footer>
       </div>
-
+</form>
       <!--  Edit Formulaire  -->
       <div ng-if="editEvent" class="px-4 py-3 m-auto mt-6 bg-white rounded-lg shadow-md dark:bg-gray-800"
       style="max-width: 500px;width: 100%;">
