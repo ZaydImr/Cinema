@@ -17,8 +17,10 @@ myApp.controller("filmController", function ($scope, $http) {
     filmType: {},
     nationality: {},
     director: {},
+    actorFilms: []
   };
   $scope.searchIn = "";
+  $scope.actorFilms = '';
 
   // Functions
   $scope.getFilms = function ($page) {
@@ -76,6 +78,19 @@ myApp.controller("filmController", function ($scope, $http) {
     );
   };
 
+  $scope.getActors = function () {
+    $http.get("/api/actor/all").then(
+      function successCallback(response) {
+        $scope.actors = response.data;
+        $scope.actor = response.data[0].id;
+      },
+      function errorCallback(response) {
+        console.log("Error....");
+        console.log(response);
+      }
+    );
+  };
+
   $scope.next = function () {
     $scope.unPage = $scope.unPage + 1;
     $scope.getFilms($scope.unPage);
@@ -95,6 +110,7 @@ myApp.controller("filmController", function ($scope, $http) {
         filmType: $scope.typeFilms[0],
         director: $scope.directors[0],
         nationality: $scope.nationalities[0],
+        actorFilms: []
       };
     }
 
@@ -105,7 +121,8 @@ myApp.controller("filmController", function ($scope, $http) {
     if ($scope.addFilm) $scope.addFilm = false;
     $scope.editFilm = !$scope.editFilm;
   };
-  $scope.addFilms = function ($film) {
+  $scope.addFilms = function () {
+
     $http.post("/api/film/add/", $scope.film).then(
       function successCallback() {
         $scope.getFilms();
@@ -179,10 +196,29 @@ myApp.controller("filmController", function ($scope, $http) {
       );
     }
   };
+  $scope.selectActor = function(actorId){
+    $scope.film.actorFilms.push($scope.actors.filter(act=>act.id===actorId)[0])
+    $scope.actors = $scope.actors.filter(actor=>actor.id !== actorId)
+    $scope.actor = $scope.actors[0].id
+  }
+  $scope.removeActor = function(actor){
+    $scope.actors.push(actor);
+    $scope.actor = $scope.actors[0].id; 
+
+    for( var i = 0; i < $scope.film.actorFilms.length; i++){ 
+      if ( $scope.film.actorFilms[i].id === actor.id) { 
+        $scope.film.actorFilms.splice(i, 1); 
+        console.log('good');
+      }
+    }
+
+    
+  }
 
   // Initialization
   $scope.getTypeFilm();
   $scope.getDirectors();
+  $scope.getActors();
   $scope.getNationalities();
   $scope.getFilms();
 });

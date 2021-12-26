@@ -1,6 +1,7 @@
 package com.cinema.services;
 
 import com.cinema.models.Subscription;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
@@ -14,17 +15,15 @@ import java.io.File;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class EmailSenderService {
 
     @Autowired
-    private JavaMailSender mailSender;
-    private SubscriptionService subscriptionService;
+    private final JavaMailSender mailSender;
+    private final SubscriptionService subscriptionService;
 
-    public void sendSimpleEmail(String body,
-                                String subject) {
+    public void sendSimpleEmail(String body, String subject) {
         SimpleMailMessage message = new SimpleMailMessage();
-
-        message.setFrom("cinemaemailsender@gmail.com");
 
         message.setText(body);
         message.setSubject(subject);
@@ -36,9 +35,7 @@ public class EmailSenderService {
         System.out.println("Mail Send...");
     }
 
-    public void sendEmailWithAttachment(String body,
-                                        String subject,
-                                        String attachment) throws MessagingException {
+    public void sendEmailWithAttachment(String body, String subject, String attachment) throws MessagingException {
 
         MimeMessage mimeMessage = mailSender.createMimeMessage();
 
@@ -62,4 +59,5 @@ public class EmailSenderService {
         }
         System.out.println("Mail Send...");
     }
+
 }

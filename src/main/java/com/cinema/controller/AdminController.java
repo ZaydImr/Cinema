@@ -18,7 +18,8 @@ public class AdminController {
     private final String news = "admin/news";
     private final String room = "admin/room";
     private final String session = "admin/session";
-    private final String account = "admin/create-account";
+    private final String createAccount = "admin/create-account";
+    private final String account = "admin/account";
 
     @GetMapping()
     public String index()
@@ -81,6 +82,12 @@ public class AdminController {
     public String getAccount()
     {
         return account;
+    }
+
+    @GetMapping("create-account")
+    public String getCreateAccount()
+    {
+        return createAccount;
     }
 
 }

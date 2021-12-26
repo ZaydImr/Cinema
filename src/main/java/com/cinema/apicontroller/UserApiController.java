@@ -28,18 +28,6 @@ public class UserApiController {
         this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
-    @GetMapping(value = "all/{pageNumber}")
-    public ResponseEntity<com.cinema.classGeneric.Page<User>> list(@PathVariable Integer pageNumber) {
-        com.cinema.classGeneric.Page<User> page = new Page<>();
-        page.setList(userService.getList(pageNumber));
-        page.setNext(userService.getList(pageNumber + 1).size() > 0);
-        if(pageNumber -1 > 0)
-            page.setPrev(userService.getList(pageNumber - 1).size() > 0);
-        else
-            page.setPrev(false);
-        return new ResponseEntity<>(page,HttpStatus.OK) ;
-    }
-
     @GetMapping("/count")
     public ResponseEntity<Long> countAllFilms(){
         Long count = userService.getCountOfUsers();
@@ -57,6 +45,17 @@ public class UserApiController {
         User user = null;
         try {
             user = userService.getElementById(id);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @GetMapping("/findByEmail/{email}")
+    public ResponseEntity<User> getUserByEmail(@PathVariable("email") String email) {
+        User user = null;
+        try {
+            user = userService.getUserByEmail(email);
         } catch (Throwable e) {
             e.printStackTrace();
         }

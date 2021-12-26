@@ -1,0 +1,58 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="admin/layout" :class="{ 'theme-dark': dark }" x-data="data()" lang="en">
+
+<head>
+
+  <link rel="stylesheet" href="../css/chart.min.css" />
+  <script src="../js/tailwind/chart.min.js" defer ></script>
+  <script src="../js/tailwind/charts-lines.js" defer></script>
+
+
+  <script src="../js/controllers/admin/account.js"></script>
+</head>
+
+<body ng-controller="accountController">
+
+
+  <main layout:fragment="content" class="h-full overflow-y-auto">
+ 
+    <div class="container px-6 mx-auto grid">
+      <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+        Account
+      </h2>
+
+      <div ng-if="err.error" class="flex w-full items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+        <div class="text-red-600">
+          <h3>Error : {{err.error}} - {{err.status}}</h3>
+          <p>Error message : {{err.message}}</p>
+        </div>
+      </div>
+
+      <div ng-if="!err.error" class="flex flex-col overflow-y-auto md:flex-row w-full p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+        
+        
+        <div class="p-3 rounded-lg md:mr-4 bg-sky-500">
+          <img class="rounded-lg" src="/pictures/{{user.imgUser}}" alt="">
+        </div>
+        <div class="w-full md:pl-4 relative">
+          <div class="dark:text-white absolute top-4 right-0 md:top-0">
+            <button class="bg-sky-600flex text-sm items-center justify-between w-full p-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-sky-600 border border-transparent rounded-lg active:bg-sky-600 hover:bg-sky-700 focus:outline-none focus:shadow-outline-sky">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+              </svg>
+            </button>
+          </div>
+          <label class="block dark:text-gray-100 mt-8 mb-4"><strong class="pr-8">Fullname : </strong>{{user.fullnameUser}}</label>
+          <label class="block dark:text-gray-100 mb-4"><strong class="pr-8">Birthday : </strong>{{user.birthdayUser}}</label>
+          <label class="block dark:text-gray-100 mb-4"><strong class="pr-8">Phone number : </strong>{{user.phoneNumberUser}}</label>
+          <label class="block dark:text-gray-100 mb-4"><strong class="pr-8">Email : </strong>{{user.email}}</label>
+        </div>
+      </div>
+    </div>
+
+  </main>
+  </div>
+</body>
+
+</html>

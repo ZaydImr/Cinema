@@ -3,6 +3,7 @@ package com.cinema.apicontroller;
 import com.cinema.classGeneric.Page;
 import com.cinema.models.Nationality;
 import com.cinema.models.News;
+import com.cinema.services.EmailSenderService;
 import com.cinema.services.NationalityService;
 import com.cinema.services.NewsService;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,6 +19,8 @@ import java.util.UUID;
 @RequestMapping("/api/news")
 @RequiredArgsConstructor
 public class NewsApiController {
+
+    public final EmailSenderService emailSenderService;
     public final NewsService newsService;
 
     @GetMapping(value = "all/{pageNumber}")
@@ -57,18 +61,14 @@ public class NewsApiController {
     @PostMapping("/add")
     public ResponseEntity<News> addNews(@RequestBody News news) {
         News newNews = newsService.addEntity(news);
+        emailSenderService.sendSimpleEmail(news.getContent(),news.getSubject());
         return new ResponseEntity<>(newNews, HttpStatus.CREATED);
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<News> updateNews(@RequestBody News news) {
-        News updatedNews = newsService.updateEntity(news);
-        return new ResponseEntity<>(updatedNews, HttpStatus.OK);
-    }
-
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteNews(@PathVariable("id") UUID id){
-        newsService.deleteEntity(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+    @PostMapping("/addAttached")
+    public ResponseEntity<?> sendAttachmentEmail(@RequestBody News news) {
+        //this.emailSenderService.sendEmailWithAttachment(news.getContent(),news.getSubject(),);
+        News newNews = newsService.addEntity(news);
+        return new ResponseEntity<>( HttpStatus.OK);
     }
 }

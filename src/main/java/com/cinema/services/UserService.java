@@ -29,6 +29,9 @@ public class UserService extends AbstractService<User, UUID> {
         return userRepository.count();
     }
 
+    public User getUserByEmail(String email){
+        return userRepository.findByEmail(email);
+    }
 
     public void updateResetPasswordToken(String token,String email) throws UsernameNotFoundException{
         User user = userRepository.findByEmail(email);

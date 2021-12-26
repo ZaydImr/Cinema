@@ -24,6 +24,8 @@ public class Film extends AbstractModel<UUID> implements Serializable {
     private String titleFilm;
     @Column(name = "descriptionFilm")
     private String descriptionFilm;
+    @Column(name = "imgFilm")
+    private String imgFilm;
     @Column(name = "dateRelease")
     private LocalDate dateRelease;
     @Column(name = "durationFilm")
@@ -46,7 +48,6 @@ public class Film extends AbstractModel<UUID> implements Serializable {
     @JsonIgnore
     private Set<FilmImage> filmImages;
     @OneToMany(mappedBy = "film",targetEntity = ActorFilm.class)
-    @JsonIgnore
     private Set<ActorFilm> actorFilms;
     @OneToMany(mappedBy = "film",targetEntity = Session.class)
     @JsonIgnore

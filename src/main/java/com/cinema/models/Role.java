@@ -15,6 +15,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
 public class Role extends AbstractModel<UUID> implements Serializable {
     private static final long serialVersionUID = 1L;
