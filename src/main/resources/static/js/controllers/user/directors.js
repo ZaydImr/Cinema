@@ -1,22 +1,20 @@
-myApp.controller("filmController", function ($scope, $http) {
+myApp.controller("directorsController", function ($scope, $http) {
 
   // Variables
   $scope.all = [];
 
   $scope.loading = false;
 
-  $scope.idFilm = "";
-
   $scope.searchIn = "";
 
   // Functions
-  $scope.getFilms = function () {
+  $scope.getDirectors = function ($page) {
     $scope.loading = true;
-    $http.get("/api/film/all").then(
+    $http.get("/api/director/all").then(
       function successCallback(response) {
         $scope.loading = false;
         $scope.all = response.data;
-        $scope.filmsCount = response.data.length - 1;
+
       },
       function errorCallback(response) {
         console.log("Error....");
@@ -25,19 +23,18 @@ myApp.controller("filmController", function ($scope, $http) {
     );
   };
 
-
   $scope.search = function () {
     if ($scope.searchIn === "") {
-      $scope.getFilms();
+         $scope.getDirectors();
     } else {
       $scope.loading = true;
-      $http.get("/api/film/all/keyword/" + $scope.searchIn).then(
+      $http.get("/api/director/all/keyword/" + $scope.searchIn).then(
         function successCallback(response) {
           console.log(response);
           $scope.loading = false;
           $scope.all = response.data;
 
-          $scope.filmsCount = response.data.length - 1;
+          $scope.directorsCount = response.data.length - 1;
         },
         function errorCallback(response) {
           console.log("Error....");
@@ -47,8 +44,6 @@ myApp.controller("filmController", function ($scope, $http) {
     }
   };
 
-
   // Initialization
-
-  $scope.getFilms();
+  $scope.getDirectors();
 });
