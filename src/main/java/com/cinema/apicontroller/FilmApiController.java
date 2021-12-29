@@ -1,6 +1,7 @@
 package com.cinema.apicontroller;
 
 import com.cinema.classGeneric.Page;
+import com.cinema.models.Actor;
 import com.cinema.models.Film;
 import com.cinema.services.FilmService;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,12 @@ public class FilmApiController {
     @GetMapping("/all")
     public ResponseEntity<List<Film>> getAllFilms(){
         List<Film> films = filmService.getAll();
+        return new ResponseEntity<>(films, HttpStatus.OK);
+    }
+
+    @GetMapping("/all/keyword/{keyword}")
+    public ResponseEntity<List<Film>> getAllByKeyword(@PathVariable("keyword") String keyword){
+        List<Film> films = filmService.GetAllByKeyword(keyword);
         return new ResponseEntity<>(films, HttpStatus.OK);
     }
 

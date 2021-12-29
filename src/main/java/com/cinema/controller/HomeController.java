@@ -11,6 +11,8 @@ public class HomeController {
     private final String index = "user/index";
     private final String login = "login";
     private final String register = "register";
+    private final String actor = "user/actors";
+    private final String director = "user/directors";
 
     @GetMapping("")
     public String index()
@@ -28,5 +30,17 @@ public class HomeController {
     public String getRegister()
     {
         return register;
+    }
+
+    @GetMapping("actors")
+    public String getActors()
+    {
+        return actor;
+    }
+
+    @GetMapping("directors")
+    public String getDirectors()
+    {
+        return director;
     }
 }
