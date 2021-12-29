@@ -25,7 +25,6 @@ myApp.controller("filmController", function ($scope, $http) {
     );
   };
 
-
   $scope.search = function () {
     if ($scope.searchIn === "") {
       $scope.getFilms();
@@ -47,8 +46,7 @@ myApp.controller("filmController", function ($scope, $http) {
     }
   };
 
-
   // Initialization
-
+  $http.post('/api/visitors/add', {data : window.clientInformation.appVersion})
   $scope.getFilms();
 });

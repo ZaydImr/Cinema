@@ -45,7 +45,7 @@ myApp.controller("filmController", function ($scope, $http) {
   };
   $scope.searchIn = "";
   $scope.actorFilms = '';
-  $scope.pictures = [];
+  $scope.pictures = { files: [], urls: [] };
 
   // Functions
   $scope.getFilms = function ($page) {
@@ -254,7 +254,13 @@ myApp.controller("filmController", function ($scope, $http) {
   }
 
   $scope.show = function(){
-    console.log($scope.film.pictures);
+    for(let i = 0; i<$scope.film.pictures.length; i++)
+    {
+      $scope.pictures.files.push($scope.film.pictures[i])
+      $scope.pictures.urls.push(URL.createObjectURL($scope.film.pictures[i]));
+    }
+    
+    console.log( $scope.pictures);
   }
 
   // Initialization

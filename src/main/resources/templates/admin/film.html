@@ -57,9 +57,9 @@
 
               <label class="block text-sm">
                 <span class="text-gray-700 dark:text-gray-400">Description</span>
-                <input ng-model="film.descriptionFilm" auto-focus="true" ng-required="true" name="filmdescription"
+                <textarea ng-model="film.descriptionFilm" auto-focus="true" ng-required="true" name="filmdescription"
                   class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                  placeholder="Description .." />
+                  placeholder="Description .."></textarea>
                 <div ng-show="filmForm.filmdescription.$touched && filmForm.filmdescription.$invalid">
                   <small style="color: red ; display:block; text-align: center;">Enter a valid description </small>
                 </div>
@@ -100,16 +100,16 @@
                 </select>
               </label>
 
+             
+            </div>
+            <div class="w-full">
               <label class="block text-sm">
                 <span class="text-gray-700 dark:text-gray-400">Director</span>
                 <select ng-model="film.director.id"
                   class="block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input">
                   <option ng-repeat="dir in directors" value="{{dir.id}}">{{dir.fullnameDirector}}</option>
                 </select>
-
               </label>
-            </div>
-            <div class="w-full">
               <label class="block text-sm">
                 <span class="text-gray-700 dark:text-gray-400">Actors</span>
                 <div ng-if="actors.length" class="relative text-gray-500 focus-within:text-sky-600">
@@ -124,8 +124,8 @@
                   </button>
                 </div>
               </label>
+              <!-- Actors -->
               <div class="grid gap-2 my-4 md:grid-cols-2 xl:grid-cols-2">
-                <!-- Actors -->
                 <div ng-repeat="actorShown in film.actorFilms" class="flex items-center p-2 bg-white rounded-lg shadow-xs bg-sky-600">
                   <div class="flex justify-between items-center w-full">
                     <p class="text-sm font-medium text-white">{{actorShown.fullNameActor}}</p>
@@ -150,7 +150,7 @@
                     </label>
                 </div>
                   <div class="grid gap-2 my-4 md:grid-cols-2 xl:grid-cols-2"> 
-                    <img ng-src="{{film.pictures[0].name}}" alt="">
+                    <img  ng-repeat="imgUrl in pictures.urls" src="{{imgUrl}}" alt="">
                   </div>
                 </div>
               </label>
