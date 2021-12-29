@@ -1,3 +1,27 @@
+myApp.directive('input',function(){
+  return {
+    restrict: 'E',
+    scope: {
+      ngModel: '=',
+      ngChange: '&',
+      type: '@'
+    },
+    link: function (scope, element, attrs) {
+      if(scope.type.toLowerCase()!='file'){
+        return;
+      }
+      element.bind('change', function(){
+        let files =  element[0].files;
+        scope.ngModel = files;
+        scope.$apply();
+        scope.ngChange();
+      });
+    }
+  }
+  
+})
+
+
 myApp.controller("filmController", function ($scope, $http) {
 
   // Variables
@@ -21,6 +45,7 @@ myApp.controller("filmController", function ($scope, $http) {
   };
   $scope.searchIn = "";
   $scope.actorFilms = '';
+  $scope.pictures = [];
 
   // Functions
   $scope.getFilms = function ($page) {
@@ -38,7 +63,6 @@ myApp.controller("filmController", function ($scope, $http) {
       }
     );
   };
-
   $scope.getNationalities = function () {
     $http.get("/api/nationality/all").then(
       function successCallback(response) {
@@ -51,7 +75,6 @@ myApp.controller("filmController", function ($scope, $http) {
       }
     );
   };
-
   $scope.getTypeFilm = function () {
     $http.get("/api/filmtypes/all").then(
       function successCallback(response) {
@@ -64,7 +87,6 @@ myApp.controller("filmController", function ($scope, $http) {
       }
     );
   };
-
   $scope.getDirectors = function () {
     $http.get("/api/director/all").then(
       function successCallback(response) {
@@ -77,7 +99,6 @@ myApp.controller("filmController", function ($scope, $http) {
       }
     );
   };
-
   $scope.getActors = function () {
     $http.get("/api/actor/all").then(
       function successCallback(response) {
@@ -90,7 +111,6 @@ myApp.controller("filmController", function ($scope, $http) {
       }
     );
   };
-
   $scope.next = function () {
     $scope.unPage = $scope.unPage + 1;
     $scope.getFilms($scope.unPage);
@@ -115,18 +135,37 @@ myApp.controller("filmController", function ($scope, $http) {
     }
 
     $scope.addFilm = !$scope.addFilm;
+    $scope.getActors();
   };
-
   $scope.setEdit = function () {
     if ($scope.addFilm) $scope.addFilm = false;
     $scope.editFilm = !$scope.editFilm;
   };
   $scope.addFilms = function () {
 
+    let actorFilms = []
+
+    $scope.film.actorFilms.forEach(actor => {
+      actorFilms.push({actor,film: $scope.film});
+    });
+
+    $scope.film.actorFilms = [];
+
     $http.post("/api/film/add/", $scope.film).then(
-      function successCallback() {
-        $scope.getFilms();
-        $scope.setAdd();
+      function successCallback(res) {
+
+        let filmEdited = res.data;
+
+        filmEdited.actorFilms = actorFilms;
+
+        console.log(filmEdited);
+
+        $http.put('/api/film/update', filmEdited)
+          .then(function(){
+              $scope.getFilms();
+              $scope.setAdd();
+          })
+        
       },
       function errorCallback(response) {
         console.log("Error....");
@@ -197,22 +236,25 @@ myApp.controller("filmController", function ($scope, $http) {
     }
   };
   $scope.selectActor = function(actorId){
-    $scope.film.actorFilms.push($scope.actors.filter(act=>act.id===actorId)[0])
-    $scope.actors = $scope.actors.filter(actor=>actor.id !== actorId)
-    $scope.actor = $scope.actors[0].id
+    if(actorId)
+    {
+      $scope.film.actorFilms.push($scope.actors.filter(act=>act.id===actorId)[0]);
+      $scope.actors = $scope.actors.filter(actor=>actor.id !== actorId);
+      $scope.actor = $scope.actors[0].id;
+    }
   }
   $scope.removeActor = function(actor){
     $scope.actors.push(actor);
-    $scope.actor = $scope.actors[0].id; 
-
     for( var i = 0; i < $scope.film.actorFilms.length; i++){ 
       if ( $scope.film.actorFilms[i].id === actor.id) { 
         $scope.film.actorFilms.splice(i, 1); 
-        console.log('good');
       }
     }
+    $scope.actor = actor.id ; 
+  }
 
-    
+  $scope.show = function(){
+    console.log($scope.film.pictures);
   }
 
   // Initialization

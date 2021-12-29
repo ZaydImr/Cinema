@@ -155,7 +155,6 @@ myApp.controller("directorController", function($scope,$http){
         var data = new FormData();
 
         data.append("description", "director");
-        console.log($scope.director.imgDirector);
         for (i = 0; i < $scope.director.imgDirector.length; i++) {
             data.append("files", $scope.director.imgDirector[i]);
         }

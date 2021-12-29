@@ -36,18 +36,18 @@
           <img class="rounded-lg" src="/pictures/{{user.imgUser}}" alt="">
         </div>
         <div class="w-full md:pl-4 relative">
-          <div class="dark:text-white absolute top-4 right-0 md:top-0">
-            <button ng-if="!edit" ng-click="setEdit()" class="bg-sky-600 flex text-sm items-center justify-between w-full p-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-sky-600 border border-transparent rounded-lg active:bg-sky-600 hover:bg-sky-700 focus:outline-none focus:shadow-outline-sky">
+          <div class="flex gap-2 dark:text-white absolute top-4 right-0 md:top-0">
+            <button ng-if="!edit" ng-click="setEdit()" class="flex text-sm items-center justify-between w-full p-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-sky-600 border border-transparent rounded-lg active:bg-sky-600 hover:bg-sky-700 focus:outline-none focus:shadow-outline-sky">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
               </svg>
             </button>
-            <button ng-if="edit" ng-click="updateUser()" class="bg-sky-600 flex mb-5 text-sm items-center justify-between w-full p-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-sky-600 border border-transparent rounded-lg active:bg-sky-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-sky">
+            <button ng-if="edit" ng-click="updateUser()" class="flex mb-5 text-sm items-center justify-between w-full p-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-600 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-green">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
               </svg>
             </button>
-            <button  ng-if="edit" ng-click="cancelEdit()" class="bg-sky-600 flex text-sm items-center justify-between w-full p-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg active:bg-white-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-sky">
+            <button  ng-if="edit" ng-click="cancelEdit()" class="flex mb-5 text-sm items-center justify-between w-full p-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
               </svg>
