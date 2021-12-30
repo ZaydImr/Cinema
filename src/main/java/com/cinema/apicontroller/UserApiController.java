@@ -1,31 +1,22 @@
 package com.cinema.apicontroller;
 
-import com.cinema.classGeneric.Page;
+
 import com.cinema.controller.Utility;
-import com.cinema.models.Director;
-import com.cinema.models.Nationality;
-import com.cinema.models.Role;
 import com.cinema.models.User;
 import com.cinema.services.EmailSenderService;
 import com.cinema.services.UserService;
-import lombok.RequiredArgsConstructor;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
-import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 @RestController
 @RequestMapping("/api/user")
-
 public class UserApiController {
     private UserService userService;
     private PasswordEncoder passwordEncoder;
@@ -93,11 +84,8 @@ public class UserApiController {
 
     @PostMapping("forgot_password")
     public void processForgotPassword(HttpServletRequest request, @RequestBody String email ){
-        //String email = request.getParameter("email");
-        System.out.println("_---------------------"+email);
         String token  = RandomString.make(30);
         userService.updateResetPasswordToken(token,email);
-        System.out.println("Mail tryitfuyf...");
 
         String resetPasswordLink = Utility.getSiteURL(request) + "/reset_password?token=" + token;
         sendEmail(email,resetPasswordLink);
