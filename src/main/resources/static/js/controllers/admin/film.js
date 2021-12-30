@@ -41,7 +41,8 @@ myApp.controller("filmController", function ($scope, $http) {
     filmType: {},
     nationality: {},
     director: {},
-    actorFilms: []
+    actorFilms: [],    
+    filmImages: []
   };
   $scope.searchIn = "";
   $scope.actorFilms = '';
@@ -130,7 +131,8 @@ myApp.controller("filmController", function ($scope, $http) {
         filmType: $scope.typeFilms[0],
         director: $scope.directors[0],
         nationality: $scope.nationalities[0],
-        actorFilms: []
+        actorFilms: [],
+        filmImages: []
       };
     }
 
@@ -144,31 +146,26 @@ myApp.controller("filmController", function ($scope, $http) {
   $scope.addFilms = function (pics) {
 
     let actorFilms = []
-
     $scope.film.actorFilms.forEach(actor => {
       actorFilms.push({actor,film: $scope.film});
-
     });
 
     $scope.film.actorFilms = [];
     $scope.film.imgFilm = pics[0];
 
+
+    console.log($scope.film);
+
     $http.post("/api/film/add/", $scope.film).then(
       function successCallback(res) {
 
-        let filmEdited = res.data;
-
-        filmEdited.actorFilms = actorFilms;
-
-        console.log(filmEdited);
-
-        $http.put('/api/film/update', filmEdited)
+        for (let i = 1; i < pics.length; i++) {
+          $http.post('/api/filmimages/add', { imageUrl: pics[i], film:  { id: res.data.id}})
           .then(function(res){
-              console.log(pics);
-              $scope.getFilms();
-              $scope.setAdd();
           })
-        
+        }
+        $scope.getFilms();
+        $scope.setAdd();
       },
       function errorCallback(response) {
         console.log("Error....");
@@ -255,7 +252,6 @@ myApp.controller("filmController", function ($scope, $http) {
     }
     $scope.actor = actor.id ; 
   }
-
   $scope.show = function(){
     for(let i = 0; i<$scope.film.pictures.length; i++)
     {
@@ -265,7 +261,6 @@ myApp.controller("filmController", function ($scope, $http) {
     
     console.log( $scope.pictures);
   }
-
   $scope.removePicture = function(url){
     
     $scope.pictures.files = $scope.pictures.files.filter( (file,index) => index !== $scope.pictures.urls.indexOf(url));
@@ -273,7 +268,6 @@ myApp.controller("filmController", function ($scope, $http) {
     
     console.log( $scope.pictures);
   }
-
   $scope.addPhotos = function() {  
 
     var url = "/api/upload/add-multi";
@@ -288,7 +282,6 @@ myApp.controller("filmController", function ($scope, $http) {
 
     var config = {
         transformRequest: angular.identity,
-        transformResponse: angular.identity,
         headers: {
             'Content-Type': undefined
         }
@@ -297,14 +290,12 @@ myApp.controller("filmController", function ($scope, $http) {
    $http.post(url, data, config).then(
         // Success
         function(response) {
-          
-          console.table(response.data);
-            $scope.addFilms(response.data);
+          $scope.addFilms(response.data);
         },
         // Error
         function(response) {
             console.log(response.data);
-        });
+    });
 };
 
   // Initialization

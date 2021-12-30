@@ -13,6 +13,7 @@ public class HomeController {
     private final String register = "register";
     private final String actor = "user/actors";
     private final String director = "user/directors";
+    private final String film = "user/film";
 
     @GetMapping("")
     public String index()
@@ -30,6 +31,12 @@ public class HomeController {
     public String getRegister()
     {
         return register;
+    }
+
+    @GetMapping("film/{id}")
+    public String getFilm()
+    {
+        return film;
     }
 
     @GetMapping("actors")

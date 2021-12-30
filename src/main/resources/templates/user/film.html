@@ -1,0 +1,79 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="user/layout" :class="{ 'theme-dark': dark }" x-data="data()" lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script src="../js/controllers/user/film.js"></script>
+</head>
+
+<body ng-controller="filmController">
+
+<main layout:fragment="content" class="h-full overflow-y-auto">
+    <div class="container px-6 mx-auto grid pt-2">
+
+        <!-- Loading -->
+        <div ng-if="loading">
+            <svg class="h-12" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                 style="margin: auto; background: none; display: block; shape-rendering: auto;" width="200px" height="200px"
+                 viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                <path fill="none" stroke="#0284c7" stroke-width="8" stroke-dasharray="42.76482137044271 42.76482137044271"
+                      d="M24.3 30C11.4 30 5 43.3 5 50s6.4 20 19.3 20c19.3 0 32.1-40 51.4-40 C88.6 30 95 43.3 95 50s-6.4 20-19.3 20C56.4 70 43.6 30 24.3 30z"
+                      stroke-linecap="round" style="transform:scale(0.8);transform-origin:50px 50px">
+                    <animate attributeName="stroke-dashoffset" repeatCount="indefinite" dur="1.1363636363636365s"
+                             keyTimes="0;1" values="0;256.58892822265625"></animate>
+                </path>
+            </svg>
+        </div>
+
+        <!-- directors -->
+        <div class="w-full">
+
+            <!-- Card -->
+            <div  class="bg-white rounded-lg shadow-xs dark:bg-gray-800 p-4 mt-4">
+                <a href="/" class="flex text-sky-600 hover:text-sky-700 pb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                      </svg>
+                    Go back
+                </a>
+                <div  class="flex gap-4 items-center flex-col md:flex-row">
+                    <img src="/pictures/{{film.imgFilm}}" class="rounded w-full md:w-96"/>
+                    <div>
+                        <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
+                            {{film.titleFilm}}
+                        </p>
+                        <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
+                            {{film.descriptionFilm}}
+                        </p>
+                        <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
+                            {{film.dateRelease}}
+                        </p>
+                        <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
+                            <img src="{{film.director.imgDirector}}" alt="">
+                            {{film.director.fullnameDirector}}
+                        </p>
+                        <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
+                            {{film.nationality.nationality}}
+                        </p>
+                        <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
+                            {{film.filmType.typeFilm}}
+                        </p>
+                        <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
+                            {{film.dateRelease}}
+                        </p>
+                    </div>
+                </div>
+                
+            </div>
+
+        </div>
+    </div>
+
+</main>
+</div>
+</body>
+
+</html>

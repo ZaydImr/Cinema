@@ -2,22 +2,15 @@ package com.cinema.apicontroller;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cinema.classGeneric.Page;
 import com.cinema.form.UploadForm;
-import com.cinema.form.UploadedFiles;
-import com.cinema.models.Visitors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -55,11 +48,11 @@ public class UploadApiController {
     }
 
     @PostMapping("/add-multi")
-    public ResponseEntity<List<UploadedFiles>> uploadMultiFiles(@ModelAttribute UploadForm form) throws Exception {
+    public ResponseEntity<List<String>> uploadMultiFiles(@ModelAttribute UploadForm form) throws Exception {
         UPLOAD_DIR = absolutePath + "/src/main/resources/static/pictures/" + form.getDescription();
         descripion = form.getDescription() ;
 
-        List<UploadedFiles> result = null;
+        List<String> result = null;
 
         result = this.saveUploadedFiles(form.getFiles());
 
@@ -67,8 +60,8 @@ public class UploadApiController {
     }
 
     // Save Files
-    private List<UploadedFiles> saveUploadedFiles(MultipartFile[] files) throws IOException {
-        List<UploadedFiles> urls = new ArrayList<>();
+    private List<String> saveUploadedFiles(MultipartFile[] files) throws IOException {
+        List<String> urls = new ArrayList<>();
 
         // Make sure directory exists!
         File uploadDir = new File(UPLOAD_DIR);
@@ -83,7 +76,7 @@ public class UploadApiController {
             byte[] bytes = file.getBytes();
             Path path = Paths.get(uploadFilePath);
             Files.write(path, bytes);
-            urls.add(new UploadedFiles(descripion + "/"+randomNumber+file.getOriginalFilename().replaceAll(" ", "")));
+            urls.add(descripion + "/"+randomNumber+file.getOriginalFilename().replaceAll(" ", ""));
         }
         return urls;
     }

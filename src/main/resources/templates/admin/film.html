@@ -153,19 +153,16 @@
                   </div>
                 </div>
               </label>
-              <div class="grid gap-2 my-4 md:grid-cols-2 xl:grid-cols-2 block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input">
-                <div class="grid gap-2 my-4 md:grid-cols-2 xl:grid-cols-2"> 
-                  <div ng-repeat="imgUrl in pictures.urls" class="relative">
+              <div class="grid gap-2 my-4 md:grid-cols-3 xl:grid-cols-3 block w-full mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input">
+                <div ng-repeat="imgUrl in pictures.urls" class="relative">
                     <button ng-click="removePicture(imgUrl)" class="absolute bg-red-600 top-1 left-1 rounded-full text-white text-sm hover:bg-red-700 ">
                       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                       </svg>
                     </button>
                     <img src="{{imgUrl}}" alt="">
-                  </div>
                 </div>
               </div>
-              
             </div>
           </div>
           <footer
@@ -264,6 +261,7 @@
             <thead>
               <tr
                 class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                <th class="px-4 py-3">Photo Film</th>
                 <th class="px-4 py-3">Title Film</th>
                 <th class="px-4 py-3">Description Film</th>
                 <th class="px-4 py-3">Date Release</th>
@@ -277,11 +275,14 @@
             <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
 
               <tr class="text-gray-700 dark:text-gray-400" ng-repeat="film in all.list">
+                <td class="px-4 py-3 w-12">
+                  <img src="/pictures/{{film.imgFilm}}" class="rounded-md" alt="{{film.titleFilm}}">
+                </td>
                 <td class="px-4 py-3">
                   {{film.titleFilm}}
                 </td>
                 <td class="px-4 py-3">
-                  {{film.descriptionFilm}}
+                  {{film.descriptionFilm.slice(0, 30)}} ...
                 </td>
                 <td class="px-4 py-3">
                   {{film.dateRelease}}
