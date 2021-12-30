@@ -35,6 +35,17 @@ public class EmailSenderService {
         System.out.println("Mail Send...");
     }
 
+    public void sendEmailByUser(String recipientEmail,String body, String subject) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        System.out.println("Mail entered...");
+
+        message.setText(body);
+        message.setSubject(subject);
+        message.setTo(recipientEmail);
+        mailSender.send(message);
+        System.out.println("Mail Send...");
+    }
+
     public void sendEmailWithAttachment(String body, String subject, String attachment) throws MessagingException {
 
         MimeMessage mimeMessage = mailSender.createMimeMessage();

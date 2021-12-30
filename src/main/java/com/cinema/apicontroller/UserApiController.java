@@ -1,19 +1,26 @@
 package com.cinema.apicontroller;
 
 import com.cinema.classGeneric.Page;
+import com.cinema.controller.Utility;
 import com.cinema.models.Director;
 import com.cinema.models.Nationality;
 import com.cinema.models.Role;
 import com.cinema.models.User;
+import com.cinema.services.EmailSenderService;
 import com.cinema.services.UserService;
 import lombok.RequiredArgsConstructor;
+import net.bytebuddy.utility.RandomString;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 @RestController
@@ -22,10 +29,12 @@ import java.util.*;
 public class UserApiController {
     private UserService userService;
     private PasswordEncoder passwordEncoder;
+    private EmailSenderService emailSenderService;
 
-    public UserApiController(UserService userService){
+    public UserApiController(UserService userService,EmailSenderService emailSenderService){
         this.userService = userService;
         this.passwordEncoder = new BCryptPasswordEncoder();
+        this.emailSenderService = emailSenderService;
     }
 
     @GetMapping("/count")
@@ -81,4 +90,33 @@ public class UserApiController {
         userService.deleteEntity(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PostMapping("forgot_password")
+    public void processForgotPassword(HttpServletRequest request, @RequestBody String email ){
+        //String email = request.getParameter("email");
+        System.out.println("_---------------------"+email);
+        String token  = RandomString.make(30);
+        userService.updateResetPasswordToken(token,email);
+        System.out.println("Mail tryitfuyf...");
+
+        String resetPasswordLink = Utility.getSiteURL(request) + "/reset_password?token=" + token;
+        sendEmail(email,resetPasswordLink);
+    }
+
+    private void sendEmail(String recipientEmail, String link){
+        System.out.println("Mail entered...");
+        String subject = "Here's the link to reset your password";
+
+        String content = "<p>Hello,</p>"
+                +"<p>You have requested to reset your password.</p>"
+                +"<p>Click the link below to change your password : </p>"
+                +"<p><a href=\""+link+"\">Change my password</p>"
+                +"<br>"
+                +"<p>Ignore this email if you do remember your password,"
+                +"or you have not made the request.</p>";
+
+        emailSenderService.sendEmailByUser(recipientEmail,content,subject);
+    }
+
+
 }

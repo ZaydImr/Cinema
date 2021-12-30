@@ -53,6 +53,5 @@ public class UserService extends AbstractService<User, UUID> {
         user.setPassword(encoderPassword);
         user.setResetPasswordToken(null);
         userRepository.save(user);
-
     }
 }
