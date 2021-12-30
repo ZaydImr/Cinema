@@ -11,6 +11,7 @@ import java.util.List;
 
 import com.cinema.classGeneric.Page;
 import com.cinema.form.UploadForm;
+import com.cinema.form.UploadedFiles;
 import com.cinema.models.Visitors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.FileSystemResource;
@@ -33,14 +34,14 @@ public class UploadApiController {
     private String descripion = "";
 
     @PostMapping("/add")
-    public ResponseEntity<?> uploadFileMulti(@ModelAttribute UploadForm form) throws Exception {
+    public ResponseEntity<?> uploadFile(@ModelAttribute UploadForm form) throws Exception {
         UPLOAD_DIR = absolutePath + "/src/main/resources/static/pictures/" + form.getDescription();
         descripion = form.getDescription() ;
 
         String result = null;
         try {
 
-            result = this.saveUploadedFiles(form.getFiles());
+            result = this.saveUploadedFile(form.getFiles());
 
         }
         // Here Catch IOException only.
@@ -53,8 +54,41 @@ public class UploadApiController {
         return new ResponseEntity<String>(result, HttpStatus.OK);
     }
 
+    @PostMapping("/add-multi")
+    public ResponseEntity<List<UploadedFiles>> uploadMultiFiles(@ModelAttribute UploadForm form) throws Exception {
+        UPLOAD_DIR = absolutePath + "/src/main/resources/static/pictures/" + form.getDescription();
+        descripion = form.getDescription() ;
+
+        List<UploadedFiles> result = null;
+
+        result = this.saveUploadedFiles(form.getFiles());
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     // Save Files
-    private String saveUploadedFiles(MultipartFile[] files) throws IOException {
+    private List<UploadedFiles> saveUploadedFiles(MultipartFile[] files) throws IOException {
+        List<UploadedFiles> urls = new ArrayList<>();
+
+        // Make sure directory exists!
+        File uploadDir = new File(UPLOAD_DIR);
+        uploadDir.mkdirs();
+
+        for (MultipartFile file : files) {
+            if (file.isEmpty()) {
+                continue;
+            }
+            int randomNumber = (int)(Math.random()*10000);
+            String uploadFilePath = UPLOAD_DIR + "/" + randomNumber + file.getOriginalFilename().replaceAll(" ", "");
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get(uploadFilePath);
+            Files.write(path, bytes);
+            urls.add(new UploadedFiles(descripion + "/"+randomNumber+file.getOriginalFilename().replaceAll(" ", "")));
+        }
+        return urls;
+    }
+    // Save Files
+    private String saveUploadedFile(MultipartFile[] files) throws IOException {
 
         // Make sure directory exists!
         File uploadDir = new File(UPLOAD_DIR);

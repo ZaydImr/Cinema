@@ -141,15 +141,17 @@ myApp.controller("filmController", function ($scope, $http) {
     if ($scope.addFilm) $scope.addFilm = false;
     $scope.editFilm = !$scope.editFilm;
   };
-  $scope.addFilms = function () {
+  $scope.addFilms = function (pics) {
 
     let actorFilms = []
 
     $scope.film.actorFilms.forEach(actor => {
       actorFilms.push({actor,film: $scope.film});
+
     });
 
     $scope.film.actorFilms = [];
+    $scope.film.imgFilm = pics[0];
 
     $http.post("/api/film/add/", $scope.film).then(
       function successCallback(res) {
@@ -161,7 +163,8 @@ myApp.controller("filmController", function ($scope, $http) {
         console.log(filmEdited);
 
         $http.put('/api/film/update', filmEdited)
-          .then(function(){
+          .then(function(res){
+              console.log(pics);
               $scope.getFilms();
               $scope.setAdd();
           })
@@ -262,6 +265,47 @@ myApp.controller("filmController", function ($scope, $http) {
     
     console.log( $scope.pictures);
   }
+
+  $scope.removePicture = function(url){
+    
+    $scope.pictures.files = $scope.pictures.files.filter( (file,index) => index !== $scope.pictures.urls.indexOf(url));
+    $scope.pictures.urls = $scope.pictures.urls.filter( ur => ur !== url);
+    
+    console.log( $scope.pictures);
+  }
+
+  $scope.addPhotos = function() {  
+
+    var url = "/api/upload/add-multi";
+
+    var data = new FormData();
+    console.log($scope.pictures.files);
+
+    data.append("description", "film");
+    for (i = 0; i < $scope.pictures.files.length; i++) {
+        data.append("files", $scope.pictures.files[i]);
+    }
+
+    var config = {
+        transformRequest: angular.identity,
+        transformResponse: angular.identity,
+        headers: {
+            'Content-Type': undefined
+        }
+    }
+
+   $http.post(url, data, config).then(
+        // Success
+        function(response) {
+          
+          console.table(response.data);
+            $scope.addFilms(response.data);
+        },
+        // Error
+        function(response) {
+            console.log(response.data);
+        });
+};
 
   // Initialization
   $scope.getTypeFilm();
