@@ -18,7 +18,7 @@ public class FilmImage extends AbstractModel<UUID> implements Serializable {
 
     @Column(name = "imgUrl")
     private String imageUrl;
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idFilm")
     private Film film;
 }

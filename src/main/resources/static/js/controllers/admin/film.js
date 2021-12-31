@@ -159,9 +159,13 @@ myApp.controller("filmController", function ($scope, $http) {
       function successCallback(res) {
 
         let editedFilm = res.data;
-        editedFilm.actorFilms = actorFilms;
+        editedFilm.actors = [];
+
+        for (let i = 0; i < actorFilms.length; i++) {
+            editedFilm.actors.push({actor:actorFilms[i].actor,film: {id:res.data.id}})
+        }
         
-        $http.post('/api/film/update', editedFilm)
+        $http.put('/api/film/update', editedFilm)
           .then(function(res){
             console.log(res.data);
           })

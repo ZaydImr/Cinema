@@ -47,12 +47,15 @@ public class Film extends AbstractModel<UUID> implements Serializable {
     @OneToMany(mappedBy = "film",targetEntity = FilmImage.class,cascade = CascadeType.REMOVE)
     @JsonIgnore
     private Set<FilmImage> filmImages;
-    @OneToMany(mappedBy = "film",targetEntity = ActorFilm.class,cascade = CascadeType.REMOVE)
-    private Set<ActorFilm> actorFilms;
+    /*@OneToMany(mappedBy = "film",targetEntity = ActorFilm.class,cascade = CascadeType.REMOVE)
+    private Set<ActorFilm> actorFilms;*/
     @OneToMany(mappedBy = "film",targetEntity = Session.class,cascade = CascadeType.REMOVE)
     @JsonIgnore
     private Set<Session> sessions;
     @OneToMany(mappedBy = "film",targetEntity = Events.class,cascade = CascadeType.REMOVE)
     @JsonIgnore
     private Set<Events> events;
+
+    @ManyToMany(mappedBy = "films")
+    private Set<Actor> actors;
 }

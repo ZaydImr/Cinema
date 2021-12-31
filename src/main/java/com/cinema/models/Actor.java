@@ -6,6 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -23,14 +24,19 @@ public class Actor extends AbstractModel<UUID> implements Serializable {
     private String fullNameActor;
     @Column(name = "birthdayActor")
     private LocalDate birthdayActor;
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "idNationalityActor")
     private Nationality nationalityActor;
     @Column(name = "imgActor")
     private String imgActor;
-    @OneToMany(mappedBy = "actor",targetEntity = ActorFilm.class,cascade = CascadeType.REMOVE)
+    /*@OneToMany(mappedBy = "actor",targetEntity = ActorFilm.class,cascade = CascadeType.REMOVE)
     @JsonIgnore
-    private Set<ActorFilm> actorFilms;
-    
+    private Set<ActorFilm> actorFilms;*/
+
+    @ManyToMany
+    @JoinTable(name = "actor_film",
+                joinColumns = @JoinColumn(name = "id_Actor",referencedColumnName = "id"),
+                inverseJoinColumns = @JoinColumn(name = "id_Film",referencedColumnName = "id"))
+    private Set<Film> films = new HashSet<>();
 
 }

@@ -24,7 +24,7 @@ public class Director extends AbstractModel<UUID> implements Serializable {
     @Column(name = "birthdayDirector")
     private LocalDate birthdayDirector;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "idNationalityDirector")
     private Nationality nationalityDirector;
 

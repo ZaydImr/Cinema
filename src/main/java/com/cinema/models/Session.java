@@ -22,10 +22,10 @@ public class Session extends AbstractModel<UUID> implements Serializable {
     private LocalDateTime dateBeginSession;
     @Column(name = "tarif")
     private double tarif;
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "idFilm")
     private Film film;
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "idRoom")
     private Room room;
 }

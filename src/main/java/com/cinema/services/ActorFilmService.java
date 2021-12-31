@@ -8,14 +8,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import java.util.UUID;
 
-@Service
-public class ActorFilmService extends AbstractService<ActorFilm, UUID> {
+//@Service
+public class ActorFilmService /*extends AbstractService<ActorFilm, UUID>*/ {
 
-    @Autowired
+   /* @Autowired
     private IActorfilmRepository actorFilmRepository;
 
     @Override
     protected JpaRepository<ActorFilm, UUID> getRepository() {
         return actorFilmRepository;
-    }
+    }*/
 }

@@ -1,5 +1,5 @@
 package com.cinema.apicontroller;
-
+/*
 import com.cinema.classGeneric.Page;
 import com.cinema.models.ActorFilm;
 import com.cinema.models.Nationality;
@@ -15,8 +15,9 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/actorsfilm")
-@RequiredArgsConstructor
+@RequiredArgsConstructor*/
 public class ActorFilmApiController {
+/*
     public final ActorFilmService actorFilmService;
 
     @GetMapping(value = "all/{pageNumber}")
@@ -65,4 +66,5 @@ public class ActorFilmApiController {
         actorFilmService.deleteEntity(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+*/
 }
