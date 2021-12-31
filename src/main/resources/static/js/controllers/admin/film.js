@@ -155,23 +155,21 @@ myApp.controller("filmController", function ($scope, $http) {
     $scope.film.actorFilms = [];
     $scope.film.imgFilm = pics[0];
 
-
-    console.log($scope.film);
-
-    $http.post("/api/film/add/", $scope.film).then(
+    $http.post("/api/film/add", $scope.film).then(
       function successCallback(res) {
 
-        for (let i = 0; i < actorFilms.length; i++) {
-          actorFilms[i].actor.actorFilms = [];
-          $http.post('/api/actorsfilm/add', { actor: actorFilms[i].actor, film: res.data})
+        let editedFilm = res.data;
+        editedFilm.actorFilms = actorFilms;
+        
+        $http.post('/api/film/update', editedFilm)
           .then(function(res){
-            console.log(actorFilms[i],res.data);
+            console.log(res.data);
           })
-        }
 
         for (let i = 1; i < pics.length; i++) {
           $http.post('/api/filmimages/add', { imageUrl: pics[i], film:  { id: res.data.id}})
         }
+        
         $scope.getFilms();
         $scope.setAdd();
       },
