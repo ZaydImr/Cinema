@@ -21,15 +21,15 @@ public class Nationality extends AbstractModel<UUID> implements Serializable {
     @Column(name = "nationality")
     private String nationality;
 
-    @OneToMany(mappedBy = "nationality",targetEntity = Film.class)
+    @OneToMany(mappedBy = "nationality",targetEntity = Film.class,cascade = CascadeType.REMOVE)
     @JsonIgnore
     private Set<Film> films;
 
-    @OneToMany(mappedBy = "nationalityDirector")
+    @OneToMany(mappedBy = "nationalityDirector",cascade = CascadeType.REMOVE)
     @JsonIgnore
     private Set<Director> directors;
 
-    @OneToMany(mappedBy = "nationalityActor")
+    @OneToMany(mappedBy = "nationalityActor",cascade = CascadeType.REMOVE)
     @JsonIgnore
     private Set<Actor> actors;
 }

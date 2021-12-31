@@ -35,13 +35,13 @@ public class User extends AbstractModel<UUID> implements Serializable {
     @Column(name = "imgUser")
     private String imgUser ;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(name = "users_roles",
                 joinColumns = @JoinColumn(name = "id_User",referencedColumnName = "id"),
                 inverseJoinColumns = @JoinColumn(name = "id_Role",referencedColumnName = "id"))
     private Set<Role> roles = new HashSet<>();
 
-    @OneToMany(mappedBy = "user",targetEntity = Comment.class)
+    @OneToMany(mappedBy = "user",targetEntity = Comment.class,cascade = CascadeType.REMOVE)
     @JsonIgnore
     private Set<Comment> comments;
 

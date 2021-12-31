@@ -23,7 +23,7 @@ public class Role extends AbstractModel<UUID> implements Serializable {
     @Column(name = "role")
     private String role ;
     @JsonIgnore
-    @ManyToMany(mappedBy = "roles")
+    @ManyToMany(mappedBy = "roles",cascade = CascadeType.REMOVE)
     private Set<User> users ;
 
 }

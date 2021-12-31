@@ -23,13 +23,12 @@ public class Actor extends AbstractModel<UUID> implements Serializable {
     private String fullNameActor;
     @Column(name = "birthdayActor")
     private LocalDate birthdayActor;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "idNationalityActor")
     private Nationality nationalityActor;
-
     @Column(name = "imgActor")
     private String imgActor;
-    @OneToMany(mappedBy = "actor",targetEntity = ActorFilm.class)
+    @OneToMany(mappedBy = "actor",targetEntity = ActorFilm.class,cascade = CascadeType.REMOVE)
     @JsonIgnore
     private Set<ActorFilm> actorFilms;
     
