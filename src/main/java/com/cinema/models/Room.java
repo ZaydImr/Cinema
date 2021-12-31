@@ -21,6 +21,6 @@ public class Room extends AbstractModel<UUID> implements Serializable {
     @Column(name = "nameRoom")
     private String nameRoom;
     @JsonIgnore
-    @OneToMany(mappedBy = "room",targetEntity = Session.class)
+    @OneToMany(mappedBy = "room",targetEntity = Session.class,cascade = CascadeType.REMOVE)
     private Set<Session> sessions;
 }

@@ -24,7 +24,7 @@ public class Director extends AbstractModel<UUID> implements Serializable {
     @Column(name = "birthdayDirector")
     private LocalDate birthdayDirector;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "idNationalityDirector")
     private Nationality nationalityDirector;
 
@@ -32,6 +32,6 @@ public class Director extends AbstractModel<UUID> implements Serializable {
     private String imgDirector;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "director",targetEntity = Film.class)
+    @OneToMany(mappedBy = "director",targetEntity = Film.class,cascade = CascadeType.REMOVE)
     private Set<Film> films;
 }

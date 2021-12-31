@@ -20,7 +20,7 @@ public class FilmType extends AbstractModel<UUID> implements Serializable {
 
     @Column(name = "typeFilm")
     private String typeFilm;
-    @OneToMany(mappedBy = "filmType",targetEntity = Film.class)
+    @OneToMany(mappedBy = "filmType",targetEntity = Film.class,cascade = CascadeType.REMOVE)
     @JsonIgnore
     private Set<Film> films;
 }
