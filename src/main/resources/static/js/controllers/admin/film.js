@@ -134,7 +134,9 @@ myApp.controller("filmController", function ($scope, $http) {
         actorFilms: [],
         filmImages: []
       };
+      $scope.pictures = { files: [], urls: [] };
     }
+
 
     $scope.addFilm = !$scope.addFilm;
     $scope.getActors();
@@ -159,10 +161,16 @@ myApp.controller("filmController", function ($scope, $http) {
     $http.post("/api/film/add/", $scope.film).then(
       function successCallback(res) {
 
+        for (let i = 0; i < actorFilms.length; i++) {
+          actorFilms[i].actor.actorFilms = [];
+          $http.post('/api/actorsfilm/add', { actor: actorFilms[i].actor, film: res.data})
+          .then(function(res){
+            console.log(actorFilms[i],res.data);
+          })
+        }
+
         for (let i = 1; i < pics.length; i++) {
           $http.post('/api/filmimages/add', { imageUrl: pics[i], film:  { id: res.data.id}})
-          .then(function(res){
-          })
         }
         $scope.getFilms();
         $scope.setAdd();

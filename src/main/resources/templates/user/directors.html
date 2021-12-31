@@ -38,7 +38,7 @@
         <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
 
             <!-- Card -->
-            <a href="/director/{{director.id}}" ng-repeat="director in all" class="flex gap-2 items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+            <div ng-repeat="director in all" class="flex gap-2 items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
 
                 <img src="/pictures/{{director.imgDirector}}" width="80" height="100" class="rounded"/>
                 <div>
@@ -52,7 +52,7 @@
                         {{director.nationalityDirector.nationality}}
                     </p>
                 </div>
-            </a>
+            </div>
 
         </div>
     </div>

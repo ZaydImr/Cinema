@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -40,14 +41,14 @@ public class FilmImageApiController {
     }
 
     @GetMapping("/find/{id}")
-    public ResponseEntity<FilmImage> getFilmImageById(@PathVariable("id") UUID id) {
-        FilmImage filmImage = null;
+    public ResponseEntity<List<String>> getFilmImageById(@PathVariable("id") UUID id) {
+        List<String> urls = null;
         try {
-            filmImage = filmImageService.getElementById(id);
+            urls = filmImageService.getImageUrlByFilmId(id);
         } catch (Throwable e) {
             e.printStackTrace();
         }
-        return new ResponseEntity<>(filmImage, HttpStatus.OK);
+        return new ResponseEntity<>(urls, HttpStatus.OK);
     }
 
     @PostMapping("/add")
