@@ -1,11 +1,13 @@
 package com.cinema.services;
 
+import com.cinema.models.Film;
 import com.cinema.models.Session;
 import com.cinema.repositories.ISessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -19,29 +21,8 @@ public class SessionService extends AbstractService<Session, UUID> {
         return sessionRepository;
     }
 
-    /*@Override
-    public List<Session> GetAll() {
-        return sessionRepository.findAll();
+    public List<Session> GetAllByKeyword(String keyword) {
+        return sessionRepository.getAllByKeyword(keyword);
     }
 
-    @Override
-    public Session AddEntity(Session session) {
-        return sessionRepository.save(session);
-    }
-
-    @Override
-    public Session UpdateEntity(Session session) {
-        return sessionRepository.save(session);
-    }
-
-    @Override
-    public Session GetOneById(UUID id) {
-        return sessionRepository.findSessionById(id)
-                .orElseThrow(() -> new ElementNotFoundException("Session was not found !"));
-    }
-
-    @Override
-    public void DeleteEntity(UUID id) {
-        sessionRepository.deleteCommentById(id);
-    }*/
 }

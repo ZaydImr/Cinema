@@ -27,17 +27,38 @@
             <div class="flex h-screen bg-gray-50 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen }"
                 th:fragment="content">
                 <div class="flex flex-col flex-1 w-full">
-                    <header class="z-10 py-4 bg-white shadow-md dark:bg-gray-800">
+                    <header class="z-10 py-4 bg-white shadow-md dark:bg-gray-800" ng-controller="sidebarController">
                         <div
                             class="container flex items-center justify-between h-full px-6 mx-auto text-sky-600 dark:text-sky-300">
-                            <h2>Near Cinema</h2>
-                            <ul class="flex items-center flex-shrink-0 space-x-6">
-                                <li><a href="/" class="hover:text-sky-700">Films</a></li>
-                                <li><a href="/actors" class="hover:text-sky-700">Actors</a></li>
-                                <li><a href="/directors" class="hover:text-sky-700">Directors</a></li>
-                            </ul>
+                            <!-- Mobile hamburger -->
+                            <button ng-click="setSidebar()"
+                                class="p-1 mr-5 -ml-1 rounded-md md:hidden focus:outline-none focus:shadow-outline-sky" >
+                                <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                            </button>
+                            <a href="/"><h2>Near Cinema</h2></a>
+                            <div class="flex justify-center space-x-4 hidden md:block">
+                                <a href="/" class="{{(homeRoute == '' )? 'bg-gray-100 text-gray-900 dark:text-gray-900' : 'text-gray-700 dark:text-gray-200 '}} font-medium px-3 py-2 rounded-lg hover:bg-gray-100 hover:text-gray-900">Films</a>
+                                <a href="/session" class="{{(homeRoute == 'session' )? 'bg-gray-100 text-gray-900 dark:text-gray-900' : 'text-gray-700 dark:text-gray-200 '}} font-medium px-3 py-2 rounded-lg hover:bg-gray-100 hover:text-gray-900">Sessions</a>
+                                <a href="/actors" class="{{(homeRoute == 'actors' )? 'bg-gray-100 text-gray-900 dark:text-gray-900' : 'text-gray-700 dark:text-gray-200 '}} font-medium px-3 py-2 rounded-lg hover:bg-gray-100 hover:text-gray-900">Actors</a>
+                                <a href="/directors" class="{{(homeRoute == 'directors' )? 'bg-gray-100 text-gray-900 dark:text-gray-900' : 'text-gray-700 dark:text-gray-200 '}} font-medium px-3 py-2 rounded-lg hover:bg-gray-100 hover:text-gray-900">Directors</a>
+                            </div>
+
+                            
 
                             <ul class="flex items-center flex-shrink-0 space-x-6">
+
+                                <li class="flex">
+                                    <a href="/news" class="rounded-md focus:outline-none focus:shadow-outline-sky text-sky-600"
+                                       aria-label="Toggle color mode">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-sky-600 dark:text-sky-300 hover:text-sky-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 5c7.18 0 13 5.82 13 13M6 11a7 7 0 017 7m-6 0a1 1 0 11-2 0 1 1 0 012 0z" />
+                                        </svg>
+                                    </a>
+                                </li>
                                 <!-- Theme toggler -->
                                 <li class="flex">
                                     <button class="rounded-md focus:outline-none focus:shadow-outline-sky"
@@ -60,6 +81,7 @@
                                         </template>
                                     </button>
                                 </li>
+
                                 <!-- Profile menu -->
                                 <li ng-if="account" class="relative">
                                     <button
@@ -125,6 +147,12 @@
                                     </a>
                                 </li>
                             </ul>
+                        </div>
+                        <div ng-if="sidebar" class="flex flex-col justify-center space-x-4 md:hidden bg-white dark:bg-gray-800 p-4">
+                            <a href="/" class="{{(homeRoute == '' )? 'bg-gray-100 text-gray-900 dark:text-gray-900' : 'text-gray-700 dark:text-gray-200 '}}  ml-4 font-medium px-3 py-2 rounded-lg hover:bg-gray-100 hover:text-gray-900">Films</a>
+                            <a href="/session" class="{{(homeRoute == 'session' )? 'bg-gray-100 text-gray-900 dark:text-gray-900' : 'text-gray-700 dark:text-gray-200 '}} font-medium px-3 py-2 rounded-lg hover:bg-gray-100 hover:text-gray-900">Sessions</a>
+                            <a href="/actors" class="{{(homeRoute == 'actors' )? 'bg-gray-100 text-gray-900 dark:text-gray-900' : 'text-gray-700 dark:text-gray-200 '}} font-medium px-3 py-2 rounded-lg hover:bg-gray-100 hover:text-gray-900">Actors</a>
+                            <a href="/directors" class="{{(homeRoute == 'directors' )? 'bg-gray-100 text-gray-900 dark:text-gray-900' : 'text-gray-700 dark:text-gray-200 '}} font-medium px-3 py-2 rounded-lg hover:bg-gray-100 hover:text-gray-900">Directors</a>
                         </div>
                     </header>
 

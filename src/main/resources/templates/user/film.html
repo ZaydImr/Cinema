@@ -14,69 +14,113 @@
 <main layout:fragment="content" class="h-full overflow-y-auto">
     <div class="container px-6 mx-auto grid pt-2">
 
-        <!-- Loading -->
-        <div ng-if="loading">
-            <svg class="h-12" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                 style="margin: auto; background: none; display: block; shape-rendering: auto;" width="200px" height="200px"
-                 viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
-                <path fill="none" stroke="#0284c7" stroke-width="8" stroke-dasharray="42.76482137044271 42.76482137044271"
-                      d="M24.3 30C11.4 30 5 43.3 5 50s6.4 20 19.3 20c19.3 0 32.1-40 51.4-40 C88.6 30 95 43.3 95 50s-6.4 20-19.3 20C56.4 70 43.6 30 24.3 30z"
-                      stroke-linecap="round" style="transform:scale(0.8);transform-origin:50px 50px">
-                    <animate attributeName="stroke-dashoffset" repeatCount="indefinite" dur="1.1363636363636365s"
-                             keyTimes="0;1" values="0;256.58892822265625"></animate>
-                </path>
-            </svg>
-        </div>
-
-        <!-- directors -->
+        <!-- film -->
         <div class="w-full">
 
             <!-- Card -->
-            <div  class="bg-white rounded-lg shadow-xs dark:bg-gray-800 p-4 mt-4">
-                <a href="/" class="flex text-sky-600 hover:text-sky-700 pb-4">
+            <div  class="bg-white rounded-lg shadow-xs dark:bg-gray-800 p-4 px-8 my-4 ">
+                <button onclick="history.back()" class="flex text-sky-600 hover:text-sky-700 mb-4">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                       </svg>
                     Go back
-                </a>
-                <div  class="flex gap-4 items-center flex-col md:flex-row">
-                    <img src="/pictures/{{film.imgFilm}}" class="rounded w-full md:w-96"/>
-                    <div>
-                        <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
+                </button>
+                <div  class="flex gap-4 flex-col md:flex-row">
+                    <div class=" w-full">
+                        <h2 class="text-5xl font-semibold mb-4 text-gray-700 dark:text-gray-200">
                             {{film.titleFilm}}
-                        </p>
-                        <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
+                        </h2>
+                        <div class="flex gap-4 items-center mb-2">
+                            <label class="text-md font-medium text-gray-700 dark:text-gray-200">
+                                Date release :
+                            </label>
+                            <p class="text-sm font-medium text-gray-700 dark:text-gray-200">
+                                {{film.dateRelease}}
+                            </p>
+                        </div>
+                        <div class="flex gap-4 items-center mb-2">
+                            <label class="text-md font-medium text-gray-700 dark:text-gray-200">
+                                Nationality :
+                            </label>
+                            <p class="text-sm font-medium text-gray-700 dark:text-gray-200">
+                                {{film.nationality.nationality}}
+                            </p>
+                        </div>
+                        <div class="flex gap-4 items-center mb-2">
+                            <label class="text-md font-medium text-gray-700 dark:text-gray-200">
+                                Category :
+                            </label>
+                            <p class="text-sm font-medium text-gray-700 dark:text-gray-200">
+                                {{film.filmType.typeFilm}}
+                            </p>
+                        </div>
+                        <div class="flex gap-4 items-center relative">
+                            <label class="text-md font-medium text-gray-700 dark:text-gray-200">
+                                Director :
+                            </label>
+                            <p class="text-md font-medium text-gray-700 dark:text-gray-200">
+                                {{film.director.fullnameDirector}}
+                            </p>
+                            <img src="/pictures/{{film.director.imgDirector}}" class="rounded-full inset-0  shadow-inner w-12 h-12">
+                        </div>
+                        <p class="mt-6 text-sm font-medium text-gray-600 dark:text-gray-400" style="max-width: 600px; text-align: justify;">
                             {{film.descriptionFilm}}
                         </p>
-                        <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                            {{film.dateRelease}}
-                        </p>
-                        <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                            <img src="{{film.director.imgDirector}}" alt="">
-                            {{film.director.fullnameDirector}}
-                        </p>
-                        <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                            {{film.nationality.nationality}}
-                        </p>
-                        <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                            {{film.filmType.typeFilm}}
-                        </p>
-                        <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                            {{film.dateRelease}}
-                        </p>
                     </div>
+                    
+                    <img src="/pictures/{{film.imgFilm}}" class="rounded w-full md:w-1/2"/>
                 </div>
 
-                <div  class="flex gap-4 mt-4 flex-col">
+                <div ng-if="galerie.length" class="w-full h-1 bg-sky-600 my-8 rounded-md"></div>
+
+                <div ng-if="galerie.length" class="flex gap-4 flex-col">
                     
-                    <h2 class="text-gray-700 dark:text-gray-200">Galerie de film :</h2>
-                    <div class="grid gap-6 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+                    <h2 class="font-semibold text-lg text-gray-700 dark:text-gray-200">Photo galery :</h2>
+                    <div class="grid gap-6 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
                         <img ng-repeat="pic in galerie" src="/pictures/{{pic}}" class="rounded w-full md:w-60"/>
                     </div>
                 </div>
+
+                <div class="w-full h-1 bg-sky-600 my-8 rounded-md"></div>
+
+                <div class="flex gap-4 flex-col">
+                    <label class="flex gap-6 items-center text-md">
+                        <span class="text-gray-700 dark:text-gray-400">Add a comment :</span>
+                        <input ng-model="comment" auto-focus="true" ng-required="true" name="filmname"
+                          class="block w-64 mt-1 mb-2 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-sky-400 focus:outline-none focus:shadow-outline-sky dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                          placeholder="Perfect film ..." />
+                        <button ng-click="addComment()"
+                          class="w-full px-5 py-3 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-sky-600 border border-transparent rounded-lg sm:w-auto sm:px-4 sm:py-2 active:bg-sky-600 hover:bg-sky-700 focus:outline-none focus:shadow-outline-sky">
+                            Comment
+                        </button>
+                    </label>
+
+                    <h2 class="font-semibold text-lg text-gray-700 dark:text-gray-200">Comments :</h2>
+
+                    <div class="flex flex-col content-center gap-4 ml-4">
+                        <div ng-repeat="comment in comments" class="">
+                            <p class="text-md font-medium text-gray-700 dark:text-gray-200">
+                                {{comment.contentComment}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Loading -->
+                <div ng-if="loading">
+                    <svg class="h-12" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                        style="margin: auto; background: none; display: block; shape-rendering: auto;" width="200px" height="200px"
+                        viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                        <path fill="none" stroke="#0284c7" stroke-width="8" stroke-dasharray="42.76482137044271 42.76482137044271"
+                            d="M24.3 30C11.4 30 5 43.3 5 50s6.4 20 19.3 20c19.3 0 32.1-40 51.4-40 C88.6 30 95 43.3 95 50s-6.4 20-19.3 20C56.4 70 43.6 30 24.3 30z"
+                            stroke-linecap="round" style="transform:scale(0.8);transform-origin:50px 50px">
+                            <animate attributeName="stroke-dashoffset" repeatCount="indefinite" dur="1.1363636363636365s"
+                                    keyTimes="0;1" values="0;256.58892822265625"></animate>
+                        </path>
+                    </svg>
+                </div>
                 
             </div>
-
         </div>
     </div>
 

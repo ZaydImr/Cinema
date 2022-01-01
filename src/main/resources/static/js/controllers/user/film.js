@@ -7,6 +7,8 @@ myApp.controller("filmController", function ($scope, $http) {
 
   $scope.film = {};
   $scope.galerie = [];
+  $scope.comments = [];
+  $scope.comment = '';
 
   // Functions
   $scope.getFilm = function () {
@@ -37,8 +39,37 @@ myApp.controller("filmController", function ($scope, $http) {
     );
   };
 
+  $scope.getComments = function () {
+    $scope.loading = true;
+    $http.get("/api/comment/find/"+location.pathname.split('/')[location.pathname.split('/').length-1]).then(
+      function successCallback(response) {
+        $scope.loading = false;
+        $scope.comments = response.data;
+        console.log(response.data);
+      },
+      function errorCallback(response) {
+        console.log("Error....");
+        console.log(response);
+      }
+    );
+  };
+
+  $scope.addComment = function () {
+    $scope.loading = true;
+    $http.post("/api/comment/add", { contentComment: $scope.comment, film: $scope.film }).then(
+      function successCallback() {
+        $scope.getComments();
+      },
+      function errorCallback(response) {
+        console.log("Error....");
+        console.log(response);
+      }
+    );
+  };
+  
   // Initialization
   $scope.getFilm();
   $scope.getGalerie();
+  $scope.getComments();
 
 });

@@ -2,6 +2,7 @@ package com.cinema.apicontroller;
 
 import com.cinema.classGeneric.Page;
 import com.cinema.models.Director;
+import com.cinema.models.Film;
 import com.cinema.models.Nationality;
 import com.cinema.models.Session;
 import com.cinema.services.SessionService;
@@ -47,6 +48,12 @@ public class SessionApiController {
             e.printStackTrace();
         }
         return new ResponseEntity<>(session, HttpStatus.OK);
+    }
+
+    @GetMapping("/all/keyword/{keyword}")
+    public ResponseEntity<List<Session>> getAllByKeyword(@PathVariable("keyword") String keyword){
+        List<Session> sessions = sessionService.GetAllByKeyword(keyword);
+        return new ResponseEntity<>(sessions, HttpStatus.OK);
     }
 
     @PostMapping("/add")

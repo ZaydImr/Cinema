@@ -14,6 +14,12 @@
 <main layout:fragment="content" class="h-full overflow-y-auto">
     <div class="container px-6 mx-auto grid pt-2">
 
+
+        <!-- Search -->
+        <input ng-model="searchIn" ng-change="search()"
+               class="w-full pl-8 pr-2 text-sm my-8 text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-sky-300 focus:outline-none focus:shadow-outline-sky form-input"
+               type="text" placeholder="Search for actors .." aria-label="Search" />
+
         <!-- Loading -->
         <div ng-if="loading">
             <svg class="h-12" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -28,27 +34,21 @@
             </svg>
         </div>
 
-        <!-- Search -->
-
-        <input ng-model="searchIn" ng-change="search()"
-               class="w-full pl-8 pr-2 text-sm my-8 text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-sky-300 focus:outline-none focus:shadow-outline-sky form-input"
-               type="text" placeholder="Search for actors .." aria-label="Search" />
-
         <!-- Actors -->
         <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
 
             <!-- Card -->
-            <div ng-repeat="actor in all" class="flex gap-2 items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+            <div ng-repeat="actor in all" class="flex gap-4 items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
 
                 <img src="/pictures/{{actor.imgActor}}" width="80" height="100" class="rounded"/>
                 <div>
-                    <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
+                    <p class="text-lg mb-4 font-semibold text-gray-700 dark:text-gray-200">
                         {{actor.fullNameActor}}
                     </p>
-                    <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
+                    <p class="text-sm font-medium text-gray-600 dark:text-gray-400">
                         {{actor.birthdayActor}}
                     </p>
-                    <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
+                    <p class="text-sm font-medium text-gray-600 dark:text-gray-400">
                         {{actor.nationalityActor.nationality}}
                     </p>
                 </div>

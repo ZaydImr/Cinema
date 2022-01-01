@@ -22,7 +22,6 @@ public class Comment extends AbstractModel<UUID> implements Serializable {
     private User user;
     @ManyToOne
     @JoinColumn(name = "idFilm")
-    @JsonIgnore
     private Film film;
     @Column(name = "contentComment")
     private String contentComment;

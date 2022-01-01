@@ -13,7 +13,9 @@ public class HomeController {
     private final String register = "register";
     private final String actor = "user/actors";
     private final String director = "user/directors";
+    private final String session = "user/session";
     private final String film = "user/film";
+    private final String news = "user/news";
 
     @GetMapping("")
     public String index()
@@ -49,5 +51,17 @@ public class HomeController {
     public String getDirectors()
     {
         return director;
+    }
+
+    @GetMapping("session")
+    public String getSession()
+    {
+        return session;
+    }
+
+    @GetMapping("news")
+    public String getNews()
+    {
+        return news;
     }
 }

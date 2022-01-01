@@ -6,7 +6,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <script src="../js/controllers/user/directors.js"></script>
+    <script src="../js/controllers/user/session.js"></script>
 </head>
 
 <body ng-controller="directorsController">
@@ -15,11 +15,10 @@
     <div class="container px-6 mx-auto grid pt-2">
 
         
-
         <!-- Search -->
         <input ng-model="searchIn" ng-change="search()"
                class="w-full pl-8 pr-2 text-sm my-8 text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-sky-300 focus:outline-none focus:shadow-outline-sky form-input"
-               type="text" placeholder="Search for directors .." aria-label="Search" />
+               type="text" placeholder="Search for film .." aria-label="Search" />
 
         <!-- Loading -->
         <div ng-if="loading">
@@ -35,25 +34,44 @@
             </svg>
         </div>
 
-        <!-- directors -->
+
+        <!-- sessions -->
         <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
 
             <!-- Card -->
-            <div ng-repeat="director in all" class="flex gap-4 items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+            <a href="/film/{{session.film.id}}" ng-repeat="session in all" class="flex flex-col gap-4 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800 relative">
+                <img src="/pictures/{{session.film.imgFilm}}" class="rounded"/>
+                <div class="">
+                    <div class="flex items-center gap-2 mb-2">
+                        <p class="text-md font-semibold text-gray-700 dark:text-gray-200">
+                            Film name :
+                        </p>
+                        <p class="text-sm font-semibold text-gray-700 dark:text-gray-200">
+                            {{session.film.titleFilm}}
+                        </p>
+                    </div>
+                    <div class="flex items-center gap-2 mb-2">
+                        <p class="text-sm font-medium text-gray-600 dark:text-gray-400">
+                            Date begin :
+                        </p>
+                        <p class="text-sm font-medium text-gray-600 dark:text-gray-400">
+                            {{session.dateBeginSession}}
+                        </p>
+                    </div>                    
+                    <div class="flex items-center gap-2 mb-2">
+                        <p class="text-sm font-medium text-gray-600 dark:text-gray-400">
+                            Room :
+                        </p>
+                        <p class="text-sm font-medium text-gray-600 dark:text-gray-400">
+                            {{session.room.nameRoom}}
+                        </p>
+                    </div>
 
-                <img src="/pictures/{{director.imgDirector}}" width="80" height="100" class="rounded"/>
-                <div>
-                    <p class="text-lg mb-2 font-semibold text-gray-700 dark:text-gray-200">
-                        {{director.fullnameDirector}}
-                    </p>
-                    <p class="text-sm font-medium text-gray-600 dark:text-gray-400">
-                        {{director.birthdayDirector}}
-                    </p>
-                    <p class="text-sm font-medium text-gray-600 dark:text-gray-400">
-                        {{director.nationalityDirector.nationality}}
+                    <p class="text-sm font-medium text-sky-600 dark:text-sky-400 absolute right-4 bottom-4">
+                        {{session.tarif}}$
                     </p>
                 </div>
-            </div>
+            </a>
 
         </div>
     </div>

@@ -38,14 +38,16 @@ public class CommentApiController {
     }
 
     @GetMapping("/find/{id}")
-    public ResponseEntity<Comment> getCommentById(@PathVariable("id") UUID id){
-        Comment comment = null;
-        try{ comment = commentService.getElementById(id);}
-        catch(Throwable e){
+    public ResponseEntity<List<Comment>> getFilmImageById(@PathVariable("id") UUID id) {
+        List<Comment> comments = null;
+        try {
+            comments = commentService.getCommentByFilmId(id);
+        } catch (Throwable e) {
             e.printStackTrace();
         }
-        return new ResponseEntity<>(comment,HttpStatus.OK);
+        return new ResponseEntity<>(comments, HttpStatus.OK);
     }
+
     @PostMapping("/add")
     public ResponseEntity<Comment> addComment(@RequestBody Comment comment) {
         Comment newComment = commentService.addEntity(comment);

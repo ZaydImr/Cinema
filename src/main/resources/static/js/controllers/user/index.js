@@ -2,6 +2,10 @@ myApp.controller("filmController", function ($scope, $http) {
 
   // Variables
   $scope.all = [];
+  $scope.nationalities = [];
+  $scope.actors = [];
+  $scope.directors = [];
+  $scope.categories = [];
 
   $scope.loading = false;
 
@@ -24,7 +28,50 @@ myApp.controller("filmController", function ($scope, $http) {
       }
     );
   };
-
+  $scope.getNationalities = function () {
+    $http.get("/api/nationality/all").then(
+      function successCallback(response) {
+        $scope.nationalities = response.data;
+      },
+      function errorCallback(response) {
+        console.log("Error....");
+        console.log(response);
+      }
+    );
+  };
+  $scope.getTypeFilm = function () {
+    $http.get("/api/filmtypes/all").then(
+      function successCallback(response) {
+        $scope.categories = response.data;
+      },
+      function errorCallback(response) {
+        console.log("Error....");
+        console.log(response);
+      }
+    );
+  };
+  $scope.getDirectors = function () {
+    $http.get("/api/director/all").then(
+      function successCallback(response) {
+        $scope.directors = response.data;
+      },
+      function errorCallback(response) {
+        console.log("Error....");
+        console.log(response);
+      }
+    );
+  };
+  $scope.getActors = function () {
+    $http.get("/api/actor/all").then(
+      function successCallback(response) {
+        $scope.actors = response.data;
+      },
+      function errorCallback(response) {
+        console.log("Error....");
+        console.log(response);
+      }
+    );
+  };
   $scope.search = function () {
     if ($scope.searchIn === "") {
       $scope.getFilms();
@@ -48,5 +95,9 @@ myApp.controller("filmController", function ($scope, $http) {
 
   // Initialization
   $http.post('/api/visitors/add', {data : window.clientInformation.appVersion})
-  $scope.getFilms();
+  $scope.search();
+  $scope.getNationalities();
+  $scope.getTypeFilm();
+  $scope.getDirectors();
+  $scope.getActors();
 });
