@@ -95,13 +95,13 @@ public class UserApiController {
         System.out.println("Mail entered...");
         String subject = "Here's the link to reset your password";
 
-        String content = "<p>Hello,</p>"
-                +"<p>You have requested to reset your password.</p>"
-                +"<p>Click the link below to change your password : </p>"
-                +"<p><a href=\""+link+"\">Change my password</p>"
-                +"<br>"
-                +"<p>Ignore this email if you do remember your password,"
-                +"or you have not made the request.</p>";
+        String content = "Hello,\n"
+                +"You have requested to reset your password.\n"
+                +"Click the link below to change your password :\n\n"
+                +link
+                +"\n\n"
+                +"Ignore this email if you do remember your password,"
+                +"or you have not made the request.";
 
         emailSenderService.sendEmailByUser(recipientEmail,content,subject);
     }
